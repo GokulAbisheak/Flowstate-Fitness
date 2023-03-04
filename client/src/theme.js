@@ -13,10 +13,11 @@ const globalTheme = (mode) => {
                 },
 
                 background: {
-                    default: "#222222",
-                    alt: "#555555",
+                    default: "#121212",
+                    alt: "#222222",
                     dif: "#0e1c2f",
                 },
+
                 
             } : {
                 primary: {
@@ -28,9 +29,10 @@ const globalTheme = (mode) => {
 
                 background: {
                     default: "#edf1fa",
-                    alt: "#FFFFFF",
+                    alt: "#FAFAFF",
                     dif: "#eafbfc",
                 },
+
             })
         },
     }

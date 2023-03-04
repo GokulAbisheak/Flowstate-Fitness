@@ -24,7 +24,8 @@ body,
     /* box-shadow: 5px 0px 5px -3px rgba(102, 102, 102, 0.5); */
     box-shadow: 0 0 10px #00000030;
     /* background: linear-gradient(to top, #2EAAFA, #1F2F98); */
-    background-color: #000000;
+    /* background-color: #000033; */
+    background: linear-gradient(to top, #07a7af, #01519a);
 }
 
 .side-nav-link-group {

@@ -85,14 +85,14 @@ const SideNav = () => {
     ]
 
     return (
-        <div id="side-nav" className="side-nav">
-            <Box width="100%" textAlign="center">
+        <div id="side-nav" className="side-nav" >
+            <Box width="100%" textAlign="center" sx={{color: "#FFFFFF"}}>
                 <Typography variant="h6" component={Link} to="/" id="brand-name" margin="0px 0px 20px 0px" sx={{
                     display: { xs: "none", md: "inherit" },
                     position: "sticky",
                     top: "0px",
                     paddingTop: "20px",
-                    color: "#FFFFFF"
+                    color: "#FFFFFF",
                 }} >
                     FLOWSTATE
                 </Typography>
@@ -102,27 +102,25 @@ const SideNav = () => {
                         <ListItem button onClick={() => navigate(item.path)} key={item.text} sx={{
                             backgroundColor:
                                 location === item.path
-                                    ? "rgba(255, 255, 255, 0.4)"
+                                    ? "rgba(255, 255, 255, 0.3)"
                                     : "transparent",
                             '&:hover': {
                                 backgroundColor:
                                     location === item.path
-                                        ? "rgba(255, 255, 255, 0.4)"
+                                        ? "rgba(255, 255, 255, 0.3)"
                                         : "rgba(255, 255, 255, 0.1)",
                             },
                         }}>
-                            <ListItemIcon sx={{
+                            <ListItemIcon  sx={{
                                 color: "#FFFFFF",
                             }}>
                                 {item.icon}
                             </ListItemIcon>
                             <ListItemText disableTypography primary={item.text} sx={{
                                 fontSize: "14px",
-                                color: "#FFFFFF",
                                 paddingLeft: "10px",
                             }} />
                             <KeyboardArrowRightIcon sx={{
-                                color: "#FFFFFF",
                                 display:
                                     location === item.path
                                         ? "inherit"

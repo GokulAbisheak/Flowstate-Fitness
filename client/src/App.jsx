@@ -10,6 +10,7 @@ import AdminLayout from './pages/AdminLayout';
 import GridPage from './pages/GridPage';
 import Members from './pages/Members';
 import NotFound from './pages/NotFound';
+import Main from './pages/TrainerManagement/main'
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
           <Route path="/" element={<Navigate to="/admin/dashboard"/>} />
             <Route path="/admin/dashboard" element={<GridPage/>} />
             <Route path="/admin/members" element={<Members/>} />
+            <Route path="/button" element={<Main/>} />
           </Route>
           <Route path="*" element={<NotFound/>} />
         </Routes>
