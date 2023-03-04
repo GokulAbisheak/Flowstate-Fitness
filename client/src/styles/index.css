@@ -68,6 +68,15 @@ body::-webkit-scrollbar-thumb {
     background: #555555;
 }
 
+.user-nav-list {
+    width: 100%;
+    position: fixed;
+    top: 64px;
+    overflow: hidden;
+    transition-duration: 1s;
+    max-height: 0px;
+}
+
 @media screen and (max-width: 900px) {
     .side-nav {
         width: 0px;
@@ -79,8 +88,11 @@ body::-webkit-scrollbar-thumb {
         width: 200px;
         position: fixed;
         top: 64px;
-        opacity: 0.8;
         transition-duration: 200ms;
+    }
+
+    .user-nav-list.responsive {
+        max-height: 100vh;
     }
 }
 

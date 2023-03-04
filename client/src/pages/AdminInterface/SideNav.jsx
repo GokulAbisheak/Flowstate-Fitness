@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/index.css';
+import '../../styles/index.css';
 import { Typography, useTheme, Box, styled, ListItemButton, ListItemText, ListItemIcon, ListItem } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import {

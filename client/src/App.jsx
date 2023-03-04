@@ -6,11 +6,13 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import globalTheme from './theme';
 import { setMode } from './state';
-import AdminLayout from './pages/AdminLayout';
-import GridPage from './pages/GridPage';
-import Members from './pages/Members';
+import AdminLayout from './pages/AdminInterface/AdminLayout';
+import GridPage from './pages/AdminInterface/GridPage';
+import Members from './pages/UserManagement/Members';
 import NotFound from './pages/NotFound';
 import Main from './pages/TrainerManagement/main'
+import Login from './pages/UserManagement/Login'
+import UserLayout from './pages/UserInterface/UserLayout'
 
 function App() {
 
@@ -20,18 +22,23 @@ function App() {
   return (
     <div className="App">
       <Router>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Routes>
-          <Route element={<AdminLayout/>}>
-          <Route path="/" element={<Navigate to="/admin/dashboard"/>} />
-            <Route path="/admin/dashboard" element={<GridPage/>} />
-            <Route path="/admin/members" element={<Members/>} />
-            <Route path="/button" element={<Main/>} />
-          </Route>
-          <Route path="*" element={<NotFound/>} />
-        </Routes>
-      </ThemeProvider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Routes>
+            <Route element={<AdminLayout />}>
+              <Route path="/" element={<Navigate to="/admin/dashboard" />} />
+              <Route path="/admin/dashboard" element={<GridPage />} />
+              <Route path="/admin/members" element={<Members />} />
+              <Route path="/button" element={<Main />} />
+            </Route>
+
+            <Route element={<UserLayout />}>
+              <Route path="/login" element={<Login />} />
+            </Route>
+
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </ThemeProvider>
       </Router>
 
       {/* <Stack direction="row">

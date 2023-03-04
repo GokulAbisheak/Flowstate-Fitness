@@ -3,7 +3,7 @@ import { Box } from '@mui/system';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from './Header';
-import SideNav from './SideNav';
+import SideNav from '../AdminInterface/SideNav';
 
 const AdminLayout = () => {
     return (

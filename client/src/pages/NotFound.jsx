@@ -1,7 +1,7 @@
 import { Box, Grid, Typography, Button, useTheme } from '@mui/material';
 import React from 'react';
 import '../styles/index.css';
-import Header from './Header';
+import Header from './AdminInterface/Header';
 import ArrowBackIcon from '@mui/icons-material/ChevronLeft';
 import { useNavigate } from 'react-router-dom';
 

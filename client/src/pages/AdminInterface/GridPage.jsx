@@ -1,5 +1,5 @@
 import { useTheme, Grid } from '@mui/material';
-import ContentBox from '../components/ContentBox';
+import ContentBox from '../../components/ContentBox';
 import React from 'react';
 
 const GridPage = () => {
