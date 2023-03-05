@@ -20,7 +20,7 @@ const NotFound = () => {
                             <Typography variant='h4'>Page Not Found</Typography>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <img style={{ maxWidth: "400px" }} src="/assets/404-Error.svg" />
+                        <img style={{ maxWidth: "400px" }} src="/assets/404-error-animated.svg" />
                     </Grid>
                     <Grid item xs={12}>
                         <Button onClick={() => navigate('/')} color='error' variant="contained" sx={{ paddingRight: "25px" }}><ArrowBackIcon></ArrowBackIcon> Go Back</Button>

@@ -7,7 +7,8 @@ const globalTheme = (mode) => {
             ...(mode === 'dark' ? {
                 primary: {
                     // main: "#3AAFA9"
-                    main: "#07a7af"
+                    // main: "#07a7af"
+                    main: "#008CDA"
                 },
                 secondary: {
                     main: "#ffef00"
@@ -23,7 +24,8 @@ const globalTheme = (mode) => {
             } : {
                 primary: {
                     // main: "#3AAFA9"
-                    main: "#07a7af"
+                    // main: "#07a7af"
+                    main: "#1053A7"
                 },
                 secondary: {
                     main: "#ffef00"
