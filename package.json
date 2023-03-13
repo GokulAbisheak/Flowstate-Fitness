@@ -5,5 +5,10 @@
     },
     "devDependencies": {
         "concurrently": "^7.6.0"
+    },
+    "dependencies": {
+        "@date-io/date-fns": "^2.16.0",
+        "@material-ui/pickers": "^3.3.10",
+        "react-google-recaptcha": "^2.1.0"
     }
 }
