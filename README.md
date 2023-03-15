@@ -34,3 +34,13 @@ looking and responsive web application.
 
 Note - The student's github account should be given in brackets e.g. (asiriRepos), this ideally should be your student id 
 
+
+<h1>Flowstate Fitness</h1>
+<br>
+<h3>Contibutors can contibute by following the steps below</h3>
+
+<p> 1. Clone the repository to your local machine. <br>
+    2. Enter command "npm install" inside the project directory. <br>
+    3. Enter command "npm run initialize-project" <br>
+    4. Code, Commit and Push and repeat step 4 <br>
+</p>
