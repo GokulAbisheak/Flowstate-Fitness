@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import userRouter from "./routes/User.route.js";
+import adminRouter from "./routes/Admin.route.js";
 
 const app = express();
 
@@ -13,5 +14,6 @@ app.get('/', (req, res) => {
 })
 
 app.use('/users', userRouter);
+app.use('/admins', adminRouter);
 
 export default app;
