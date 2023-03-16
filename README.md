@@ -8,7 +8,7 @@ Please go under edit and edit this file as needed for your project
 ### Member 3 - 
 ### Member 4 - 
 ### Member 5 - 
-### Member 6 - 
+### Member 6 - IT21228162 - Y.Sankeethan (IT21228162)
 ### Member 7 - 
 ### Member 8 - 
 
