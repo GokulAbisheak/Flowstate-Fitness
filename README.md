@@ -4,11 +4,11 @@ Please go under edit and edit this file as needed for your project
 # Batch - Y2.S2.WD.IT.06.01
 # Group - ITP_WD_B06_G02
 ### Group Leader - IT21375132 - Gokul Abisheak (GokulAbisheak)
-### Member 2 - 
+### Member 2 - IT21228162 - Y.Sankeethan (IT21228162)
 ### Member 3 - 
 ### Member 4 - 
 ### Member 5 - 
-### Member 6 - IT21228162 - Y.Sankeethan (IT21228162)
+### Member 6 - 
 ### Member 7 - 
 ### Member 8 - 
 
