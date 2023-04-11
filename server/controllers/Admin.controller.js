@@ -15,17 +15,17 @@ const AdminController = {
     },
 
     //Get admin by id
-    getAdminById: async (req, res) => {
+    getAdminByEmail: async (req, res) => {
         try {
-            const admin = await Admin.findById(req.params.id);
+            const admin = await Admin.findOne({ email: req.params.email });
             if (!admin) {
-                logger.error("Admin" + req.params.id + " not found");
+                logger.error("Admin " + req.params.email + " not found");
                 return res.status(404).json({ message: 'Admin not found' });
             }
             res.status(200).json(admin);
         } catch (error) {
             res.status(500).json({ message: error.message });
-            logger.error("Error getting admin " + req.params.id);
+            logger.error("Error getting admin " + req.params.email);
         }
     },
 
@@ -42,39 +42,39 @@ const AdminController = {
         }
     },
 
-    //Update a admin by id
-    updateAdminById: async (req, res) => {
+    //Update a admin by email
+    updateAdminByEmail: async (req, res) => {
         try {
-            const admin = await Admin.findByIdAndUpdate(
-                req.params.id,
+            const admin = await Admin.findOneAndUpdate(
+                req.params.email,
                 req.body,
                 { new: true }
             );
-            logger.info("Admin" + req.params.id + " update successful");
+            logger.info("Admin " + req.params.email + " update successful");
             if (!admin) {
-                logger.error("Admin" + req.params.id + " not found");
+                logger.error("Admin " + req.params.email + " not found");
                 return res.status(404).json({ message: 'Admin not found' });
             }
             res.status(200).json(admin);
         } catch (error) {
             res.status(400).json({ message: error.message });
-            logger.error("Admin" + req.params.id + " update unsuccessful");
+            logger.error("Admin " + req.params.email + " update unsuccessful");
         }
     },
 
-    //Delete a admin by id
-    deleteAdminById: async (req, res) => {
+    //Delete a admin by email
+    deleteAdminByEmail: async (req, res) => {
         try {
-            const admin = await Admin.findByIdAndDelete(req.params.id);
+            const admin = await Admin.findOneAndDelete(req.params.email);
             if (!admin) {
-                logger.error("Admin" + req.params.id + " not found");
+                logger.error("Admin " + req.params.email + " not found");
                 return res.status(404).json({ message: 'Admin not found' });
             }
             res.status(200).json({ message: 'Admin deleted' });
-            logger.info("Admin" + req.params.id + " deleted successfully");
+            logger.info("Admin " + req.params.email + " deleted successfully");
         } catch (error) {
             res.status(400).json({ message: error.message });
-            logger.info("Admin" + req.params.id + " deleted successfully");
+            logger.info("Admin " + req.params.email + " deleted successfully");
         }
     }
 };

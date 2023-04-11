@@ -4,9 +4,9 @@ import AdminController from '../controllers/Admin.controller.js';
 const adminRouter = express.Router();
 
 adminRouter.get('/', AdminController.getAllAdmins);
-adminRouter.get('/:id', AdminController.getAdminById);
+adminRouter.get('/:email', AdminController.getAdminByEmail);
 adminRouter.post('/add', AdminController.createAdmin);
-adminRouter.patch('/update/:id', AdminController.updateAdminById);
-adminRouter.delete('/delete/:id', AdminController.deleteAdminById);
+adminRouter.patch('/update/:email', AdminController.updateAdminByEmail);
+adminRouter.delete('/delete/:email', AdminController.deleteAdminByEmail);
 
 export default adminRouter;
