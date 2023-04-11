@@ -3,6 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 import userRouter from "./routes/User.route.js";
 import adminRouter from "./routes/Admin.route.js";
+import reviewRouter from "./routes/Review.route.js";
 
 const app = express();
 
@@ -15,5 +16,6 @@ app.get('/', (req, res) => {
 
 app.use('/user', userRouter);
 app.use('/admin', adminRouter);
+app.use('/review', reviewRouter);
 
 export default app;
