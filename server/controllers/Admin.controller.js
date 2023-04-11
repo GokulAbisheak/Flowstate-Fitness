@@ -14,7 +14,7 @@ const AdminController = {
         }
     },
 
-    //Get admin by id
+    //Get admin by email
     getAdminByEmail: async (req, res) => {
         try {
             const admin = await Admin.findOne({ email: req.params.email });
@@ -42,7 +42,7 @@ const AdminController = {
         }
     },
 
-    //Update a admin by email
+    //Update an admin by email
     updateAdminByEmail: async (req, res) => {
         try {
             const admin = await Admin.findOneAndUpdate(
@@ -62,7 +62,7 @@ const AdminController = {
         }
     },
 
-    //Delete a admin by email
+    //Delete an admin by email
     deleteAdminByEmail: async (req, res) => {
         try {
             const admin = await Admin.findOneAndDelete(req.params.email);

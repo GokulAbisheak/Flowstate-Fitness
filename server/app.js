@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
     res.send('Server is Running! 🚀');
 })
 
-app.use('/users', userRouter);
-app.use('/admins', adminRouter);
+app.use('/user', userRouter);
+app.use('/admin', adminRouter);
 
 export default app;
