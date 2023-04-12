@@ -2,7 +2,7 @@ import React from 'react';
 import { useTheme, IconButton, Typography, Avatar, Button, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMode } from '../../state';
-import { NightsStay, LightMode, Menu } from '@mui/icons-material';
+import { NightsStay, LightMode, Menu, ShoppingCart } from '@mui/icons-material';
 import FlexBetween from '../../components/FlexBetween';
 import { Link } from 'react-router-dom';
 import '../../styles/index.css'
@@ -51,7 +51,7 @@ const Header = () => {
 
     return (
         <>
-            <FlexBetween backgroundColor={theme.palette.background.alt}
+            <FlexBetween sx={{ zIndex: "1000" }} backgroundColor={theme.palette.background.alt}
                 padding="10px 20px"
                 height="64px"
                 position="sticky"
@@ -87,7 +87,10 @@ const Header = () => {
                     }
                 </FlexBetween>
                 <FlexBetween>
-                    <IconButton onClick={() => dispatch(setMode())}>
+                    <IconButton sx={{ marginRight: "5px" }}>
+                        <ShoppingCart sx={{ fontSize: "25px"}} />
+                    </IconButton>
+                    <IconButton sx={{ marginRight: "5px" }} onClick={() => dispatch(setMode())}>
                         {theme.palette.mode === "dark" ? (
                             <LightMode sx={{ fontSize: "25px" }} />
                         ) : (
@@ -97,9 +100,9 @@ const Header = () => {
                     <Avatar alt="Cindy Baker" src="/assets/user.jpg" sx={{ width: "32px", height: "32px" }} />
                 </FlexBetween>
             </FlexBetween>
-            <div id="nav-list-responsive" class="user-nav-list" style={{backgroundColor: theme.palette.primary.main, opacity: "0.8"}}>
+            <div id="nav-list-responsive" class="user-nav-list" style={{ backgroundColor: theme.palette.primary.main, opacity: "0.8", zIndex: "1000" }}>
                 {NavDetails.map(item => (
-                    <Button variant="text" sx={{ width: "100%", color: "#FFFFFF", '&:hover': {backgroundColor: "rgba(0,0,0,0.3)"}}}>{item.title}</Button>
+                    <Button variant="text" sx={{ width: "100%", color: "#FFFFFF", '&:hover': { backgroundColor: "rgba(0,0,0,0.3)" } }}>{item.title}</Button>
                 ))
                 }
             </div>

@@ -112,3 +112,12 @@ body::-webkit-scrollbar-thumb {
     font-size: 24px;
     text-decoration: none;
 }
+
+.error {
+    border: 1px solid #FF0000;
+    background-color: rgba(255, 0, 0, 0.1);
+    color: #FF0000;
+    font-size: 12px;
+    padding: 10px 60px;
+    border-radius: 5px;
+}
