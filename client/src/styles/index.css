@@ -26,6 +26,7 @@ body,
     /* background: linear-gradient(to top, #2EAAFA, #1F2F98); */
     /* background-color: #000033; */
     background: linear-gradient(to top, #07a7af, #01519a);
+    z-index: 1000;
 }
 
 .side-nav-link-group {
@@ -120,4 +121,8 @@ body::-webkit-scrollbar-thumb {
     font-size: 12px;
     padding: 10px 60px;
     border-radius: 5px;
+}
+
+#update-box {
+    display: none;
 }

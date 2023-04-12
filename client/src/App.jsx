@@ -14,6 +14,7 @@ import Main from './pages/TrainerManagement/main'
 import Login from './pages/UserManagement/Login'
 import UserLayout from './pages/UserInterface/UserLayout'
 import SignUp from './pages/UserManagement/SignUp';
+import DisplayUsers from './pages/UserManagement/DisplayUsers';
 
 function App() {
 
@@ -29,7 +30,7 @@ function App() {
             <Route element={<AdminLayout />}>
               <Route path="/" element={<Navigate to="/admin/dashboard" />} />
               <Route path="/admin/dashboard" element={<GridPage />} />
-              <Route path="/admin/members" element={<Members />} />
+              <Route path="/admin/members" element={<DisplayUsers />} />
               <Route path="/button" element={<Main />} />
             </Route>
 

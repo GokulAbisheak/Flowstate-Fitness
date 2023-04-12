@@ -46,7 +46,7 @@ const UserController = {
     updateUserByEmail: async (req, res) => {
         try {
             const user = await User.findOneAndUpdate(
-                req.params.email,
+                { email: req.params.email },
                 req.body,
                 { new: true }
             );
