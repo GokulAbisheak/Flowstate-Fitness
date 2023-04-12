@@ -12,7 +12,7 @@ const Header = () => {
     const theme = useTheme();
 
     return (
-        <FlexBetween backgroundColor={theme.palette.background.alt}
+        <FlexBetween sx={{ zIndex: "1000" }} backgroundColor={theme.palette.background.alt}
             padding="10px 20px"
             height="64px"
             position="sticky"
