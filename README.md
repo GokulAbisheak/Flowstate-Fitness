@@ -8,7 +8,7 @@ Please go under edit and edit this file as needed for your project
 ### Member 3 - IT21330728 - L.D.Lokukaluge(Lakitha04)
 ### Member 4 - IT21368066 -  Quais N.M (QuaisNM)
 ### Member 5 - IT21358920 - R. A. H. B. Ranasinghe (HasinduRanasinghe)
-### Member 6 - 
+### Member 6 - IT21222122 - B. D. Gunawardena (BinuriGunawardena)
 ### Member 7 - 
 ### Member 8 - 
 
