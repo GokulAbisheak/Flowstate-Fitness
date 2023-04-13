@@ -29,7 +29,7 @@ function App() {
             <Route element={<AdminLayout />}>
               <Route path="/" element={<Navigate to="/admin/dashboard" />} />
               <Route path="/admin/dashboard" element={<GridPage />} />
-              <Route path="/admin/members" element={<Members />} />
+              <Route path="/admin/users" element={<DisplayUsers />} />
               <Route path="/button" element={<Main />} />
             </Route>
 
