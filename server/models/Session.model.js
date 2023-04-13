@@ -15,7 +15,7 @@ const calendarSchema = new Schema({
     },
 
     time: {
-        type: TimeRanges,
+        type: String,
         required: true
     },
 
@@ -31,6 +31,6 @@ const calendarSchema = new Schema({
 
 });
 
-const Calendar = mongoose.model('Calendar', calendarSchema);
+const Session = mongoose.model('Session', calendarSchema);
 
-export default Calendar;
+export default Session;
