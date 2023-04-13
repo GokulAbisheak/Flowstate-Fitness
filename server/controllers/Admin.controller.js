@@ -2,7 +2,7 @@ import Admin from '../models/Admin.model.js';
 import logger from '../utilities/logger.js';
 
 const AdminController = {
-    
+
     //Get all admins
     getAllAdmins: async (req, res) => {
         try {
@@ -46,7 +46,7 @@ const AdminController = {
     updateAdminByEmail: async (req, res) => {
         try {
             const admin = await Admin.findOneAndUpdate(
-                req.params.email,
+                { email: req.params.email },
                 req.body,
                 { new: true }
             );
