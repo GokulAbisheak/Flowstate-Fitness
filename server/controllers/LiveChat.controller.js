@@ -1,6 +1,9 @@
-const Message = require('../models/message.model');
+import Message from "../models/LiveChat.model";
 
-exports.sendMessage = async (req, res) => {
+messageController ={
+
+   //send a Message
+   sendMessage: async (req, res) => {
   try {
     const { sender, receiver, message } = req.body;
     const newMessage = new Message({ sender, receiver, message });
@@ -10,9 +13,9 @@ exports.sendMessage = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
   }
-};
-
-exports.getMessages = async (req, res) => {
+},
+    //get a Message
+      getMessages : async (req, res) => {
   try {
     const { sender, receiver } = req.params;
     const messages = await Message.find({
@@ -26,4 +29,8 @@ exports.getMessages = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
   }
-};
+}
+
+}
+
+export default messageController;
