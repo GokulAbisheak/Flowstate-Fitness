@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setMode } from '../../state';
 import { NightsStay, LightMode, Menu, ShoppingCart } from '@mui/icons-material';
 import FlexBetween from '../../components/FlexBetween';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../../styles/index.css'
 
 const Header = () => {
 
     const dispatch = useDispatch();
     const theme = useTheme();
+    const navigate = useNavigate();
 
     const NavDetails = [
         {
@@ -35,7 +36,7 @@ const Header = () => {
 
         {
             title: "Membership",
-            link: "",
+            link: "/user/membership",
         },
 
         {
@@ -82,7 +83,9 @@ const Header = () => {
                 </FlexBetween>
                 <FlexBetween sx={{ display: { xs: "none", md: "inherit" } }}>
                     {NavDetails.map(item => (
-                        <Button variant="text">{item.title}</Button>
+                        <Button onClick={() => {
+                            navigate(item.link)
+                        }} variant="text">{item.title}</Button>
                     ))
                     }
                 </FlexBetween>
