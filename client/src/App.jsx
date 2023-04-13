@@ -14,11 +14,8 @@ import Main from './pages/TrainerManagement/main'
 import Login from './pages/UserManagement/Login'
 import UserLayout from './pages/UserInterface/UserLayout'
 import SignUp from './pages/UserManagement/SignUp';
-<<<<<<< Updated upstream
-=======
 import DisplayUsers from './pages/UserManagement/DisplayUsers';
 import PurchaseMembership from './pages/UserManagement/PurchaseMembership';
->>>>>>> Stashed changes
 
 function App() {
 
