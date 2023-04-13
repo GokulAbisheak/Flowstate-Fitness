@@ -14,7 +14,11 @@ import Main from './pages/TrainerManagement/main'
 import Login from './pages/UserManagement/Login'
 import UserLayout from './pages/UserInterface/UserLayout'
 import SignUp from './pages/UserManagement/SignUp';
+<<<<<<< Updated upstream
+=======
 import DisplayUsers from './pages/UserManagement/DisplayUsers';
+import PurchaseMembership from './pages/UserManagement/PurchaseMembership';
+>>>>>>> Stashed changes
 
 function App() {
 
@@ -37,6 +41,7 @@ function App() {
             <Route element={<UserLayout />}>
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignUp />} />
+              <Route path="/user/membership" element={<PurchaseMembership />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />
