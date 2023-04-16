@@ -19,6 +19,7 @@ import PurchaseMembership from './pages/UserManagement/PurchaseMembership';
 import AddProducts from './pages/ProductManagement/AddProducts';
 import UpdateProducts from './pages/ProductManagement/UpdateProducts';
 import DeleteProducts from './pages/ProductManagement/DeleteProducts';
+import AddReviews from './pages/CustomerRelationshipManagement/addReviews';
 
 function App() {
 
@@ -45,6 +46,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/user/membership" element={<PurchaseMembership />} />
+              <Route path="/user/addReviews" element={<AddReviews/>}/>
             </Route>
 
             <Route path="*" element={<NotFound />} />
