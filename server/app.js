@@ -4,6 +4,7 @@ import "dotenv/config";
 import userRouter from "./routes/User.route.js";
 import adminRouter from "./routes/Admin.route.js";
 import reviewRouter from "./routes/Review.route.js";
+import trainerRouter from "./routes/Trainer.route.js";
 
 const app = express();
 
@@ -17,5 +18,6 @@ app.get('/', (req, res) => {
 app.use('/user', userRouter);
 app.use('/admin', adminRouter);
 app.use('/review', reviewRouter);
+app.use('/Trainer',trainerRouter);
 
 export default app;
