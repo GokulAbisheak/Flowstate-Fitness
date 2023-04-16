@@ -16,6 +16,9 @@ import UserLayout from './pages/UserInterface/UserLayout'
 import SignUp from './pages/UserManagement/SignUp';
 import DisplayUsers from './pages/UserManagement/DisplayUsers';
 import PurchaseMembership from './pages/UserManagement/PurchaseMembership';
+import AddProducts from './pages/ProductManagement/AddProducts';
+import UpdateProducts from './pages/ProductManagement/UpdateProducts';
+import DeleteProducts from './pages/ProductManagement/DeleteProducts';
 
 function App() {
 
@@ -32,6 +35,9 @@ function App() {
               <Route path="/" element={<Navigate to="/admin/dashboard" />} />
               <Route path="/admin/dashboard" element={<GridPage />} />
               <Route path="/admin/users" element={<DisplayUsers />} />
+              <Route path="/admin/addProducts" element={<AddProducts/>}/> 
+              <Route path="/admin/updateProducts" element={<UpdateProducts/>}/>
+              <Route path="/admin/deleteProducts" element={<DeleteProducts/>}/>
               <Route path="/button" element={<Main />} />
             </Route>
 
