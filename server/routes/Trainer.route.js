@@ -3,11 +3,11 @@ import TrainerController from '../controllers/Trainer.controller.js';
 
 const trainerRouter = express.Router();
 
-trainerRouter.get('/', TrainerController.getAllTrainers);
-trainerRouter.get('/:email', TrainerController.getTrainerByEmail);
-trainerRouter.post('/', TrainerController.createTrainer);
-trainerRouter.patch('/:email', TrainerController.updateTrainerByEmail);
-trainerRouter.delete('/:email', TrainerController.deleteTrainerByEmail);
+trainerRouter.get('/get', TrainerController.getAllTrainers);
+trainerRouter.get('/get/:email', TrainerController.getTrainerByEmail);
+trainerRouter.post('/add', TrainerController.createTrainer);
+trainerRouter.patch('/update/:email', TrainerController.updateTrainerByEmail);
+trainerRouter.delete('/delete/:email', TrainerController.deleteTrainerByEmail);
 
 export default trainerRouter;
 
