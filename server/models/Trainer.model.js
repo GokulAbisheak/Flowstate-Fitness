@@ -14,14 +14,33 @@ const trainerSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        trim: true
+        trim: true,
+        validate: {
+            validator: function(v) {
+                return /^\S+@\S+\.\S+$/.test(v);
+            },
+            message: props => `${props.value} is not a valid email address!`
+        }
     },
+
     nic: {
         type: String,
         required: true,
         unique: true,
-        trim: true
-    },
+        trim: true,
+        validate: {
+          validator: function(v) {
+            if (v.length === 10) {
+              return /^[0-10]{9}[xXvV]$/.test(v);
+            } else if (v.length === 12) {
+              return /^[0-9]{12}$/.test(v);
+            } else {
+              return false;
+            }
+          },
+          message: props => `${props.value} is not a valid NIC number! Please enter a OLD NIC number with 9 digits and an 'X' or 'V' at the end, or New NIC with 12 digits and all digits between 0-9.`
+        }
+      },
     password: {
         type: String,
         required: true
