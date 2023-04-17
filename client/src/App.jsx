@@ -19,6 +19,7 @@ import PurchaseMembership from './pages/UserManagement/PurchaseMembership';
 import AddProducts from './pages/ProductManagement/AddProducts';
 import UpdateProducts from './pages/ProductManagement/UpdateProducts';
 import DeleteProducts from './pages/ProductManagement/DeleteProducts';
+import AddReviews from './pages/CustomerRelationshipManagement/addReviews';
 import Cart from './pages/ProductManagement/Cart';
 
 function App() {
