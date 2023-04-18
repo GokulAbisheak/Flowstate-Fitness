@@ -59,7 +59,7 @@ const PaymentController = {
             logger.info("Payment " + req.params.paymentID + " deleted successfully");
         } catch (error) {
             res.status(400).json({ message: error.message });
-            logger.info("Payment " + req.params.productID + " deleted successfully");
+            logger.info("Payment " + req.params.productID + " deleted unsuccessfully");
         }
     },
 };
