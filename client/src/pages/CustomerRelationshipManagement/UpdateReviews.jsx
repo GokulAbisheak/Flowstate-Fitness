@@ -1,60 +1,98 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, Grid, Link, TextField, InputAdornment, useTheme, Rating } from '@mui/material';
+import axios from "axios";
 
 const UpdateReviews = () => {
-    return (
 
-        <>
-            <Grid display="flex" justifyContent="center"><h1>Update Reviews</h1></Grid>
+    const [id, setID] = useState('');
+    const [comment, setComment] = useState('');
+    const [rating, setRating] = useState('');
 
-            <form>
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const newReview = {
 
-                <Grid
+            text: comment,
+            author: id,
+            rating: rating
 
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    container spacing={2}
-                    direction={"column"}
+        };
 
-                >
-                    <Grid item>
-                        <TextField
+        axios.patch(`http://localhost:8090/review/update/${id}`, newReview).then(() => {
+            alert('Updating Successful!')
+            window.location.href = '/review'
 
-                            label="User ID"
-                            type="text"
-                            margin="normal"
-                            sx={{ width: 300 }} />
+            setID('');
+            setComment('');
+            setRating('');
+
+
+        }).catch((err) => {
+            alert('Review updating failed! ' + err)
+        })}
+
+        return (
+
+            <>
+                <Grid display="flex" justifyContent="center"><h1>Update Reviews</h1></Grid>
+
+                <form onSubmit={handleSubmit}>
+
+                    <Grid
+
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        container spacing={2}
+                        direction={"column"}
+
+                    >
+                        <Grid item>
+                            <TextField
+
+                                label="User ID"
+                                type="text"
+                                margin="normal"
+                                sx={{ width: 300 }}
+                                onChange={(e) => {
+                                    setID(e.target.value)
+                                }} />
+                        </Grid>
+
+                        <Grid item>
+                            <TextField
+
+                                label="Comment"
+                                type="text"
+                                margin="normal"
+                                sx={{ width: 300 }}
+                                onChange={(e) => {
+                                    setComment(e.target.value)
+                                }} />
+                        </Grid>
+
+                        <Grid item>
+                            <Rating
+
+                                label="Rating"
+                                type="text"
+                                margin="normal"
+                                sx={{ width: 300 }}
+                                onChange={(e) => {
+                                    setRating(e.target.value)
+                                }} />
+                        </Grid>
+
+                        <Grid item>
+                            <Button variant="contained" margin="normal" color="primary" type="submit">Update</Button>
+                        </Grid>
+
                     </Grid>
 
-                    <Grid item>
-                        <TextField
+                </form>
 
-                            label="Comment"
-                            type="text"
-                            margin="normal"
-                            sx={{ width: 300 }} />
-                    </Grid>
+            </>
+        )
+    }
 
-                    <Grid item>
-                        <Rating
-
-                            label="Rating"
-                            type="text"
-                            margin="normal"
-                            sx={{ width: 300 }} />
-                    </Grid>
-
-                    <Grid item>
-                        <Button variant="contained" margin="normal" color="primary" type="submit">Update</Button>
-                    </Grid>
-
-                </Grid>
-
-            </form>
-            
-        </>
-    )
-}
-
-export default UpdateReviews;
+    export default UpdateReviews;

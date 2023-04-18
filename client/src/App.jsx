@@ -5,17 +5,18 @@ import { useSelector } from 'react-redux';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import globalTheme from './theme';
-import { setMode } from './state';
+// import { setMode } from './state';
 import AdminLayout from './pages/AdminInterface/AdminLayout';
 import GridPage from './pages/AdminInterface/GridPage';
 import Members from './pages/UserManagement/Members';
 import NotFound from './pages/NotFound';
 import Main from './pages/TrainerManagement/main'
-import Login from './pages/UserManagement/Login'
+import Login from './pages/UserManagement/Login';
 import UserLayout from './pages/UserInterface/UserLayout'
 import SignUp from './pages/UserManagement/SignUp';
 import DisplayUsers from './pages/UserManagement/DisplayUsers';
 import PurchaseMembership from './pages/UserManagement/PurchaseMembership';
+import DisplayMemberships from './pages/UserManagement/DisplayMembership';
 import AddProducts from './pages/ProductManagement/AddProducts';
 import UpdateProducts from './pages/ProductManagement/UpdateProducts';
 import DeleteProducts from './pages/ProductManagement/DeleteProducts';
@@ -45,6 +46,7 @@ function App() {
               <Route path="/admin/dashboard" element={<GridPage />} />
               <Route path="/admin/members" element={<DisplayUsers />} />
               <Route path="/admin/users" element={<DisplayUsers />} />
+              <Route path="/admin/membership" element={<DisplayMemberships />} />
               <Route path="/admin/addProducts" element={<AddProducts/>}/> 
               <Route path="/admin/updateProducts" element={<UpdateProducts/>}/>
               <Route path="/admin/deleteProducts" element={<DeleteProducts/>}/>
@@ -53,6 +55,8 @@ function App() {
               <Route path="/admin/addAttendance" element={<AddAttendance/>}/>
 
               <Route path="/button" element={<Main />} />
+              
+              
               
               
             </Route>
@@ -67,8 +71,8 @@ function App() {
               <Route path="/user/cart" element={<Cart/>} />
 
             </Route>
-
             <Route path="*" element={<NotFound />} />
+            <Route path="/members" element={ <Members /> } />
           </Routes>
         </ThemeProvider>
       </Router>

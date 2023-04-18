@@ -4,6 +4,7 @@ import "dotenv/config";
 import userRouter from "./routes/User.route.js";
 import adminRouter from "./routes/Admin.route.js";
 import reviewRouter from "./routes/Review.route.js";
+import membershipRouter from "./routes/Membership.route.js";
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
 
 app.use('/user', userRouter);
 app.use('/admin', adminRouter);
+app.use('/membership', membershipRouter);
 app.use('/review', reviewRouter);
 app.use('/product', productRouter);
 

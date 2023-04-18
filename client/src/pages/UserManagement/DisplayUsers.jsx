@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Button, IconButton, Input, TextField, useTheme } from '@mui/material';
+import { Alert, Box, Button, IconButton, Input, Snackbar, TextField, useTheme } from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,6 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import CancelIcon from '@mui/icons-material/Close';
 import '../../styles/index.css'
+import { useSelector } from 'react-redux';
 
 const DisplayUsers = () => {
 
@@ -20,9 +21,12 @@ const DisplayUsers = () => {
     const [phoneNumber, setPhoneNumber] = useState("");
     const [email, setEmail] = useState("");
     const [oldEmail, setOldEmail] = useState("");
+    const [open, setOpen] = useState(false);
 
     const theme = useTheme();
 
+    const loggedUser = useSelector((state) => state.user)
+    const token = useSelector((state) => state.token)
 
     useEffect(() => {
         const getAllUsers = () => {
@@ -94,16 +98,24 @@ const DisplayUsers = () => {
         }
 
         await axios.patch(`http://localhost:8090/user/update/${oldEmail}`, updateDetails).then(() => {
-            console.log(email)
-            alert('Update Success');
+            handleOpen();
             hideUpdateForm();
-            location.reload();
 
         }).catch((err) => {
             alert('Update Failed ' + err.message);
         })
 
     }
+
+    const handleOpen = () => {
+        setOpen(true);
+    }
+
+    const handleClose = () => {
+        setOpen(false);
+        location.reload();
+    }
+
 
     return (
         <>
@@ -200,6 +212,14 @@ const DisplayUsers = () => {
                 </Box>
             </Box>
 
+            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+            }}>
+                <Alert variant="filled" onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                    Update Success!
+                </Alert>
+            </Snackbar>
         </>
     );
 }
