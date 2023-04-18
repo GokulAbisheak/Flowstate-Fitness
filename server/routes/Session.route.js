@@ -8,5 +8,5 @@ sessionRouter.post('/add', SessionController.addSession);
 sessionRouter.patch('/update/:id', SessionController.updateSessionById);
 sessionRouter.delete('/delete/:id', SessionController.deleteSessionById);
 
-export default sessionRouter;
 
+  export default sessionRouter;
