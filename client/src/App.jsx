@@ -15,6 +15,7 @@ import Login from './pages/UserManagement/Login'
 import UserLayout from './pages/UserInterface/UserLayout'
 import SignUp from './pages/UserManagement/SignUp';
 import DisplayUsers from './pages/UserManagement/DisplayUsers';
+//import TrainerCalendar from './pages/PersonalTrainingManagement/TrainerCalendar';
 
 function App() {
 
