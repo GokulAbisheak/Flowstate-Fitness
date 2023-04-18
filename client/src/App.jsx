@@ -15,7 +15,7 @@ import Login from './pages/UserManagement/Login'
 import UserLayout from './pages/UserInterface/UserLayout'
 import SignUp from './pages/UserManagement/SignUp';
 import DisplayUsers from './pages/UserManagement/DisplayUsers';
-//import TrainerCalendar from './pages/PersonalTrainingManagement/TrainerCalendar';
+import TrainerCalendar from './pages/PersonalTrainingManagement/TrainerCalendar';
 
 function App() {
 
@@ -32,6 +32,7 @@ function App() {
               <Route path="/" element={<Navigate to="/admin/dashboard" />} />
               <Route path="/admin/dashboard" element={<GridPage />} />
               <Route path="/admin/members" element={<DisplayUsers />} />
+              <Route path="/admin/schedule" element={<TrainerCalendar/>}/>
               <Route path="/button" element={<Main />} />
             </Route>
 

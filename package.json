@@ -8,6 +8,10 @@
     },
     "dependencies": {
         "@date-io/date-fns": "^2.16.0",
+        "@fullcalendar/core": "^6.1.5",
+        "@fullcalendar/daygrid": "^6.1.5",
+        "@fullcalendar/interaction": "^6.1.5",
+        "@fullcalendar/react": "^6.1.5",
         "@material-ui/pickers": "^3.3.10",
         "react-google-recaptcha": "^2.1.0"
     }
