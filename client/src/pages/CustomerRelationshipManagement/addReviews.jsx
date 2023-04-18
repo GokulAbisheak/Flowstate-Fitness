@@ -4,7 +4,7 @@ import { TextField, Rating, Button, Grid } from '@mui/material';
 
 const ReviewForm = () => {
 
-  const [name, setName] = useState('');
+  const [id, setID] = useState('');
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState('');
 
@@ -15,7 +15,7 @@ const ReviewForm = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, comment, rating }),
+      body: JSON.stringify({ id, comment, rating }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -44,7 +44,7 @@ const ReviewForm = () => {
           <Grid item>
             <TextField
 
-              label="Username"
+              label="UserID"
               type="text"
               margin="normal"
               sx={{ width: 300 }} />
