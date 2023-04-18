@@ -53,12 +53,7 @@ function App() {
               <Route path="/admin/schedule" element={<TrainerCalendar/>}/>
               <Route path="/admin/attendance" element={<Attendance/>}/>
               <Route path="/admin/addAttendance" element={<AddAttendance/>}/>
-
               <Route path="/button" element={<Main />} />
-              
-              
-              
-              
             </Route>
 
             <Route element={<UserLayout />}>
