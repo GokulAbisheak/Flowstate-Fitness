@@ -38,6 +38,10 @@ const userSchema = new mongoose.Schema({
 
     weight: {
         type: Number
+    },
+
+    flowTokens: {
+        type: Number
     }
 });
 
