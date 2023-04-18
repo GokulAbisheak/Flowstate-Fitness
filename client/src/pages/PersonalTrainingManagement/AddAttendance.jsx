@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+//import { Alert, Box, Button, IconButton, Input, Snackbar, TextField, useTheme } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -36,7 +37,7 @@ function AddAttendance() {
 
         axios.post('http://localhost:8090/attendance/add',newAttendance).then(() => {
             alert('Adding Successful!')
-            window.location.href = '/product'
+            window.location.href = '/attendance'
 
             setName('');
             setDate('');
