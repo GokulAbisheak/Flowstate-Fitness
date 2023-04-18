@@ -19,5 +19,6 @@ app.use('/user', userRouter);
 app.use('/admin', adminRouter);
 app.use('/membership', membershipRouter);
 app.use('/review', reviewRouter);
+app.use('/product', productRouter);
 
 export default app;
