@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { TextField, Rating, Button, Grid } from '@mui/material';
-
+import { useSelector } from 'react-redux';
 
 const ReviewForm = () => {
 
-  const [id, setID] = useState('');
+  const loggedUser = useSelector((state) => state.user)
+
+  const [id, setID] = useState(loggedUser.email);
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState('');
 
@@ -66,8 +68,9 @@ const ReviewForm = () => {
 
               label="UserID"
               type="text"
+              value={id}
               margin="normal"
-              sx={{ width: 300 }} />
+              sx={{ width: 300, display: "none" }} />
           </Grid>
 
           <Grid item>

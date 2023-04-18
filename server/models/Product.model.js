@@ -19,7 +19,7 @@ const productSchema = new mongoose.Schema({
     },
 
     price: {
-        type: Double,
+        type: Number,
         required: true
     },
 
