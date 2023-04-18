@@ -10,7 +10,27 @@ const ReviewForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetch('/api/reviews', {
+    const newReview = {
+
+      text: comment,
+      author: id,
+      rating: rating
+
+  };
+
+  axios.post('http://localhost:8090/review/add', newProduct).then(() => {
+      alert('Adding Successful!')
+      window.location.href = '/review'
+
+      setID('');
+      setComment('');
+      setRating('');
+
+
+  }).catch((err) => {
+      alert('Review adding failed! ' + err)
+  })
+    /* fetch('/api/reviews', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -23,7 +43,7 @@ const ReviewForm = () => {
       })
       .catch((error) => {
         console.error('Error submitting review:', error);
-      });
+      }); */
   };
 
   return (
