@@ -1,5 +1,6 @@
 import express from 'express';
 import MembershipController from '../controllers/Membership.controller.js';
+import protect from '../middlewares/authMiddleware.js';
 
 const membershipRouter = express.Router();
 
