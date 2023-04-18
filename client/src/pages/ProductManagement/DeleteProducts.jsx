@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Box, Button, Grid, Link, TextField, InputAdornment, useTheme } from '@mui/material';
 import axios from 'axios';
 
@@ -8,11 +8,11 @@ const DeleteProducts = () => {
 
     const theme = useTheme();
 
-    const handleDelete = async event => {
+    const onSubmitDeleteProducts = async event => {
         event.preventDefault();
 
         try {
-            axios.patch('http://localhost:8090/product/delete/${productID}');
+            axios.delete(`http://localhost:8090/product/delete/${productID}`);
             alert('Deleting Successful!');
         } catch (err) {
             alert('Product deleting failed! ' + err)
@@ -25,7 +25,7 @@ const DeleteProducts = () => {
 
             <Grid display="flex" justifyContent="center"><h1>Delete Products Here</h1></Grid>
 
-            <form onSubmit={handleDelete}>
+            <form onSubmit={onSubmitDeleteProducts}>
 
                 <Grid
                     display="flex"
@@ -43,7 +43,7 @@ const DeleteProducts = () => {
                             label="Product ID"
                             type="text"
                             margin="normal"
-                            value={DPID}
+                            value={productID}
                             sx={{ width: 300 }}
                             onChange={(e) => {
                                 setPID(e.target.value)

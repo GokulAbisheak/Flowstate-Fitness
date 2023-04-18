@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import { Box, Button, Grid, Link, TextField, InputAdornment, useTheme } from '@mui/material';
+import axios from 'axios';
 
 
 const AddProducts = () => {
@@ -11,11 +12,29 @@ const AddProducts = () => {
     const [productDescription, setPDescription] = useState("");
     const [productMFGDate, setPMFGDate] = useState("");
     const [productEXPDate, setPEXPDate] = useState("");
+    const [image, setImage] = useState([]);
+    const [url, setURL] = useState([]);
 
     const theme = useTheme();
 
     const onSubmitAddProducts = (event) => {
         event.preventDefault();
+
+        const data = new FormData()
+        data.append("file", image)
+        data.append("upload_preset", "mernpro")
+        data.append("cloud_name", "dloxej4xv")
+        fetch("https://api.cloudinary.com/v1_1/dloxej4xv/image/upload", {
+            method:"POST",
+            body:data
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            setURL([...url, data.url])
+        })
+        .catch(err=>{
+            console.log(err)
+        })
 
         //Create new product object
         const newProduct = {
@@ -26,6 +45,7 @@ const AddProducts = () => {
             description: productDescription,
             mfgDate: productMFGDate,
             expDate: productEXPDate,
+            url: url
         };
 
         axios.post('http://localhost:8090/product/add', newProduct).then(() => {
@@ -39,6 +59,8 @@ const AddProducts = () => {
             setPDescription('');
             setPMFGDate('');
             setPEXPDate('');
+            setImage('');
+            setURL('');
 
         }).catch((err) => {
             alert('Product adding failed! ' + err)
@@ -47,7 +69,7 @@ const AddProducts = () => {
 
     return (
 
-        <form>
+        <form onSubmit={onSubmitAddProducts}>
 
             <Grid
 
@@ -67,7 +89,7 @@ const AddProducts = () => {
                         type="text"
                         margin="normal"
                         sx={{ width: 300 }}
-                        required="true"
+                        required={true}
                         onChange={(e) => {
                             setPID(e.target.value)
                         }}
@@ -84,7 +106,7 @@ const AddProducts = () => {
                         type="text"
                         margin="normal"
                         sx={{ width: 300 }}
-                        required="true"
+                        required={true}
                         onChange={(e) => {
                             setPName(e.target.value)
                         }}
@@ -101,7 +123,7 @@ const AddProducts = () => {
                         type="text"
                         margin="normal"
                         sx={{ width: 300 }}
-                        required="true"
+                        required={true}
                         onChange={(e) => {
                             setPCategory(e.target.value)
                         }}
@@ -117,9 +139,9 @@ const AddProducts = () => {
                         label="Product Price"
                         type="text"
                         margin="normal"
-                        startAdornment={<InputAdornment position="start">Rs.</InputAdornment>}
+                        startadornment={<InputAdornment position="start">Rs.</InputAdornment>}
                         sx={{ width: 300 }}
-                        required="true"
+                        required={true}
                         onChange={(e) => {
                             setPPrice(e.target.value)
                         }}
@@ -137,7 +159,7 @@ const AddProducts = () => {
                         margin="normal"
                         multiline
                         sx={{ width: 300 }}
-                        required="true"
+                        required={true}
                         onChange={(e) => {
                             setPDescription(e.target.value)
                         }}
@@ -150,12 +172,11 @@ const AddProducts = () => {
 
                         id="mfg-input"
                         name="productMFGDate"
-                        //label="MFG Date"
                         helperText="Please select manufactured date"
                         type="date"
                         margin="normal"
                         sx={{ width: 300 }}
-                        required="true"
+                        required={true}
                         onChange={(e) => {
                             setPMFGDate(e.target.value)
                         }}
@@ -168,12 +189,11 @@ const AddProducts = () => {
 
                         id="exp-input"
                         name="productEXPDate"
-                        //label="EXP Date"
                         helperText="Please select expiration date"
                         type="date"
                         margin="normal"
                         sx={{ width: 300 }}
-                        required="true"
+                        required={true}
                         onChange={(e) => {
                             setPEXPDate(e.target.value)
                         }}
@@ -193,10 +213,10 @@ const AddProducts = () => {
                                 </InputAdornment>
                             ),
                         }}
-                        //onChange={handleImageChange}
+                        onChange={(e) => setImage(e.target.files[0])}
                         inputProps={{ multiple: true }}
                         margin="normal"
-                        required="true"
+                        required={true}
                     />
                 </Grid>
 
