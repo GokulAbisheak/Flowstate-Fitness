@@ -5,6 +5,7 @@ import userRouter from "./routes/User.route.js";
 import adminRouter from "./routes/Admin.route.js";
 import reviewRouter from "./routes/Review.route.js";
 import membershipRouter from "./routes/Membership.route.js";
+import productRouter from "./routes/Product.route.js"
 
 const app = express();
 
