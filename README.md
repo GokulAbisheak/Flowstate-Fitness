@@ -9,7 +9,7 @@ Please go under edit and edit this file as needed for your project
 ### Member 4 - IT21368066 -  Quais N.M (QuaisNM)
 ### Member 5 - IT21358920 - R. A. H. B. Ranasinghe (HasinduRanasinghe)
 ### Member 6 - IT21222122 - B. D. Gunawardena (BinuriGunawardena)
-### Member 7 - 
+### Member 7 - IT21292118 - Amarasinghe R.A.D.T. (DidulaTharuka4)
 ### Member 8 - 
 
 #### Brief Description of Project

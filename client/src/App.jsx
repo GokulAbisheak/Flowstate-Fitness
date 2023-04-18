@@ -15,7 +15,16 @@ import Login from './pages/UserManagement/Login'
 import UserLayout from './pages/UserInterface/UserLayout'
 import SignUp from './pages/UserManagement/SignUp';
 import DisplayUsers from './pages/UserManagement/DisplayUsers';
+<<<<<<< HEAD
 import TrainerCalendar from './pages/PersonalTrainingManagement/TrainerCalendar';
+=======
+import PurchaseMembership from './pages/UserManagement/PurchaseMembership';
+import AddProducts from './pages/ProductManagement/AddProducts';
+import UpdateProducts from './pages/ProductManagement/UpdateProducts';
+import DeleteProducts from './pages/ProductManagement/DeleteProducts';
+import AddReviews from './pages/CustomerRelationshipManagement/addReviews';
+import Cart from './pages/ProductManagement/Cart';
+>>>>>>> 28cb62e3fab1beb7553fec130a7ebf6020560df9
 
 function App() {
 
@@ -31,14 +40,23 @@ function App() {
             <Route element={<AdminLayout />}>
               <Route path="/" element={<Navigate to="/admin/dashboard" />} />
               <Route path="/admin/dashboard" element={<GridPage />} />
+<<<<<<< HEAD
               <Route path="/admin/members" element={<DisplayUsers />} />
               <Route path="/admin/schedule" element={<TrainerCalendar/>}/>
+=======
+              <Route path="/admin/users" element={<DisplayUsers />} />
+              <Route path="/admin/addProducts" element={<AddProducts/>}/> 
+              <Route path="/admin/updateProducts" element={<UpdateProducts/>}/>
+              <Route path="/admin/deleteProducts" element={<DeleteProducts/>}/>
+>>>>>>> 28cb62e3fab1beb7553fec130a7ebf6020560df9
               <Route path="/button" element={<Main />} />
             </Route>
 
             <Route element={<UserLayout />}>
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignUp />} />
+              <Route path="/user/membership" element={<PurchaseMembership />} />
+              <Route path="/user/cart" element={<Cart/>} />
             </Route>
 
             <Route path="*" element={<NotFound />} />
