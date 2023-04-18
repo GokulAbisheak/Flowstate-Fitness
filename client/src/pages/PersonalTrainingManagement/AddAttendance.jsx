@@ -26,9 +26,22 @@ function AddAttendance() {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        axios.post('http://localhost:8090/attendance/add', {
-            date,
-            present,
+        //Create new attendance
+        const newAttendance = {
+            name: name,
+            date: date,
+            present: present,
+            absent: absent
+        };
+
+        axios.post('http://localhost:8090/attendance/add',newAttendance).then(() => {
+            alert('Adding Successful!')
+            window.location.href = '/product'
+
+            setName('');
+            setDate('');
+            setPresent('');
+            setAbsent('');
         })
             .then((response) => {
                 console.log(response.data);
