@@ -23,8 +23,8 @@ const AttendanceController = {
         try {
             const attendance = await Attendance.findOne({name : req.params.name});
             if (!attendance) {
-                logger.error("Product " + req.params.name + " not found");
-                return res.status(404).json({ message: 'Product not found' });
+                logger.error("Attendance " + req.params.name + " not found");
+                return res.status(404).json({ message: 'Name not found' });
             }
             res.status(200).json(attendance);
         } catch (error) {
@@ -36,13 +36,13 @@ const AttendanceController = {
     //Create Attendance
     createAttendance: async (req, res) => {
         try {
-            const product = new Attendance(req.body);
-            await product.save();
+            const attendance = new Attendance(req.body);
+            await attendance.save();
             res.status(201).json(attendance);
-            logger.info("Product create successful");
+            logger.info("Attendance create successful");
         } catch (error) {
             res.status(400).json({ message: error.message });
-            logger.error("Product create failed");
+            logger.error("Attendance create failed");
         }
     }
     // // Add attendance record
