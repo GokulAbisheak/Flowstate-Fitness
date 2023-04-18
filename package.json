@@ -12,8 +12,11 @@
         "@fullcalendar/daygrid": "^6.1.5",
         "@fullcalendar/interaction": "^6.1.5",
         "@fullcalendar/react": "^6.1.5",
+        "@fullcalendar/timegrid": "^6.1.5",
         "@material-ui/pickers": "^3.3.10",
         "cloudinary": "^1.36.1",
+        "install": "^0.13.0",
+        "npm": "^9.6.4",
         "react-google-recaptcha": "^2.1.0"
     }
 }
