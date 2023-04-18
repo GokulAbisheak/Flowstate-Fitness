@@ -22,6 +22,7 @@ import DeleteProducts from './pages/ProductManagement/DeleteProducts';
 import AddReviews from './pages/CustomerRelationshipManagement/addReviews';
 import Cart from './pages/ProductManagement/Cart';
 import TrainerCalendar from './pages/PersonalTrainingManagement/TrainerCalendar';
+import Attendance from './pages/PersonalTrainingManagement/Attendance';
 
 
 function App() {
@@ -38,15 +39,13 @@ function App() {
             <Route element={<AdminLayout />}>
               <Route path="/" element={<Navigate to="/admin/dashboard" />} />
               <Route path="/admin/dashboard" element={<GridPage />} />
- 
               <Route path="/admin/members" element={<DisplayUsers />} />
-              
-
               <Route path="/admin/users" element={<DisplayUsers />} />
               <Route path="/admin/addProducts" element={<AddProducts/>}/> 
               <Route path="/admin/updateProducts" element={<UpdateProducts/>}/>
               <Route path="/admin/deleteProducts" element={<DeleteProducts/>}/>
               <Route path="/admin/schedule" element={<TrainerCalendar/>}/>
+              <Route path="/admin/attendance" element={<Attendance/>}/>
 
               <Route path="/button" element={<Main />} />
             </Route>
