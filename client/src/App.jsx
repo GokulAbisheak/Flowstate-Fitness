@@ -65,10 +65,7 @@ function App() {
               <Route path="/user/updateReviews" element={<UpdateReviews/>}/>
               <Route path="/user/deleteReviews" element={<DeleteReviews/>}/>
               <Route path="/user/cart" element={<Cart/>} />
-<<<<<<< HEAD
-=======
 
->>>>>>> db1f6b68e6d9cc7d3440464d3b172467afaf9d46
             </Route>
 
             <Route path="*" element={<NotFound />} />
