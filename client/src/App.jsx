@@ -20,6 +20,8 @@ import AddProducts from './pages/ProductManagement/AddProducts';
 import UpdateProducts from './pages/ProductManagement/UpdateProducts';
 import DeleteProducts from './pages/ProductManagement/DeleteProducts';
 import AddReviews from './pages/CustomerRelationshipManagement/addReviews';
+import UpdateReviews from './pages/CustomerRelationshipManagement/UpdateReviews';
+import DeleteReviews from './pages/CustomerRelationshipManagement/deleteReviews';
 
 function App() {
 
@@ -40,6 +42,8 @@ function App() {
               <Route path="/admin/updateProducts" element={<UpdateProducts/>}/>
               <Route path="/admin/deleteProducts" element={<DeleteProducts/>}/>
               <Route path="/button" element={<Main />} />
+              
+              
             </Route>
 
             <Route element={<UserLayout />}>
@@ -47,6 +51,8 @@ function App() {
               <Route path="/signup" element={<SignUp />} />
               <Route path="/user/membership" element={<PurchaseMembership />} />
               <Route path="/user/addReviews" element={<AddReviews/>}/>
+              <Route path="/user/updateReviews" element={<UpdateReviews/>}/>
+              <Route path="/user/deleteReviews" element={<DeleteReviews/>}/>
             </Route>
 
             <Route path="*" element={<NotFound />} />
