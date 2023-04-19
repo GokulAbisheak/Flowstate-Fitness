@@ -28,6 +28,7 @@ import TrainerCalendar from './pages/PersonalTrainingManagement/TrainerCalendar'
 import Attendance from './pages/PersonalTrainingManagement/Attendance';
 import AddAttendance from './pages/PersonalTrainingManagement/AddAttendance';
 import ProductScreen from './pages/ProductManagement/ProductScreen';
+import ProductHandle from './pages/ProductManagement/ProductHandle';
 
 
 
@@ -48,6 +49,7 @@ function App() {
               <Route path="/admin/members" element={<DisplayUsers />} />
               <Route path="/admin/users" element={<DisplayUsers />} />
               <Route path="/admin/membership" element={<DisplayMemberships />} />
+              <Route path="/admin/products" element={<ProductHandle/>}/>
               <Route path="/admin/addProducts" element={<AddProducts/>}/> 
               <Route path="/admin/updateProducts" element={<UpdateProducts/>}/>
               <Route path="/admin/deleteProducts" element={<DeleteProducts/>}/>
