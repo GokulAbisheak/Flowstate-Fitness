@@ -27,9 +27,14 @@ import Cart from './pages/ProductManagement/Cart';
 import TrainerCalendar from './pages/PersonalTrainingManagement/TrainerCalendar';
 import Attendance from './pages/PersonalTrainingManagement/Attendance';
 import AddAttendance from './pages/PersonalTrainingManagement/AddAttendance';
+<<<<<<< HEAD
+import ProductScreen from './pages/ProductManagement/ProductScreen';
+import ProductHandle from './pages/ProductManagement/ProductHandle';
+=======
 
 //import LiveChat from'./pages/CustomerRelationshipManagement/LiveChat';
 
+>>>>>>> 17c54851a047743740ae549b7621e6a6c505637e
 
 
 
@@ -50,6 +55,7 @@ function App() {
               <Route path="/admin/members" element={<DisplayUsers />} />
               <Route path="/admin/users" element={<DisplayUsers />} />
               <Route path="/admin/membership" element={<DisplayMemberships />} />
+              <Route path="/admin/products" element={<ProductHandle/>}/>
               <Route path="/admin/addProducts" element={<AddProducts/>}/> 
               <Route path="/admin/updateProducts" element={<UpdateProducts/>}/>
               <Route path="/admin/deleteProducts" element={<DeleteProducts/>}/>
