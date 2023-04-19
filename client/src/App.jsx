@@ -32,6 +32,7 @@ import AddAttendance from './pages/PersonalTrainingManagement/AddAttendance';
 import ProductScreen from './pages/ProductManagement/ProductScreen';
 import ProductHandle from './pages/ProductManagement/ProductHandle';
 
+
 //import LiveChat from'./pages/CustomerRelationshipManagement/LiveChat';
 
 import ScanMembership from './pages/UserManagement/ScanMembership';
@@ -150,10 +151,10 @@ function App() {
               </Grid>
               </Content>
             </Layout>
-          </Stack> */}
+  </Stack> */}
 
     </div>
-    
+
   );
 }
 
