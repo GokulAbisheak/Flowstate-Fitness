@@ -1,50 +1,47 @@
 import mongoose from 'mongoose';
 
-const productSchema = new mongoose.Schema({
+const financeSchema = new mongoose.Schema({
 
-    productID: {
+    salaryID: {
         type: String,
         required: true,
         unique: true
     },
-
-    productName: {
+    firstName: {
         type: String,
         required: true
     },
 
-    productCategory: {
+    lastName: {
         type: String,
         required: true
     },
 
-    price: {
+    department: {
+        type: String,
+        required: true
+    },
+
+
+    lastUpdated: {
+        type: Date,
+        required: true
+    },
+
+    salary: {
         type: Number,
         required: true
     },
 
-    description: {
+    frequency: {
         type: String,
         required: true
     },
 
-    mfgDate: {
-        type: Date,
-        required: true
-    },
-
-    expDate: {
-        type: Date,
-        required: true
-    },
-
-    url: {
-        type: String,
-        required: true 
-    }
-
+   
 });
 
-const Product = mongoose.model('Product', productSchema);
+const Finance = mongoose.model('Finance', financeSchema);
 
-export default Product;
+export default Finance;
+

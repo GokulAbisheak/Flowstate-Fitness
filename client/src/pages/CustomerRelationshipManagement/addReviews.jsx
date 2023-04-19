@@ -1,21 +1,43 @@
 import React, { useState } from 'react';
 import { TextField, Rating, Button, Grid } from '@mui/material';
-
+import { useSelector } from 'react-redux';
 
 const ReviewForm = () => {
 
-  const [name, setName] = useState('');
+  const loggedUser = useSelector((state) => state.user)
+
+  const [id, setID] = useState(loggedUser.email);
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetch('/api/reviews', {
+    const newReview = {
+
+      text: comment,
+      author: id,
+      rating: rating
+
+  };
+
+  axios.post('http://localhost:8090/review/add', newProduct).then(() => {
+      alert('Adding Successful!')
+      window.location.href = '/review'
+
+      setID('');
+      setComment('');
+      setRating('');
+
+
+  }).catch((err) => {
+      alert('Review adding failed! ' + err)
+  })
+    /* fetch('/api/reviews', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, comment, rating }),
+      body: JSON.stringify({ id, comment, rating }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -23,7 +45,7 @@ const ReviewForm = () => {
       })
       .catch((error) => {
         console.error('Error submitting review:', error);
-      });
+      }); */
   };
 
   return (
@@ -44,10 +66,11 @@ const ReviewForm = () => {
           <Grid item>
             <TextField
 
-              label="Username"
+              label="UserID"
               type="text"
+              value={id}
               margin="normal"
-              sx={{ width: 300 }} />
+              sx={{ width: 300, display: "none" }} />
           </Grid>
 
           <Grid item>

@@ -5,24 +5,38 @@ import { useSelector } from 'react-redux';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import globalTheme from './theme';
-import { setMode } from './state';
+// import { setMode } from './state';
 import AdminLayout from './pages/AdminInterface/AdminLayout';
 import GridPage from './pages/AdminInterface/GridPage';
 import Members from './pages/UserManagement/Members';
 import NotFound from './pages/NotFound';
 import Main from './pages/TrainerManagement/main'
-import Login from './pages/UserManagement/Login'
+import Login from './pages/UserManagement/Login';
 import UserLayout from './pages/UserInterface/UserLayout'
 import SignUp from './pages/UserManagement/SignUp';
 import DisplayUsers from './pages/UserManagement/DisplayUsers';
 import PurchaseMembership from './pages/UserManagement/PurchaseMembership';
+import DisplayMemberships from './pages/UserManagement/DisplayMembership';
 import AddProducts from './pages/ProductManagement/AddProducts';
 import UpdateProducts from './pages/ProductManagement/UpdateProducts';
 import DeleteProducts from './pages/ProductManagement/DeleteProducts';
 import AddReviews from './pages/CustomerRelationshipManagement/addReviews';
+import UpdateReviews from './pages/CustomerRelationshipManagement/UpdateReviews';
+import DeleteReviews from './pages/CustomerRelationshipManagement/deleteReviews';
 import Cart from './pages/ProductManagement/Cart';
 import MainPayment from './pages/PaymentManagement/MainPayment';
 import AdminPayment from './pages/PaymentManagement/AdminPayment';
+import TrainerCalendar from './pages/PersonalTrainingManagement/TrainerCalendar';
+import Attendance from './pages/PersonalTrainingManagement/Attendance';
+import AddAttendance from './pages/PersonalTrainingManagement/AddAttendance';
+import ProductScreen from './pages/ProductManagement/ProductScreen';
+import ProductHandle from './pages/ProductManagement/ProductHandle';
+
+//import LiveChat from'./pages/CustomerRelationshipManagement/LiveChat';
+
+import ScanMembership from './pages/UserManagement/ScanMembership';
+import Profile from './pages/UserManagement/Profile';
+
 
 function App() {
 
@@ -38,13 +52,23 @@ function App() {
             <Route element={<AdminLayout />}>
               <Route path="/" element={<Navigate to="/admin/dashboard" />} />
               <Route path="/admin/dashboard" element={<GridPage />} />
+              <Route path="/admin/members" element={<DisplayUsers />} />
               <Route path="/admin/users" element={<DisplayUsers />} />
+              <Route path="/admin/membership" element={<DisplayMemberships />} />
+              <Route path="/admin/products" element={<ProductHandle/>}/>
               <Route path="/admin/addProducts" element={<AddProducts/>}/> 
               <Route path="/admin/updateProducts" element={<UpdateProducts/>}/>
               <Route path="/admin/deleteProducts" element={<DeleteProducts/>}/>
               {/* <Route path="/admin/mainpayment" element={<MainPayment/>}/> */}
               {/* <Route path="/admin/adminpayment" element={<AdminPayment/>}/> */}
               
+              <Route path="/admin/schedule" element={<TrainerCalendar/>}/>
+              <Route path="/admin/attendance" element={<Attendance/>}/>
+              <Route path="/admin/addAttendance" element={<AddAttendance/>}/>
+              <Route path="/admin/scan" element={<ScanMembership />}/>
+
+              {/* <Route path="/admin/LiveChat" element={<LiveChat/>}/> */}
+
               <Route path="/button" element={<Main />} />
             </Route>
 
@@ -52,6 +76,10 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/user/membership" element={<PurchaseMembership />} />
+              <Route path="/user/addReviews" element={<AddReviews/>}/>
+              <Route path="/user/updateReviews" element={<UpdateReviews/>}/>
+              <Route path="/user/deleteReviews" element={<DeleteReviews/>}/>
+              <Route path="/user/productScreen" element={<ProductScreen/>}/>
               <Route path="/user/cart" element={<Cart/>} />
               <Route path="/user/adminpayment" element={<AdminPayment/>} />
               <Route path="/user/mnpayment" element={<MainPayment/>} />
@@ -59,7 +87,11 @@ function App() {
 
             
 
+              <Route path="/user/profile" element={<Profile />} />
+
+            </Route>
             <Route path="*" element={<NotFound />} />
+            <Route path="/members" element={ <Members /> } />
           </Routes>
         </ThemeProvider>
       </Router>
@@ -119,7 +151,9 @@ function App() {
               </Content>
             </Layout>
           </Stack> */}
+
     </div>
+    
   );
 }
 

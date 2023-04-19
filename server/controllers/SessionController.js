@@ -2,6 +2,7 @@ import Session from '../models/Session.model.js';
 
 const SessionController = {
 
+
 //Add a session 
 addSession: (req, res) => {
     const title = req.body.title;
@@ -15,7 +16,6 @@ addSession: (req, res) => {
         date,
         time,
         description,
-        addedBy
     });
 
     newSession.save()
@@ -54,7 +54,36 @@ deleteSessionById: (req, res) => {
     .catch(err => res.status(400).json('Error:' +err));
 },
 
-
 }
 
 export default SessionController;
+
+// app.post('/events', async (req, res) => {
+//     const { title, start, end, description } = req.body;
+//     const event = new Event({ title, start, end, description });
+//     await event.save();
+//     res.json(event);
+//   });
+  
+//   app.get('/events', async (req, res) => {
+//     const events = await Event.find();
+//     res.json(events);
+//   });
+  
+//   app.put('/events/:id', async (req, res) => {
+//     const { id } = req.params;
+//     const { title, start, end, description } = req.body;
+//     const event = await Event.findById(id);
+//     event.title = title;
+//     event.start = start;
+//     event.end = end;
+//     event.description = description;
+//     await event.save();
+//     res.json(event);
+//   });
+  
+//   app.delete('/events/:id', async (req, res) => {
+//     const { id } = req.params;
+//     await Event.findByIdAndDelete(id);
+//     res.json({ message: 'Event deleted' });
+//   });

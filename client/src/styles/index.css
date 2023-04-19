@@ -125,4 +125,27 @@ body::-webkit-scrollbar-thumb {
 
 #update-box {
     display: none;
+    position: fixed;
+}
+
+#purchase-box {
+    display: none;
+}
+
+.scanner {
+    box-shadow: 0 0 10px #000000;
+    background: linear-gradient(to left, #07a7af, #01519a);
+    max-width: 400px;
+    width: 400px;
+    margin: 0px auto;
+    border-radius: 5px;
+}
+
+.scanner-display {
+    box-shadow: 0 0 10px #000000;
+    max-width: 80%;
+    margin: 0px auto;
+    border-radius: 5px;
+    height: 480px;
+    padding: 20px;
 }

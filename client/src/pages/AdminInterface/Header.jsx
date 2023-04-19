@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTheme, IconButton, Typography, Avatar } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { setMode } from '../../state';
+import { setMode } from '../../state/';
 import { NightsStay, LightMode, Menu } from '@mui/icons-material';
 import FlexBetween from '../../components/FlexBetween';
 import { Link } from 'react-router-dom';
