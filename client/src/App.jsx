@@ -27,14 +27,11 @@ import Cart from './pages/ProductManagement/Cart';
 import TrainerCalendar from './pages/PersonalTrainingManagement/TrainerCalendar';
 import Attendance from './pages/PersonalTrainingManagement/Attendance';
 import AddAttendance from './pages/PersonalTrainingManagement/AddAttendance';
-<<<<<<< HEAD
 import ProductScreen from './pages/ProductManagement/ProductScreen';
 import ProductHandle from './pages/ProductManagement/ProductHandle';
-=======
 
 import LiveChat from'./pages/CustomerRelationshipManagement/LiveChat';
 
->>>>>>> 17c54851a047743740ae549b7621e6a6c505637e
 
 
 
