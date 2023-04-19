@@ -8,23 +8,28 @@ import axios from 'axios';
 const Calendar = () => {
 
   const [events, setEvents] = useState([]);
+  // const [title, setTitle] = useState("");
+  // const [start, setStartDate] = useState("");
+  // const [end, setEndDate] = useState("");
+  // const [description, setDescription] = useState("");
 
   const handleDateSelect = (selectInfo) => {
-    const title = prompt('Enter event title:');
-    const description = prompt('Enter event description:');
+    const title = prompt('Enter session title:');
+    const description = prompt('Enter session description:');
     if (title) {
-      const eventData = {
+      const sessionData = {
         title,
         start: selectInfo.startStr,
         end: selectInfo.endStr,
         description,
       };
-      axios.post('/api/events', eventData)
+      axios.post('http://localhost:8090/session/add', sessionData)
         .then(res => {
           setEvents([...events, res.data]);
         })
         .catch(err => {
           console.error(err);
+          alert('Unable to add session' + err);
         });
     }
   };
@@ -38,7 +43,7 @@ const Calendar = () => {
         title,
         description,
       };
-      axios.put(`/api/events/${eventInfo.event.id}`, eventData)
+      axios.put(`http://localhost:8090/session/update/${eventInfo.event.id}`, eventData)
         .then(res => {
           setEvents(events.map(event => (event.id === res.data.id ? res.data : event)));
         })
@@ -49,7 +54,7 @@ const Calendar = () => {
   };
 
   const handleEventRemove = (eventInfo) => {
-    axios.delete(`/api/events/${eventInfo.event.id}`)
+    axios.delete(`http://localhost:8090/session/delete/${sessionInfo.session.id}`)
       .then(() => {
         setEvents(events.filter(event => event.id !== eventInfo.event.id));
       })
@@ -59,7 +64,7 @@ const Calendar = () => {
   };
 
   const handleEventsFetch = (fetchInfo, successCallback) => {
-    axios.get('/api/events')
+    axios.get(`http://localhost:8090/session/${sessionInfo.session.id})`)
       .then(res => {
         successCallback(res.data);
       })
