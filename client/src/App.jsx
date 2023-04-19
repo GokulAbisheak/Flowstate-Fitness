@@ -28,7 +28,7 @@ import TrainerCalendar from './pages/PersonalTrainingManagement/TrainerCalendar'
 import Attendance from './pages/PersonalTrainingManagement/Attendance';
 import AddAttendance from './pages/PersonalTrainingManagement/AddAttendance';
 
-import LiveChat from'./pages/CustomerRelationshipManagement/LiveChat';
+//import LiveChat from'./pages/CustomerRelationshipManagement/LiveChat';
 
 
 
@@ -57,7 +57,7 @@ function App() {
               <Route path="/admin/attendance" element={<Attendance/>}/>
               <Route path="/admin/addAttendance" element={<AddAttendance/>}/>
 
-              <Route path="/admin/LiveChat" element={<LiveChat/>}/>
+              {/* <Route path="/admin/LiveChat" element={<LiveChat/>}/> */}
 
               <Route path="/button" element={<Main />} />
             </Route>
