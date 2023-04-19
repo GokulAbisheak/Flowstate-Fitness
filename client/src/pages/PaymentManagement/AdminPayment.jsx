@@ -74,7 +74,9 @@ const AdminPayment = () => {
   
   return (
     
-   <form></form>
+   <form>
+    <h1>hello</h1>
+   </form>
   )
 
 }
