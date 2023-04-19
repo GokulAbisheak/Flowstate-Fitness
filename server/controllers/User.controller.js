@@ -17,7 +17,7 @@ const UserController = {
     //Get all users
     getAllUsers: async (req, res) => {
         try {
-            const users = await User.find();
+            const users = await User.find({ type: 'user' });
             res.status(200).json(users);
         } catch (error) {
             res.status(500).json({ message: error.message });
@@ -45,7 +45,7 @@ const UserController = {
         try {
 
             logger.info(req.body)
-            const { firstName, lastName, email, password, dateOfBirth, phoneNumber } = req.body;
+            const { firstName, lastName, email, password, dateOfBirth, phoneNumber, type } = req.body;
 
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(password, salt);
@@ -57,7 +57,8 @@ const UserController = {
                 password: hashedPassword,
                 dateOfBirth,
                 phoneNumber,
-                flowTokens: 0
+                flowTokens: 0,
+                type
             });
             await user.save();
             res.status(201).json(user);
