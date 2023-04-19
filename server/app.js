@@ -4,6 +4,7 @@ import "dotenv/config";
 import userRouter from "./routes/User.route.js";
 import adminRouter from "./routes/Admin.route.js";
 import reviewRouter from "./routes/Review.route.js";
+//import paymentRouter from "./routes/Payment.route.js";
 import paymentRouter from "./routes/Payment.route.js";
 import productRouter from "./routes/Product.route.js";
 

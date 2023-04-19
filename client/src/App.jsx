@@ -21,6 +21,8 @@ import UpdateProducts from './pages/ProductManagement/UpdateProducts';
 import DeleteProducts from './pages/ProductManagement/DeleteProducts';
 import AddReviews from './pages/CustomerRelationshipManagement/addReviews';
 import Cart from './pages/ProductManagement/Cart';
+import MainPayment from './pages/PaymentManagement/MainPayment';
+import AdminPayment from './pages/PaymentManagement/AdminPayment';
 
 function App() {
 
@@ -40,6 +42,9 @@ function App() {
               <Route path="/admin/addProducts" element={<AddProducts/>}/> 
               <Route path="/admin/updateProducts" element={<UpdateProducts/>}/>
               <Route path="/admin/deleteProducts" element={<DeleteProducts/>}/>
+              {/* <Route path="/admin/mainpayment" element={<MainPayment/>}/> */}
+              {/* <Route path="/admin/adminpayment" element={<AdminPayment/>}/> */}
+              
               <Route path="/button" element={<Main />} />
             </Route>
 
@@ -48,7 +53,11 @@ function App() {
               <Route path="/signup" element={<SignUp />} />
               <Route path="/user/membership" element={<PurchaseMembership />} />
               <Route path="/user/cart" element={<Cart/>} />
+              <Route path="/user/adminpayment" element={<AdminPayment/>} />
+              <Route path="/user/mnpayment" element={<MainPayment/>} />
             </Route>
+
+            
 
             <Route path="*" element={<NotFound />} />
           </Routes>
