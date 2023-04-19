@@ -30,7 +30,7 @@ import AddAttendance from './pages/PersonalTrainingManagement/AddAttendance';
 import ProductScreen from './pages/ProductManagement/ProductScreen';
 import ProductHandle from './pages/ProductManagement/ProductHandle';
 
-import LiveChat from'./pages/CustomerRelationshipManagement/LiveChat';
+//import LiveChat from'./pages/CustomerRelationshipManagement/LiveChat';
 
 
 
@@ -60,7 +60,7 @@ function App() {
               <Route path="/admin/attendance" element={<Attendance/>}/>
               <Route path="/admin/addAttendance" element={<AddAttendance/>}/>
 
-              <Route path="/admin/LiveChat" element={<LiveChat/>}/>
+              {/* <Route path="/admin/LiveChat" element={<LiveChat/>}/> */}
 
               <Route path="/button" element={<Main />} />
             </Route>
