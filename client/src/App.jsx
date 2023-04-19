@@ -27,6 +27,7 @@ import Cart from './pages/ProductManagement/Cart';
 import TrainerCalendar from './pages/PersonalTrainingManagement/TrainerCalendar';
 import Attendance from './pages/PersonalTrainingManagement/Attendance';
 import AddAttendance from './pages/PersonalTrainingManagement/AddAttendance';
+import ProductScreen from './pages/ProductManagement/ProductScreen';
 
 
 
@@ -63,6 +64,7 @@ function App() {
               <Route path="/user/addReviews" element={<AddReviews/>}/>
               <Route path="/user/updateReviews" element={<UpdateReviews/>}/>
               <Route path="/user/deleteReviews" element={<DeleteReviews/>}/>
+              <Route path="/user/productScreen" element={<ProductScreen/>}/>
               <Route path="/user/cart" element={<Cart/>} />
 
             </Route>

@@ -32,7 +32,22 @@ const ProductController = {
     //Create a new product
     createProduct: async (req, res) => {
         try {
-            const product = new Product(req.body);
+
+            logger.info(req.body)
+            const { productID, productName, productCategory, price, description, mfgDate, expDate, url } = req.body;
+
+            const product = new Product({
+
+                productID, 
+                productName, 
+                productCategory, 
+                price, 
+                description, 
+                mfgDate, 
+                expDate, 
+                url,
+
+            });
             await product.save();
             res.status(201).json(product);
             logger.info("Product create successful");
