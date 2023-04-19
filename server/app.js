@@ -7,6 +7,7 @@ import reviewRouter from "./routes/Review.route.js";
 import membershipRouter from "./routes/Membership.route.js";
 import productRouter from "./routes/Product.route.js";
 import financeRouter from "./routes/Finance.route.js"
+import uploadImage from "./uploadImage.js";
 
 const app = express();
 
@@ -23,5 +24,14 @@ app.use('/membership', membershipRouter);
 app.use('/review', reviewRouter);
 app.use('/product', productRouter);
 app.use('/finance',financeRouter);
+
+
+app.post("/uploadImage", (req, res) => {
+    uploadImage(req.body.image).then((url) => {
+        res.send(url)
+    }).catch((err) => {
+        res.status(500).send(err)
+    })
+})
 
 export default app;

@@ -32,7 +32,8 @@ import ProductHandle from './pages/ProductManagement/ProductHandle';
 
 //import LiveChat from'./pages/CustomerRelationshipManagement/LiveChat';
 
-
+import ScanMembership from './pages/UserManagement/ScanMembership';
+import Profile from './pages/UserManagement/Profile';
 
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
               <Route path="/admin/schedule" element={<TrainerCalendar/>}/>
               <Route path="/admin/attendance" element={<Attendance/>}/>
               <Route path="/admin/addAttendance" element={<AddAttendance/>}/>
+              <Route path="/admin/scan" element={<ScanMembership />}/>
 
               {/* <Route path="/admin/LiveChat" element={<LiveChat/>}/> */}
 
@@ -74,6 +76,7 @@ function App() {
               <Route path="/user/deleteReviews" element={<DeleteReviews/>}/>
               <Route path="/user/productScreen" element={<ProductScreen/>}/>
               <Route path="/user/cart" element={<Cart/>} />
+              <Route path="/user/profile" element={<Profile />} />
 
             </Route>
             <Route path="*" element={<NotFound />} />
