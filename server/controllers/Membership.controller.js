@@ -29,6 +29,21 @@ const MembershipController = {
         }
     },
 
+    //Get membership by email
+    getMembershipByEmail: async (req, res) => {
+        try {
+            const membership = await Membership.findOne({ email: req.params.email });
+            if (!membership) {
+                logger.error("Membership " + req.params.email + " not found");
+                return res.status(404).json({ message: 'Membership not found' });
+            }
+            res.status(200).json(membership);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+            logger.error("Error getting membership " + req.params.email);
+        }
+    },
+
     //Create a new membership
     createMembership: async (req, res) => {
         try {
