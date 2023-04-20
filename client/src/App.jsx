@@ -32,8 +32,8 @@ import AddAttendance from './pages/PersonalTrainingManagement/AddAttendance';
 import ProductScreen from './pages/ProductManagement/ProductScreen';
 import ProductHandle from './pages/ProductManagement/ProductHandle';
 import AddFinances from './pages/FinanceManagement/AddFinances';
-import UpdateFinances from './pages/Finance Management/UpdateFinances';
-import DeleteFinances from './pages/Finance Management/DeleteFinances';
+import UpdateFinances from './pages/FinanceManagement/UpdateFinances';
+import DeleteFinances from './pages/FinanceManagement/DeleteFinances';
 
 
 
