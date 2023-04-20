@@ -6,6 +6,7 @@ import adminRouter from "./routes/Admin.route.js";
 import reviewRouter from "./routes/Review.route.js";
 import membershipRouter from "./routes/Membership.route.js";
 import productRouter from "./routes/Product.route.js"
+import sessionRouter from "./routes/Session.route.js";
 
 const app = express();
 
@@ -21,5 +22,6 @@ app.use('/admin', adminRouter);
 app.use('/membership', membershipRouter);
 app.use('/review', reviewRouter);
 app.use('/product', productRouter);
+app.use('/session', sessionRouter);
 
 export default app;

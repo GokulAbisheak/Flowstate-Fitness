@@ -10,11 +10,14 @@
         "@date-io/date-fns": "^2.16.0",
         "@fullcalendar/core": "^6.1.5",
         "@fullcalendar/daygrid": "^6.1.5",
+        "@fullcalendar/moment": "^6.1.5",
         "@fullcalendar/react": "^6.1.5",
         "@fullcalendar/timegrid": "^6.1.5",
         "@material-ui/pickers": "^3.3.10",
         "cloudinary": "^1.36.1",
+        "fullcalendar": "^6.1.5",
         "install": "^0.13.0",
+        "moment": "^2.29.4",
         "npm": "^9.6.4",
         "react-google-recaptcha": "^2.1.0"
     }

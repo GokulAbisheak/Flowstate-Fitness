@@ -28,16 +28,16 @@ function AddAttendance() {
         event.preventDefault();
 
         //Create new attendance
-        const newAttendance = {
+        const createAttendance = {
             name: name,
             date: date,
             present: present,
             absent: absent
         };
 
-        axios.post('http://localhost:8090/attendance/add',newAttendance).then(() => {
+        axios.post('http://localhost:8090/attendance/add',createAttendance).then(() => {
             alert('Adding Successful!')
-            window.location.href = '/attendance'
+            window.location.href = '/addAttendance'
 
             setName('');
             setDate('');

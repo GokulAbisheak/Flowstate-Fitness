@@ -29,7 +29,6 @@ import Attendance from './pages/PersonalTrainingManagement/Attendance';
 import AddAttendance from './pages/PersonalTrainingManagement/AddAttendance';
 
 
-
 function App() {
 
   const mode = useSelector((state) => state.mode);

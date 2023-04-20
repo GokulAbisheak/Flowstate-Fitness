@@ -35,7 +35,7 @@ const DisplayUsers = () => {
             }).catch((err) => {
                 alert('Unable to get all users ' + err.message);
             })
-        }
+        } 
         getAllUsers();
     }, [])
 
