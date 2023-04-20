@@ -19,6 +19,7 @@
         "install": "^0.13.0",
         "moment": "^2.29.4",
         "npm": "^9.6.4",
-        "react-google-recaptcha": "^2.1.0"
+        "react-google-recaptcha": "^2.1.0",
+        "socket.io-client": "^4.6.1"
     }
 }

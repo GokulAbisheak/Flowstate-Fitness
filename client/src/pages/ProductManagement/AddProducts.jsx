@@ -12,59 +12,66 @@ const AddProducts = () => {
     const [productDescription, setPDescription] = useState("");
     const [productMFGDate, setPMFGDate] = useState("");
     const [productEXPDate, setPEXPDate] = useState("");
-    const [image, setImage] = useState([]);
-    const [url, setURL] = useState([]);
+    const [image, setImage] = useState("");
+    const [url, setURL] = useState("");
 
     const theme = useTheme();
 
     const onSubmitAddProducts = (event) => {
         event.preventDefault();
-
+    
         const data = new FormData()
         data.append("file", image)
         data.append("upload_preset", "mernpro")
         data.append("cloud_name", "dloxej4xv")
-        fetch("https://api.cloudinary.com/v1_1/dloxej4xv/image/upload", {
-            method:"POST",
-            body:data
-        })
-        .then(res=>res.json())
-        .then(data=>{
-            setURL([...url, data.url])
-        })
-        .catch(err=>{
-            console.log(err)
-        })
-
-        //Create new product object
-        const newProduct = {
-            productID: productID,
-            productName: productName,
-            productCategory: productCategory,
-            price: productPrice,
-            description: productDescription,
-            mfgDate: productMFGDate,
-            expDate: productEXPDate,
-            url: url
+    
+        const checkUrlAndUpdateProduct = () => {
+            if (url === '') { // check if the url state is empty
+                setTimeout(checkUrlAndUpdateProduct, 500); // wait for 0.5 second before checking again
+            } else {
+                const newProduct = {
+                    productID: productID,
+                    productName: productName,
+                    productCategory: productCategory,
+                    price: productPrice,
+                    description: productDescription,
+                    mfgDate: productMFGDate,
+                    expDate: productEXPDate,
+                    url: url
+                };
+    
+                axios.post('http://localhost:8090/product/add', newProduct)
+                .then(() => {
+                    setPID('');
+                    setPName('');
+                    setPCategory('');
+                    setPPrice('');
+                    setPDescription('');
+                    setPMFGDate('');
+                    setPEXPDate('');
+                    setImage('');
+                    setURL('');
+                    alert('Adding Successful!');
+                    /* window.location.href = '/product' */
+                })
+                .catch(err => {
+                    alert('Product adding failed! ' + err);
+                });
+            }
         };
-
-        axios.post('http://localhost:8090/product/add', newProduct).then(() => {
-            alert('Adding Successful!')
-            window.location.href = '/product'
-
-            setPID('');
-            setPName('');
-            setPCategory('');
-            setPPrice('');
-            setPDescription('');
-            setPMFGDate('');
-            setPEXPDate('');
-            setImage('');
-            setURL('');
-
-        }).catch((err) => {
-            alert('Product adding failed! ' + err)
+    
+        fetch("https://api.cloudinary.com/v1_1/dloxej4xv/image/upload", {
+            method: "POST",
+            body: data
         })
+        .then(response => response.json())
+        .then(imageData => {
+            setURL(imageData.url);
+            checkUrlAndUpdateProduct(); // start the recursive function to check the url update
+        })
+        .catch(err => {
+            alert('Image uploading failed! ' + err);
+        });
     };
 
     return (
@@ -214,7 +221,6 @@ const AddProducts = () => {
                             ),
                         }}
                         onChange={(e) => setImage(e.target.files[0])}
-                        inputProps={{ multiple: true }}
                         margin="normal"
                         required={true}
                     />

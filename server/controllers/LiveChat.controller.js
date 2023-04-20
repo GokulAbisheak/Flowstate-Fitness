@@ -1,6 +1,6 @@
 import Message from "../models/LiveChat.model";
 
-messageController ={
+const messageController ={
 
    //send a Message
    sendMessage: async (req, res) => {
