@@ -32,7 +32,22 @@ const FinanceController = {
     //Create new finance
     createFinance: async (req, res) => {
         try {
-            const finance = new Finance(req.body);
+            logger.info(req.body)
+            const { salaryID, firstName, lastName, department, lastUpdated, salary,frequency, url } = req.body;
+
+           
+            const finance = new Finance({
+
+                salaryID, 
+                firstName, 
+                lastName, 
+                department, 
+                lastUpdated, 
+                salary,
+                frequency, 
+                url,
+
+            });
             await finance.save();
             res.status(201).json(finance);
             logger.info("Finance create successful");
