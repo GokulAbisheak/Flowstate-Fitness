@@ -31,6 +31,10 @@ import Attendance from './pages/PersonalTrainingManagement/Attendance';
 import AddAttendance from './pages/PersonalTrainingManagement/AddAttendance';
 import ProductScreen from './pages/ProductManagement/ProductScreen';
 import ProductHandle from './pages/ProductManagement/ProductHandle';
+import AddFinances from './pages/FinanceManagement/AddFinances';
+import UpdateFinances from './pages/Finance Management/UpdateFinances';
+import DeleteFinances from './pages/Finance Management/DeleteFinances';
+
 
 
 
@@ -62,6 +66,9 @@ function App() {
               <Route path="/admin/addProducts" element={<AddProducts/>}/> 
               <Route path="/admin/updateProducts" element={<UpdateProducts/>}/>
               <Route path="/admin/deleteProducts" element={<DeleteProducts/>}/>
+              <Route path="/admin/addFinances" element={<AddFinances/>}/> 
+              <Route path="/admin/updateFinances" element={<UpdateFinances/>}/>
+              <Route path="/admin/deleteFinances" element={<DeleteFinances/>}/>
               {/* <Route path="/admin/mainpayment" element={<MainPayment/>}/> */}
               {/* <Route path="/admin/adminpayment" element={<AdminPayment/>}/> */}
               
