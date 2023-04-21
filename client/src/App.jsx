@@ -23,7 +23,7 @@ import DeleteProducts from './pages/ProductManagement/DeleteProducts';
 import AddReviews from './pages/CustomerRelationshipManagement/addReviews';
 import UpdateReviews from './pages/CustomerRelationshipManagement/UpdateReviews';
 import DeleteReviews from './pages/CustomerRelationshipManagement/deleteReviews';
-import Cart from './pages/ProductManagement/Cart';
+//import Cart from './pages/ProductManagement/Cart';
 import TrainerCalendar from './pages/PersonalTrainingManagement/TrainerCalendar';
 import Attendance from './pages/PersonalTrainingManagement/Attendance';
 import AddAttendance from './pages/PersonalTrainingManagement/AddAttendance';
@@ -73,7 +73,7 @@ function App() {
               <Route path="/user/updateReviews" element={<UpdateReviews/>}/>
               <Route path="/user/deleteReviews" element={<DeleteReviews/>}/>
               <Route path="/user/productScreen" element={<ProductScreen/>}/>
-              <Route path="/user/cart" element={<Cart/>} />
+              {/* <Route path="/user/cart" element={<Cart/>} /> */}
 
             </Route>
             <Route path="*" element={<NotFound />} />
