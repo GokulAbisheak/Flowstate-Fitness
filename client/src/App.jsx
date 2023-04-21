@@ -23,9 +23,13 @@ import DeleteProducts from './pages/ProductManagement/DeleteProducts';
 import AddReviews from './pages/CustomerRelationshipManagement/addReviews';
 import UpdateReviews from './pages/CustomerRelationshipManagement/UpdateReviews';
 import DeleteReviews from './pages/CustomerRelationshipManagement/deleteReviews';
+<<<<<<< HEAD
+//import Cart from './pages/ProductManagement/Cart';
+=======
 import Cart from './pages/ProductManagement/Cart';
 import MainPayment from './pages/PaymentManagement/MainPayment';
 import AdminPayment from './pages/PaymentManagement/AdminPayment';
+>>>>>>> 85871ce9cbb54c53fbbf64b5effab582388d79a0
 import TrainerCalendar from './pages/PersonalTrainingManagement/TrainerCalendar';
 import Attendance from './pages/PersonalTrainingManagement/Attendance';
 import AddAttendance from './pages/PersonalTrainingManagement/AddAttendance';
@@ -90,12 +94,16 @@ function App() {
               <Route path="/user/updateReviews" element={<UpdateReviews/>}/>
               <Route path="/user/deleteReviews" element={<DeleteReviews/>}/>
               <Route path="/user/productScreen" element={<ProductScreen/>}/>
+<<<<<<< HEAD
+              {/* <Route path="/user/cart" element={<Cart/>} /> */}
+=======
               <Route path="/user/cart" element={<Cart/>} />
               <Route path="/user/adminpayment" element={<AdminPayment/>} />
               <Route path="/user/mnpayment" element={<MainPayment/>} />
               <Route path="/user/profile" element={<Profile />} />
               <Route path="*" element={<NotFound />} />
             <Route path="/members" element={ <Members /> } />
+>>>>>>> 85871ce9cbb54c53fbbf64b5effab582388d79a0
 
             </Route>
           </Routes>

@@ -17,16 +17,14 @@ const UpdateProducts = () => {
 
     const theme = useTheme();
 
-    //axios.patch(`http://localhost:8090/product/update/${productID}`, newProduct)
-
     const onSubmitUpdateProducts = (event) => {
         event.preventDefault();
-    
+
         const data = new FormData()
         data.append("file", image)
         data.append("upload_preset", "mernpro")
         data.append("cloud_name", "dloxej4xv")
-    
+
         const checkUrlAndUpdateProduct = () => {
             if (url === '') { // check if the url state is empty
                 setTimeout(checkUrlAndUpdateProduct, 500); // wait for 0.5 second before checking again
@@ -41,39 +39,39 @@ const UpdateProducts = () => {
                     expDate: productEXPDate,
                     url: url
                 };
-    
+
                 axios.patch(`http://localhost:8090/product/update/${productID}`, newProduct)
-                .then(() => {
-                    setPID('');
-                    setPName('');
-                    setPCategory('');
-                    setPPrice('');
-                    setPDescription('');
-                    setPMFGDate('');
-                    setPEXPDate('');
-                    setImage('');
-                    setURL('');
-                    alert('Adding Successful!');
-                    /* window.location.href = '/product' */
-                })
-                .catch(err => {
-                    alert('Product adding failed! ' + err);
-                });
+                    .then(() => {
+                        setPID('');
+                        setPName('');
+                        setPCategory('');
+                        setPPrice('');
+                        setPDescription('');
+                        setPMFGDate('');
+                        setPEXPDate('');
+                        setImage('');
+                        setURL('');
+                        alert('Adding Successful!');
+                        window.location.href = '/admin/products'
+                    })
+                    .catch(err => {
+                        alert('Product adding failed! ' + err);
+                    });
             }
         };
-    
+
         fetch("https://api.cloudinary.com/v1_1/dloxej4xv/image/upload", {
             method: "POST",
             body: data
         })
-        .then(response => response.json())
-        .then(imageData => {
-            setURL(imageData.url);
-            checkUrlAndUpdateProduct(); // start the recursive function to check the url update
-        })
-        .catch(err => {
-            alert('Image uploading failed! ' + err);
-        });
+            .then(response => response.json())
+            .then(imageData => {
+                setURL(imageData.url);
+                checkUrlAndUpdateProduct();
+            })
+            .catch(err => {
+                alert('Image uploading failed! ' + err);
+            });
     };
     return (
 
@@ -164,7 +162,7 @@ const UpdateProducts = () => {
                             margin="normal"
                             multiline
                             sx={{ width: 300 }}
-                            required={true}
+                            //required={true}
                             onChange={(e) => {
                                 setPDescription(e.target.value);
                             }} />
@@ -179,7 +177,7 @@ const UpdateProducts = () => {
                             type="date"
                             margin="normal"
                             sx={{ width: 300 }}
-                            required={true}
+                            // required={true}
                             onChange={(e) => {
                                 setPMFGDate(e.target.value);
                             }} />
@@ -194,7 +192,7 @@ const UpdateProducts = () => {
                             type="date"
                             margin="normal"
                             sx={{ width: 300 }}
-                            required={true}
+                            // required={true}
                             onChange={(e) => {
                                 setPEXPDate(e.target.value);
                             }} />
@@ -215,7 +213,7 @@ const UpdateProducts = () => {
                             onChange={(e) => setImage(e.target.files[0])}
                             inputProps={{ multiple: true }}
                             margin="normal"
-                            required={true}
+                        // required={true}
                         />
                     </Grid>
 

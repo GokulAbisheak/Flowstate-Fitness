@@ -30,12 +30,12 @@ const productSchema = new mongoose.Schema({
 
     mfgDate: {
         type: Date,
-        required: true
+        //required: true
     },
 
     expDate: {
         type: Date,
-        required: true
+        //required: true
     },
 
     url: {
