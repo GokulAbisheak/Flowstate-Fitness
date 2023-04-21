@@ -4,31 +4,39 @@ const SessionController = {
 
 
 //Add a session 
-addSession: (req, res) => {
-    const title = req.body.title;
-    const date = req.body.date;
-    const time = req.body.time;
-    const description = req.body.description;
-    const addedBy = req.body.addedBy;
+addSession: async (req, res) => {
+
+    const { title, start, end, description } = req.body;
 
     const newSession = new Session({
         title,
-        date,
-        time,
+        start,
+        end,
         description,
     });
-
     newSession.save()
     .then(()=> res.json('Session Added'))
     .catch(err => res.status(400).json('Error:' +err));
 },
 
-//Get all sessions
-getAllSessions: (req, res) => {
-    Review.find()
-     .then(()=> res.json(Session))
-     .catch(err => res.status(400).json('Error:' +err));
-},
+// //Get all sessions
+// getAllSessions: (req, res) => {
+//     Session.find()
+//      .then(()=> res.json(Session))
+//      .catch(err => res.status(400).json('Error:' +err));
+// },
+
+getAllSessions: async (_req, res) => {
+    try {
+      // get all sessions from database
+      const sessions = await Session.findAll();
+      // return sessions array to client
+      res.status(200).json(sessions);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Unable to fetch sessions');
+    }
+  },
 
 //Update a session
 updateSessionById: (req, res) => {
@@ -38,7 +46,6 @@ updateSessionById: (req, res) => {
      session.date = req.body.date
      session.time = req.body.time;
      session.description = req.body.description;
-     session.addedBy = req.body.addedBy;
 
      session.save()
     .then(()=> res.json('Session Updated'))

@@ -11,8 +11,33 @@ import Paper from '@mui/material/Paper';
 import CancelIcon from '@mui/icons-material/Close';
 import '../../styles/index.css'
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const DisplayUsers = () => {
+
+    const loggedUser = useSelector((state) => state.user)
+    const token = useSelector((state) => state.token)
+    const navigate = useNavigate();
+
+    useEffect(() => {
+
+        if (!loggedUser || !token) {
+            navigate('/login')
+        }
+
+        if (loggedUser.type != 'admin') {
+            console.log(loggedUser.type)
+            navigate('/')
+        }
+
+    }, [])
+
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    };
 
     const [allUsers, setAllUsers] = useState([]);
     const [fName, setFName] = useState("");
@@ -25,17 +50,14 @@ const DisplayUsers = () => {
 
     const theme = useTheme();
 
-    const loggedUser = useSelector((state) => state.user)
-    const token = useSelector((state) => state.token)
-
     useEffect(() => {
         const getAllUsers = () => {
-            axios.get('http://localhost:8090/user').then((res) => {
+            axios.get('http://localhost:8090/user', config).then((res) => {
                 setAllUsers(res.data);
             }).catch((err) => {
                 alert('Unable to get all users ' + err.message);
             })
-        }
+        } 
         getAllUsers();
     }, [])
 
@@ -212,7 +234,7 @@ const DisplayUsers = () => {
                 </Box>
             </Box>
 
-            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{
+            <Snackbar open={open} autoHideDuration={2000} onClose={handleClose} anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'right',
             }}>

@@ -5,7 +5,7 @@ function AttendanceList() {
   const [attendance, setAttendance] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/attendance')
+    axios.get('http://localhost:8090/attendance')
       .then(response => {
         setAttendance(response.data);
       })
