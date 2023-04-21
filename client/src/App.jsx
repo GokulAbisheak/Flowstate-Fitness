@@ -40,7 +40,7 @@ import DeleteFinances from './pages/FinanceManagement/DeleteFinances';
 
 //import LiveChat from'./pages/CustomerRelationshipManagement/LiveChat';
 
-import ScanMembership from './pages/UserManagement/ScanMembership';
+//import ScanMembership from './pages/UserManagement/ScanMembership';
 import Profile from './pages/UserManagement/Profile';
 
 
@@ -75,7 +75,7 @@ function App() {
               <Route path="/admin/schedule" element={<TrainerCalendar/>}/>
               <Route path="/admin/attendance" element={<Attendance/>}/>
               <Route path="/admin/addAttendance" element={<AddAttendance/>}/>
-              <Route path="/admin/scan" element={<ScanMembership />}/>
+              {/* <Route path="/admin/scan" element={<ScanMembership />}/> */}
 
               {/* <Route path="/admin/LiveChat" element={<LiveChat/>}/> */}
 

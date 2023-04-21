@@ -7,9 +7,9 @@ import reviewRouter from "./routes/Review.route.js";
 
 //import paymentRouter from "./routes/Payment.route.js";
 import paymentRouter from "./routes/Payment.route.js";
-import productRouter from "./routes/Product.route.js";
+
 import membershipRouter from "./routes/Membership.route.js";
-import productRouter from "./routes/Product.route.js"
+
 import sessionRouter from "./routes/Session.route.js";
 import productRouter from "./routes/Product.route.js";
 import financeRouter from "./routes/Finance.route.js"

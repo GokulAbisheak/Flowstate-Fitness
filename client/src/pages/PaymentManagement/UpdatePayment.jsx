@@ -1,9 +1,8 @@
-import { Button, Card, CardActionArea, CardContent, CardMedia, Grid, Typography, Box, useTheme } from '@mui/material';
-import React, {useState} from "react";
+import React, { useState } from "react";
+import { Box, Button, Grid, Link, TextField, InputAdornment, useTheme } from '@mui/material';
 import axios from 'axios';
 
-export default function Main() {
-  //const Main = () => {
+const UpdatePayment = () => {
 
     const [paymentID, setPID] = useState("");
     const [paymentAmount, setPAmount] = useState("");
@@ -19,7 +18,7 @@ export default function Main() {
 
     const theme = useTheme();
 
-    const onSubmitMainPayment = (event) => {
+    const onSubmitUpdatePayment = (event) => {
         event.preventDefault();
 
         const data = new FormData()
@@ -48,13 +47,14 @@ export default function Main() {
             pAddressl2: pAddressl2, 
             pAddressl3: pAddressl3,
             pState: pState,
+            pProvince: pProvince,
             pZip: pZip,
             pCountry: pCountry
         };
 
-        axios.post('http://localhost:8090/payment/add', newPayment).then(() => {
-            alert('Payment Adding Successful!')
-            window.location.href = '/payment'
+        axios.patch(`http://localhost:8090/payment/update/${paymentID}`, newPayment).then(() => {
+            // alert('Payment Adding Successful!')
+            // window.location.href = '/payment'
 
             setPID('');
             setPAmount('');
@@ -72,10 +72,15 @@ export default function Main() {
             alert('Payment adding failed! ' + err)
         })
   };
+}
 
-  return (
+return (
 
-    <form onSubmit={onSubmitMainPayment}>
+    <>
+
+    <Grid display="flex" justifyContent="center"><h1>Update Payments Here</h1></Grid>
+
+    <form onSubmit={onSubmitUpdatePayment}>
 
       <Grid
         display="flex"
@@ -255,18 +260,16 @@ export default function Main() {
         </Grid>
 
         <Grid item>
-          <Button variant="contained" margin="normal" color="primary" type="submit">Add</Button>
+          <Button variant="contained" margin="normal" color="primary" type="submit">Update</Button>
         </Grid>
 
       </Grid>
 
     </form>
     
+    </>
 
   )
 
-};
+export default UpdatePayment;
 
-
-
-//export default MainPayment ;
