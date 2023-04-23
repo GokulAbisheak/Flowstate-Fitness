@@ -23,20 +23,22 @@ import DeleteProducts from './pages/ProductManagement/DeleteProducts';
 import AddReviews from './pages/CustomerRelationshipManagement/addReviews';
 import UpdateReviews from './pages/CustomerRelationshipManagement/UpdateReviews';
 import DeleteReviews from './pages/CustomerRelationshipManagement/deleteReviews';
-import Cart from './pages/ProductManagement/Cart';
-import MainPayment from './pages/PaymentManagement/MainPayment';
-import AdminPayment from './pages/PaymentManagement/AdminPayment';
+// import Cart from './pages/ProductManagement/Cart';
+// import MainPayment from './pages/PaymentManagement/MainPayment';
+// import AdminPayment from './pages/PaymentManagement/AdminPayment';
 import TrainerCalendar from './pages/PersonalTrainingManagement/TrainerCalendar';
 import Attendance from './pages/PersonalTrainingManagement/Attendance';
 import AddAttendance from './pages/PersonalTrainingManagement/AddAttendance';
 import ProductScreen from './pages/ProductManagement/ProductScreen';
 import ProductHandle from './pages/ProductManagement/ProductHandle';
+import UpdateAttendance from './pages/PersonalTrainingManagement/UpdateAttendance';
+import DeleteAttendance from './pages/PersonalTrainingManagement/DeleteAttendance';
 
 
 
 //import LiveChat from'./pages/CustomerRelationshipManagement/LiveChat';
 
-import ScanMembership from './pages/UserManagement/ScanMembership';
+// import ScanMembership from './pages/UserManagement/ScanMembership';
 import Profile from './pages/UserManagement/Profile';
 
 
@@ -68,7 +70,9 @@ function App() {
               <Route path="/admin/schedule" element={<TrainerCalendar/>}/>
               <Route path="/admin/attendance" element={<Attendance/>}/>
               <Route path="/admin/addAttendance" element={<AddAttendance/>}/>
-              <Route path="/admin/scan" element={<ScanMembership />}/>
+              <Route path="/admin/updateAttendance" element={<UpdateAttendance/>}/>
+              <Route path="/admin/deleteAttendance" element={<DeleteAttendance/>}/>
+              {/* <Route path="/admin/scan" element={<ScanMembership />}/> */}
 
               {/* <Route path="/admin/LiveChat" element={<LiveChat/>}/> */}
 
@@ -83,9 +87,9 @@ function App() {
               <Route path="/user/updateReviews" element={<UpdateReviews/>}/>
               <Route path="/user/deleteReviews" element={<DeleteReviews/>}/>
               <Route path="/user/productScreen" element={<ProductScreen/>}/>
-              <Route path="/user/cart" element={<Cart/>} />
-              <Route path="/user/adminpayment" element={<AdminPayment/>} />
-              <Route path="/user/mnpayment" element={<MainPayment/>} />
+              {/* <Route path="/user/cart" element={<Cart/>} /> */}
+              {/* <Route path="/user/adminpayment" element={<AdminPayment/>} />
+              <Route path="/user/mnpayment" element={<MainPayment/>} /> */}
               <Route path="/user/profile" element={<Profile />} />
               <Route path="*" element={<NotFound />} />
             <Route path="/members" element={ <Members /> } />
