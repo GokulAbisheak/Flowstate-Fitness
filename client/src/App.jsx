@@ -29,6 +29,7 @@ import Attendance from './pages/PersonalTrainingManagement/Attendance';
 import AddAttendance from './pages/PersonalTrainingManagement/AddAttendance';
 import ProductScreen from './pages/ProductManagement/ProductScreen';
 import ProductHandle from './pages/ProductManagement/ProductHandle';
+import UserPrivateRoute from './components/UserPrivateRoute';
 
 //import LiveChat from'./pages/CustomerRelationshipManagement/LiveChat';
 
@@ -53,14 +54,14 @@ function App() {
               <Route path="/admin/members" element={<DisplayUsers />} />
               <Route path="/admin/users" element={<DisplayUsers />} />
               <Route path="/admin/membership" element={<DisplayMemberships />} />
-              <Route path="/admin/products" element={<ProductHandle/>}/>
-              <Route path="/admin/addProducts" element={<AddProducts/>}/> 
-              <Route path="/admin/updateProducts" element={<UpdateProducts/>}/>
-              <Route path="/admin/deleteProducts" element={<DeleteProducts/>}/>
-              <Route path="/admin/schedule" element={<TrainerCalendar/>}/>
-              <Route path="/admin/attendance" element={<Attendance/>}/>
-              <Route path="/admin/addAttendance" element={<AddAttendance/>}/>
-              <Route path="/admin/scan" element={<ScanMembership />}/>
+              <Route path="/admin/products" element={<ProductHandle />} />
+              <Route path="/admin/addProducts" element={<AddProducts />} />
+              <Route path="/admin/updateProducts" element={<UpdateProducts />} />
+              <Route path="/admin/deleteProducts" element={<DeleteProducts />} />
+              <Route path="/admin/schedule" element={<TrainerCalendar />} />
+              <Route path="/admin/attendance" element={<Attendance />} />
+              <Route path="/admin/addAttendance" element={<AddAttendance />} />
+              <Route path="/admin/scan" element={<ScanMembership />} />
 
               {/* <Route path="/admin/LiveChat" element={<LiveChat/>}/> */}
 
@@ -70,17 +71,20 @@ function App() {
             <Route element={<UserLayout />}>
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignUp />} />
-              <Route path="/user/membership" element={<PurchaseMembership />} />
-              <Route path="/user/addReviews" element={<AddReviews/>}/>
-              <Route path="/user/updateReviews" element={<UpdateReviews/>}/>
-              <Route path="/user/deleteReviews" element={<DeleteReviews/>}/>
-              <Route path="/user/productScreen" element={<ProductScreen/>}/>
-              <Route path="/user/cart" element={<Cart/>} />
-              <Route path="/user/profile" element={<Profile />} />
+              <Route path="/user/addReviews" element={<AddReviews />} />
+              <Route path="/user/updateReviews" element={<UpdateReviews />} />
+              <Route path="/user/deleteReviews" element={<DeleteReviews />} />
+              <Route path="/user/productScreen" element={<ProductScreen />} />
+              <Route path="/user/cart" element={<Cart />} />
+
+              <Route element={<UserPrivateRoute />}>
+                <Route path="/user/membership" element={<PurchaseMembership />} />
+                <Route path="/user/profile" element={<Profile />} />
+              </Route>
 
             </Route>
             <Route path="*" element={<NotFound />} />
-            <Route path="/members" element={ <Members /> } />
+            <Route path="/members" element={<Members />} />
           </Routes>
         </ThemeProvider>
       </Router>
