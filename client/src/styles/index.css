@@ -149,3 +149,10 @@ body::-webkit-scrollbar-thumb {
     height: 480px;
     padding: 20px;
 }
+
+.profile-pic {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: #f2f2f2;
+}
