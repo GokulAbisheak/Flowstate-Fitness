@@ -23,22 +23,43 @@ import DeleteProducts from './pages/ProductManagement/DeleteProducts';
 import AddReviews from './pages/CustomerRelationshipManagement/addReviews';
 import UpdateReviews from './pages/CustomerRelationshipManagement/UpdateReviews';
 import DeleteReviews from './pages/CustomerRelationshipManagement/deleteReviews';
+<<<<<<< HEAD
 // import Cart from './pages/ProductManagement/Cart';
 // import MainPayment from './pages/PaymentManagement/MainPayment';
 // import AdminPayment from './pages/PaymentManagement/AdminPayment';
+=======
+<<<<<<< HEAD
+//import Cart from './pages/ProductManagement/Cart';
+=======
+import Cart from './pages/ProductManagement/Cart';
+import MainPayment from './pages/PaymentManagement/MainPayment';
+import AdminPayment from './pages/PaymentManagement/AdminPayment';
+>>>>>>> 85871ce9cbb54c53fbbf64b5effab582388d79a0
+>>>>>>> 6263ea8071982797702c81aa51d33cfea091c27a
 import TrainerCalendar from './pages/PersonalTrainingManagement/TrainerCalendar';
 import Attendance from './pages/PersonalTrainingManagement/Attendance';
 import AddAttendance from './pages/PersonalTrainingManagement/AddAttendance';
 import ProductScreen from './pages/ProductManagement/ProductScreen';
 import ProductHandle from './pages/ProductManagement/ProductHandle';
+<<<<<<< HEAD
 import UpdateAttendance from './pages/PersonalTrainingManagement/UpdateAttendance';
 import DeleteAttendance from './pages/PersonalTrainingManagement/DeleteAttendance';
+=======
+import AddFinances from './pages/FinanceManagement/AddFinances';
+import UpdateFinances from './pages/FinanceManagement/UpdateFinances';
+import DeleteFinances from './pages/FinanceManagement/DeleteFinances';
+
+>>>>>>> 6263ea8071982797702c81aa51d33cfea091c27a
 
 
 
 //import LiveChat from'./pages/CustomerRelationshipManagement/LiveChat';
 
+<<<<<<< HEAD
 // import ScanMembership from './pages/UserManagement/ScanMembership';
+=======
+//import ScanMembership from './pages/UserManagement/ScanMembership';
+>>>>>>> 6263ea8071982797702c81aa51d33cfea091c27a
 import Profile from './pages/UserManagement/Profile';
 
 
@@ -64,14 +85,20 @@ function App() {
               <Route path="/admin/addProducts" element={<AddProducts/>}/> 
               <Route path="/admin/updateProducts" element={<UpdateProducts/>}/>
               <Route path="/admin/deleteProducts" element={<DeleteProducts/>}/>
+              <Route path="/admin/addFinances" element={<AddFinances/>}/> 
+              <Route path="/admin/updateFinances" element={<UpdateFinances/>}/>
+              <Route path="/admin/deleteFinances" element={<DeleteFinances/>}/>
               {/* <Route path="/admin/mainpayment" element={<MainPayment/>}/> */}
               {/* <Route path="/admin/adminpayment" element={<AdminPayment/>}/> */}
               
               <Route path="/admin/schedule" element={<TrainerCalendar/>}/>
               <Route path="/admin/attendance" element={<Attendance/>}/>
               <Route path="/admin/addAttendance" element={<AddAttendance/>}/>
+<<<<<<< HEAD
               <Route path="/admin/updateAttendance" element={<UpdateAttendance/>}/>
               <Route path="/admin/deleteAttendance" element={<DeleteAttendance/>}/>
+=======
+>>>>>>> 6263ea8071982797702c81aa51d33cfea091c27a
               {/* <Route path="/admin/scan" element={<ScanMembership />}/> */}
 
               {/* <Route path="/admin/LiveChat" element={<LiveChat/>}/> */}
@@ -87,12 +114,22 @@ function App() {
               <Route path="/user/updateReviews" element={<UpdateReviews/>}/>
               <Route path="/user/deleteReviews" element={<DeleteReviews/>}/>
               <Route path="/user/productScreen" element={<ProductScreen/>}/>
+<<<<<<< HEAD
               {/* <Route path="/user/cart" element={<Cart/>} /> */}
               {/* <Route path="/user/adminpayment" element={<AdminPayment/>} />
               <Route path="/user/mnpayment" element={<MainPayment/>} /> */}
+=======
+<<<<<<< HEAD
+              {/* <Route path="/user/cart" element={<Cart/>} /> */}
+=======
+              <Route path="/user/cart" element={<Cart/>} />
+              <Route path="/user/adminpayment" element={<AdminPayment/>} />
+              <Route path="/user/mnpayment" element={<MainPayment/>} />
+>>>>>>> 6263ea8071982797702c81aa51d33cfea091c27a
               <Route path="/user/profile" element={<Profile />} />
               <Route path="*" element={<NotFound />} />
             <Route path="/members" element={ <Members /> } />
+>>>>>>> 85871ce9cbb54c53fbbf64b5effab582388d79a0
 
             </Route>
           </Routes>

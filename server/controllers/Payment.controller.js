@@ -14,6 +14,21 @@ const PaymentController = {
         }
     },
 
+    //Get payment by id
+    getPaymentById: async (req, res) => {
+        try {
+            const payment = await Payment.findOne({paymentID : req.params.paymentID});
+            if (!payment) {
+                logger.error("Payment " + req.params.paymentID + " not found");
+                return res.status(404).json({ message: 'Payment not found' });
+            }
+            res.status(200).json(payment);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+            logger.error("Error getting payment " + req.params.paymentID);
+        }
+    },
+
     //Create new payment
     createPayment: async (req, res) => {
         try {
