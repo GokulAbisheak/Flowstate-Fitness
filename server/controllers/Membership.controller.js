@@ -91,6 +91,33 @@ const MembershipController = {
             res.status(400).json({ message: error.message });
             logger.info("Membership " + req.params.id + " deleted successfully");
         }
+    },
+
+    //search
+    searchMembership: async (req, res) => {
+
+        const { term } = req.query;
+        const regex = new RegExp(term, 'i');
+        const users = await Membership.find({
+            email: regex
+        });
+
+        res.json(users);
+    },
+
+    //sort membership
+    sortMembership: async (req, res) => {
+        try {
+            const membership = await Membership.find({ membershipType: req.params.type });
+            if (!membership) {
+                logger.error("Membership " + req.params.type + " not found");
+                return res.status(404).json({ message: 'Membership not found' });
+            }
+            res.status(200).json(membership);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+            logger.error("Error getting membership " + req.params.type);
+        }
     }
 };
 
