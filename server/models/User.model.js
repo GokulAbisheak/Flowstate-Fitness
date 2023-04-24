@@ -24,12 +24,10 @@ const userSchema = new mongoose.Schema({
 
     dateOfBirth: {
         type: Date,
-        required: true
     },
 
     phoneNumber: {
         type: String,
-        required: true
     },
 
     height: {
@@ -38,6 +36,18 @@ const userSchema = new mongoose.Schema({
 
     weight: {
         type: Number
+    },
+
+    flowTokens: {
+        type: Number
+    },
+
+    type: {
+        type: String
+    },
+
+    url: {
+        type: String
     }
 });
 

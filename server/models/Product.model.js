@@ -19,7 +19,7 @@ const productSchema = new mongoose.Schema({
     },
 
     price: {
-        type: Double,
+        type: Number,
         required: true
     },
 
@@ -30,23 +30,17 @@ const productSchema = new mongoose.Schema({
 
     mfgDate: {
         type: Date,
-        required: true
+        //required: true
     },
 
     expDate: {
         type: Date,
-        required: true
+        //required: true
     },
 
-    image: {
-        public_id: {
-            type: String,
-            required: true
-        },
-        url: {
-            type: String,
-            required: true
-        }
+    url: {
+        type: String,
+        required: true 
     }
 
 });

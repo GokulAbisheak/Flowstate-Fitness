@@ -4,6 +4,16 @@ import "dotenv/config";
 import userRouter from "./routes/User.route.js";
 import adminRouter from "./routes/Admin.route.js";
 import reviewRouter from "./routes/Review.route.js";
+
+//import paymentRouter from "./routes/Payment.route.js";
+import paymentRouter from "./routes/Payment.route.js";
+
+import membershipRouter from "./routes/Membership.route.js";
+import productRouter from './routes/Product.route.js'
+import sessionRouter from "./routes/Session.route.js";
+import financeRouter from "./routes/Finance.route.js"
+import uploadImage from "./uploadImage.js";
+import attendanceRouter from "./routes/Attendance.route.js";
 import trainerRouter from "./routes/Trainer.route.js";
 
 const app = express();
@@ -22,7 +32,27 @@ app.get('/', (req, res) => {
 
 app.use('/user', userRouter);
 app.use('/admin', adminRouter);
+app.use('/membership', membershipRouter);
 app.use('/review', reviewRouter);
+app.use('/product', productRouter);
+
+app.use('/session', sessionRouter);
+
+
+app.use('/payment', paymentRouter);
+
+app.use('/finance',financeRouter);
+app.use('/attendance', attendanceRouter);
+
+
+app.post("/uploadImage", (req, res) => {
+    uploadImage(req.body.image).then((url) => {
+        res.send(url)
+    }).catch((err) => {
+        res.status(500).send(err)
+    })
+})
+
 app.use('/trainer', trainerRouter);
 
 // Add console.log statement here
