@@ -22,7 +22,7 @@ import UpdateProducts from './pages/ProductManagement/UpdateProducts';
 import DeleteProducts from './pages/ProductManagement/DeleteProducts';
 import AddReviews from './pages/CustomerRelationshipManagement/addReviews';
 import UpdateReviews from './pages/CustomerRelationshipManagement/UpdateReviews';
-<<<<<<< HEAD
+
 //import DeleteReviews from './pages/CustomerRelationshipManagement/deleteReviews';
 =======
 import DeleteReviews from './pages/CustomerRelationshipManagement/deleteReviews';
