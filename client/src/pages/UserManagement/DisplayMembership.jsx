@@ -12,6 +12,8 @@ import CancelIcon from '@mui/icons-material/Close';
 import '../../styles/index.css'
 import UpdateBox from '../../components/UpdateBox.js';
 import UpdateBoxContent from '../../components/UpdateBoxContent.js';
+import SearchIcon from '@mui/icons-material/Search';
+import FlexBetween from '../../components/FlexBetween.js'
 
 const DisplayMemberships = () => {
 
@@ -21,6 +23,21 @@ const DisplayMemberships = () => {
     const [membershipEmail, setMembershipEmail] = useState("");
     const [memberId, setMemberId] = useState("");
     const [open, setOpen] = useState(false);
+
+    //search
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchMemberships, setSearchMemberships] = useState([]);
+    const [noResult, setNoResult] = useState('');
+    const [display, setDisplay] = useState('none');
+
+    //sort
+    const [sortTerm, setSortTerm] = useState('');
+    const [sortMemberships, setSortMemberships] = useState([]);
+    const [sortDisplay, setSortDisplay] = useState('none');
+
+    //display main
+    const [mainDisplay, setMainDisplay] = useState('block');
+
 
     const theme = useTheme();
 
@@ -105,9 +122,200 @@ const DisplayMemberships = () => {
         location.reload();
     }
 
+    //search
+    const handleSearch = async () => {
+        if (searchTerm != '') {
+            axios.get(`http://localhost:8090/membership/search/byemail?term=${searchTerm}`).then((res) => {
+                setSearchMemberships(res.data);
+                if (res.data.length === 0) {
+                    setNoResult('No results')
+                    setDisplay('none')
+                } else {
+                    setNoResult('')
+                    setDisplay('block');
+                }
+                setSortDisplay('none')
+                setMainDisplay('none');
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
+    };
+
+    //sort
+    const handleSort = async (term) => {
+        console.log('test 1')
+        if (term != '') {
+            console.log('test 2')
+            axios.get(`http://localhost:8090/membership/sort/${term}`).then((res) => {
+
+                setSortMemberships(res.data);
+                if (res.data.length === 0) {
+                    setNoResult('No results')
+                    setSortDisplay('none')
+                    setMainDisplay('block');
+                    setDisplay('none')
+                } else {
+                    setNoResult('')
+                    setSortDisplay('block');
+                    setMainDisplay('none');
+                    setDisplay('none')
+                }
+
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
+    };
+
+    //available membership types
+    const availableTypes = [
+        {
+            value: '',
+            disable: true
+        },
+
+        {
+            value: 'Gold',
+            disable: false
+        },
+
+        {
+            value: 'Silver',
+            disable: false
+        },
+
+        {
+            value: 'Bronze',
+            disable: false
+        }
+    ]
+
+    //sort
+    const sortNow = (e) => {
+        setSortTerm(e.target.value)
+        handleSort(e.target.value);
+    }
+
     return (
         <>
-            <TableContainer component={Paper}>
+            <FlexBetween>
+                <FlexBetween>
+                    <Button onClick={() => { window.location.reload() }}>
+                        All
+                    </Button>
+                    <Box display="flex" alignItems="center" width="250px" padding="5px 10px" sx={{ backgroundColor: theme.palette.background.alt, borderRadius: '10px', boxShadow: '0px 0px 2px #000000' }}>
+                        <TextField placeholder='Search...' variant='standard' InputProps={{
+                            disableUnderline: true
+                        }} type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                        <IconButton onClick={handleSearch} sx={{ width: "40px" }}>
+                            <SearchIcon />
+                        </IconButton>
+                    </Box>
+                </FlexBetween>
+                <FlexBetween>
+                    <TextField
+                        select
+                        label="Select Membership Type"
+                        defaultValue=""
+                        onChange={sortNow}
+                        SelectProps={{
+                            native: true,
+                        }}
+                        variant="standard"
+                        sx={{ width: '250px' }}
+                    >
+                        {availableTypes.map((option) => (
+                            <option key={option.value} value={option.value} disabled={option.disable}>
+                                {option.value}
+                            </option>
+                        ))}
+                    </TextField>
+                </FlexBetween>
+            </FlexBetween>
+
+
+
+            <p align="center">{noResult}</p>
+            <TableContainer component={Paper} sx={{ margin: '20px 0px', display: display }}>
+                <Table sx={{ minWidth: 650 }} aria-label="sticky table">
+                    <TableHead sx={{ background: 'linear-gradient(to left, #07a7af, #01519a)' }}>
+                        <TableRow>
+                            <TableCell sx={{ color: '#FFFFFF' }}>Email</TableCell>
+                            <TableCell align="center" sx={{ color: '#FFFFFF' }}>First Name</TableCell>
+                            <TableCell align="center" sx={{ color: '#FFFFFF' }}>Last Name</TableCell>
+                            <TableCell align="center" sx={{ color: '#FFFFFF' }}>Date of Birth</TableCell>
+                            <TableCell align="center" sx={{ color: '#FFFFFF' }}>Phone Number</TableCell>
+                            <TableCell align="right"></TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {searchMemberships.map(membership => (
+                            <TableRow
+                                key={membership._id}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell component="th" scope="row">
+                                    {membership._id}
+                                </TableCell>
+                                <TableCell align="center">{membership.email}</TableCell>
+                                <TableCell align="center">{membership.membershipType}</TableCell>
+                                <TableCell align="center" sx={{ color: (new Date(membership.expirationDate)) > (new Date()) ? "#4BB543" : "#FF0000", fontWeight: "500" }}>{formatDate(membership.expirationDate)}
+                                </TableCell>
+
+                                <TableCell align="center">
+                                    <Button variant='contained' color='success' sx={{ margin: '5px', color: '#FFFFFF' }} onClick={() => {
+                                        getMembership(membership._id);
+                                        displayUpdateForm();
+                                    }}>Update</Button>
+                                    <Button variant='contained' color='error' sx={{ margin: '5px' }} onClick={() => { deleteMembership(membership._id) }}>Cancel</Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+
+            <TableContainer component={Paper} sx={{ margin: '20px 0px', display: sortDisplay }}>
+                <Table sx={{ minWidth: 650 }} aria-label="sticky table">
+                    <TableHead sx={{ background: 'linear-gradient(to left, #07a7af, #01519a)' }}>
+                        <TableRow>
+                            <TableCell sx={{ color: '#FFFFFF' }}>Email</TableCell>
+                            <TableCell align="center" sx={{ color: '#FFFFFF' }}>First Name</TableCell>
+                            <TableCell align="center" sx={{ color: '#FFFFFF' }}>Last Name</TableCell>
+                            <TableCell align="center" sx={{ color: '#FFFFFF' }}>Date of Birth</TableCell>
+                            <TableCell align="center" sx={{ color: '#FFFFFF' }}>Phone Number</TableCell>
+                            <TableCell align="right"></TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {sortMemberships.map(membership => (
+                            <TableRow
+                                key={membership._id}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell component="th" scope="row">
+                                    {membership._id}
+                                </TableCell>
+                                <TableCell align="center">{membership.email}</TableCell>
+                                <TableCell align="center">{membership.membershipType}</TableCell>
+                                <TableCell align="center" sx={{ color: (new Date(membership.expirationDate)) > (new Date()) ? "#4BB543" : "#FF0000", fontWeight: "500" }}>{formatDate(membership.expirationDate)}
+                                </TableCell>
+
+                                <TableCell align="center">
+                                    <Button variant='contained' color='success' sx={{ margin: '5px', color: '#FFFFFF' }} onClick={() => {
+                                        getMembership(membership._id);
+                                        displayUpdateForm();
+                                    }}>Update</Button>
+                                    <Button variant='contained' color='error' sx={{ margin: '5px' }} onClick={() => { deleteMembership(membership._id) }}>Cancel</Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+
+            <TableContainer component={Paper} sx={{ display: mainDisplay }}>
                 <Table sx={{ minWidth: 650 }} aria-label="sticky table">
                     <TableHead sx={{ background: 'linear-gradient(to left, #07a7af, #01519a)' }}>
                         <TableRow>
@@ -190,7 +398,7 @@ const DisplayMemberships = () => {
                     </form>
                 </UpdateBoxContent>
             </UpdateBox>
-            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{
+            <Snackbar open={open} autoHideDuration={2000} onClose={handleClose} anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'right',
             }}>

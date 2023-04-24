@@ -11,10 +11,41 @@ import Paper from '@mui/material/Paper';
 import CancelIcon from '@mui/icons-material/Close';
 import '../../styles/index.css'
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import SearchIcon from '@mui/icons-material/Search';
+import FlexBetween from '../../components/FlexBetween.js'
 
 const DisplayUsers = () => {
 
+    const loggedUser = useSelector((state) => state.user)
+    const token = useSelector((state) => state.token)
+
+    const navigate = useNavigate();
+
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    };
+
+    //all users
     const [allUsers, setAllUsers] = useState([]);
+
+    useEffect(() => {
+        const getAllUsers = () => {
+            axios.get('http://localhost:8090/user', config)
+                .then((res) => {
+                    setAllUsers(res.data);
+                })
+                .catch((err) => {
+                    alert('Unable to get all users ' + err.message);
+                })
+        }
+        getAllUsers();
+    }, [])
+
+    //update users
     const [fName, setFName] = useState("");
     const [lName, setLName] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState("");
@@ -23,60 +54,19 @@ const DisplayUsers = () => {
     const [oldEmail, setOldEmail] = useState("");
     const [open, setOpen] = useState(false);
 
-    const theme = useTheme();
-
-    const loggedUser = useSelector((state) => state.user)
-    const token = useSelector((state) => state.token)
-
-    useEffect(() => {
-        const getAllUsers = () => {
-            axios.get('http://localhost:8090/user').then((res) => {
-                setAllUsers(res.data);
-            }).catch((err) => {
-                alert('Unable to get all users ' + err.message);
-            })
-        }
-        getAllUsers();
-    }, [])
-
-    const deleteUser = (email) => {
-        axios.delete(`http://localhost:8090/user/delete/${email}`).then(() => {
-            alert('User deleted successfully');
-            location.reload();
-        }).catch((err) => {
-            alert('User delete unsuccessful ' + err.message);
-        })
-    }
-
     const getUser = (email) => {
-        axios.get(`http://localhost:8090/user/${email}`).then((res) => {
-            setFName(res.data.firstName);
-            setLName(res.data.lastName);
-            setEmail(res.data.email);
-            setDateOfBirth(res.data.dateOfBirth);
-            setPhoneNumber(res.data.phoneNumber);
-            setOldEmail(res.data.email);
-        }).catch((err) => {
-            alert('Unable to get user ' + err.message);
-        })
-    }
-
-    const formatDate = (date) => {
-        return (date.substring(0, 10));
-    };
-
-    const displayUpdateForm = () => {
-        document.getElementById('update-box').style.display = "block";
-    }
-
-    const hideUpdateForm = () => {
-        document.getElementById('update-box').style.display = "none";
-        setFName('');
-        setLName('');
-        setEmail('');
-        setDateOfBirth('');
-        setPhoneNumber('');
-        setOldEmail('');
+        axios.get(`http://localhost:8090/user/${email}`)
+            .then((res) => {
+                setFName(res.data.firstName);
+                setLName(res.data.lastName);
+                setEmail(res.data.email);
+                setDateOfBirth(res.data.dateOfBirth);
+                setPhoneNumber(res.data.phoneNumber);
+                setOldEmail(res.data.email);
+            })
+            .catch((err) => {
+                alert('Unable to get user ' + err.message);
+            })
     }
 
     const handleSubmit = async (e) => {
@@ -107,19 +97,143 @@ const DisplayUsers = () => {
 
     }
 
+    //theme
+    const theme = useTheme();
+
+    //delete user
+    const deleteUser = (email) => {
+        axios.delete(`http://localhost:8090/user/delete/${email}`)
+            .then(() => {
+                alert('User deleted successfully');
+                location.reload();
+            })
+            .catch((err) => {
+                alert('User delete unsuccessful ' + err.message);
+            })
+    }
+
+    //format date
+    const formatDate = (date) => {
+        return (date.substring(0, 10));
+    };
+
+    //display updateform
+    const displayUpdateForm = () => {
+        document.getElementById('update-box').style.display = "block";
+    }
+
+    //hide updateform
+    const hideUpdateForm = () => {
+        document.getElementById('update-box').style.display = "none";
+        setFName('');
+        setLName('');
+        setEmail('');
+        setDateOfBirth('');
+        setPhoneNumber('');
+        setOldEmail('');
+    }
+
+    //alert open
     const handleOpen = () => {
         setOpen(true);
     }
 
+    //alert close
     const handleClose = () => {
         setOpen(false);
         location.reload();
     }
 
+    //search
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchUsers, setSearchUsers] = useState([]);
+    const [noResult, setNoResult] = useState('');
+    const [display, setDisplay] = useState('none');
+    const [displayMain, setDisplayMain] = useState('block');
+
+    const handleSearch = async () => {
+        if (searchTerm != '') {
+            axios.get(`http://localhost:8090/user/search/byemail?term=${searchTerm}`)
+                .then((res) => {
+                    setSearchUsers(res.data);
+
+                    if (res.data.length === 0) {
+                        setNoResult('No results')
+                        setDisplay('none')
+                    } else {
+                        setNoResult('')
+                        setDisplay('block');
+                    }
+                    setDisplayMain('none')
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        }
+    };
 
     return (
         <>
-            <TableContainer component={Paper}>
+            {/* search bar */}
+            <FlexBetween>
+                <FlexBetween>
+                    <Button onClick={() => { window.location.reload() }}>
+                        All
+                    </Button>
+                    <Box display="flex" alignItems="center" width="250px" padding="5px 10px" sx={{ backgroundColor: theme.palette.background.alt, borderRadius: '10px', boxShadow: '0px 0px 2px #000000' }}>
+                        <TextField placeholder='Search...' variant='standard' InputProps={{
+                            disableUnderline: true
+                        }} type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                        <IconButton onClick={handleSearch} sx={{ width: "40px" }}>
+                            <SearchIcon />
+                        </IconButton>
+                    </Box>
+                </FlexBetween>
+            </FlexBetween>
+
+            {/* search results */}
+            <p align="center">{noResult}</p>
+            <TableContainer component={Paper} sx={{ margin: '20px 0px', display: display }}>
+                <Table sx={{ minWidth: 650 }} aria-label="sticky table">
+                    <TableHead sx={{ background: 'linear-gradient(to left, #07a7af, #01519a)' }}>
+                        <TableRow>
+                            <TableCell sx={{ color: '#FFFFFF' }}>Email</TableCell>
+                            <TableCell align="center" sx={{ color: '#FFFFFF' }}>First Name</TableCell>
+                            <TableCell align="center" sx={{ color: '#FFFFFF' }}>Last Name</TableCell>
+                            <TableCell align="center" sx={{ color: '#FFFFFF' }}>Date of Birth</TableCell>
+                            <TableCell align="center" sx={{ color: '#FFFFFF' }}>Phone Number</TableCell>
+                            <TableCell align="right"></TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {searchUsers.map(user => (
+                            <TableRow
+                                key={user.email}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell component="th" scope="row">
+                                    {user.email}
+                                </TableCell>
+                                <TableCell align="center">{user.firstName}</TableCell>
+                                <TableCell align="center">{user.lastName}</TableCell>
+                                <TableCell align="center">{formatDate(user.dateOfBirth)}
+                                </TableCell>
+                                <TableCell align="center">{user.phoneNumber}</TableCell>
+                                <TableCell align="center">
+                                    <Button variant='contained' color='success' sx={{ margin: '5px', color: '#FFFFFF' }} onClick={() => {
+                                        getUser(user.email);
+                                        displayUpdateForm();
+                                    }}>Update</Button>
+                                    <Button variant='contained' color='error' sx={{ margin: '5px' }} onClick={() => { deleteUser(user.email) }}>Delete</Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+
+            {/* display all users */}
+            <TableContainer component={Paper} sx={{ marginTop: '20px', display: displayMain }}>
                 <Table sx={{ minWidth: 650 }} aria-label="sticky table">
                     <TableHead sx={{ background: 'linear-gradient(to left, #07a7af, #01519a)' }}>
                         <TableRow>
@@ -157,6 +271,8 @@ const DisplayUsers = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
+
+            {/* update form */}
             <Box id="update-box" sx={{ backgroundColor: "rgba(0,0,0,0.3)", width: "100%", height: "100%", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
                 <Box maxWidth="500px" height="520px" sx={{ backgroundColor: theme.palette.background.alt, position: "relative", top: "50%", left: "50%", transform: "translate(-50%, -50%)", boxShadow: "0px 0px 10px rgba(0,0,0,0.5)", borderRadius: "5px" }}>
                     <IconButton sx={{ float: "right", margin: "5px" }}>
@@ -212,7 +328,7 @@ const DisplayUsers = () => {
                 </Box>
             </Box>
 
-            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{
+            <Snackbar open={open} autoHideDuration={2000} onClose={handleClose} anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'right',
             }}>

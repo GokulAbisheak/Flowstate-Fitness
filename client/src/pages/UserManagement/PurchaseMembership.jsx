@@ -1,11 +1,25 @@
-import { Button, Card, CardActionArea, CardContent, CardMedia, Grid, Typography, Box, useTheme } from '@mui/material';
-import React from 'react';
+import { Button, Card, CardActionArea, CardContent, CardMedia, Grid, Typography, Box, useTheme, IconButton, Snackbar, Alert } from '@mui/material';
+import React, { useState } from 'react';
 import FlowTokenIcon from '@mui/icons-material/Pix';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
+import { useSelector } from 'react-redux';
+import UpdateBox from '../../components/UpdateBox.js';
+import CancelIcon from '@mui/icons-material/Close';
+import axios from 'axios'
 
 const PurchaseMembership = () => {
 
+    const loggedUser = useSelector((state) => state.user)
+
     const theme = useTheme();
+    const [memberEmail, setMembershipEmail] = useState(loggedUser.email)
+    const [membershipType, setMembershipType] = useState('');
+    const [flowToken, setFlowToken] = useState();
+    const [freeFlowToken, setFreeFlowToken] = useState();
+    const [membershipExpiration, setMemebershipExpiration] = useState('');
+
+    const [openSuccess, setOpenSuccess] = useState(false);
+    const [openError, setOpenError] = useState(false);
 
     const listItem = [
         {
@@ -39,6 +53,98 @@ const PurchaseMembership = () => {
         }
     ]
 
+    const getPurchaseMembership = (type) => {
+
+        const today = new Date();
+
+        function addMonths(date, months) {
+            date.setMonth(date.getMonth() + months);
+
+            return (((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '-' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '-' + date.getFullYear())
+        }
+
+        if (type === 'Gold') {
+            setMembershipType('Gold')
+            setFlowToken(8000)
+            setMemebershipExpiration(addMonths(today, 12))
+            setFreeFlowToken(1000)
+        } else if (type === 'Silver') {
+            setMembershipType('Silver')
+            setFlowToken(5000)
+            setMemebershipExpiration(addMonths(today, 6))
+            setFreeFlowToken(400)
+        } else if (type === 'Bronze') {
+            setMembershipType('Bronze')
+            setFlowToken(1000)
+            setMemebershipExpiration(addMonths(today, 1))
+            setFreeFlowToken(0)
+        }
+        displayPurchaseBox()
+    }
+
+    const displayPurchaseBox = () => {
+        document.getElementById('update-box').style.display = "block";
+    }
+
+    const hidePurchaseBox = () => {
+        document.getElementById('update-box').style.display = "none";
+    }
+
+    const purchaseWithFlowToken = () => {
+        console.log(loggedUser.email)
+
+        let availableFlowTokens
+
+        axios.get(`http://localhost:8090/user/${loggedUser.email}`).then((res) => {
+            availableFlowTokens = res.data.flowTokens
+            if (availableFlowTokens >= flowToken) {
+                let newFlowTokens = availableFlowTokens - flowToken + freeFlowToken
+                axios.patch(`http://localhost:8090/user/update/${loggedUser.email}`, { flowTokens: newFlowTokens }).then((res) => {
+                    axios.get(`http://localhost:8090/membership/email/${loggedUser.email}`).then((res) => {
+                        const tempId = res.data._id;
+                        axios.patch(`http://localhost:8090/membership/update/${tempId}`, { expirationDate: membershipExpiration }).then((res) => {
+                            handleOpenSuccess();
+                        })
+                    }).catch(() => {
+                        console.log(memberEmail)
+                        console.log(membershipType)
+                        console.log(membershipExpiration)
+
+                        const newMembership = {
+                            email : memberEmail,
+                            membershipType: membershipType,
+                            expirationDate: membershipExpiration
+                        }
+
+                        axios.post('http://localhost:8090/membership/add', newMembership).then((res) => {
+                            handleOpenSuccess();
+                        }).catch(() => {
+
+                        })
+                    })
+                })
+            } else {
+                handleOpenError();
+            }
+        })
+    }
+
+    const handleOpenSuccess = () => {
+        setOpenSuccess(true);
+    }
+
+    const handleCloseSuccess = () => {
+        setOpenSuccess(false);
+    }
+
+    const handleOpenError = () => {
+        setOpenError(true);
+    }
+
+    const handleCloseError = () => {
+        setOpenError(false);
+    }
+
     return (
         <>
             <Grid container spacing={2} alignItems="center"
@@ -52,7 +158,7 @@ const PurchaseMembership = () => {
                                 component="img"
                                 height="140"
                                 image={listDetail.imgurl}
-                                alt="green iguana"
+                                alt={listDetail.title + " Logo"}
                             />
                             <CardContent>
                                 <Typography align='center' fontWeight='500' textTransform='uppercase' gutterBottom variant="h4" component="div">
@@ -73,7 +179,10 @@ const PurchaseMembership = () => {
                                     {listDetail.flowtokens} FlowTokens Included
                                 </Typography>
                                 <Box textAlign='center' marginTop={10} padding="0px 3px">
-                                    <Button fullWidth variant='contained'>
+                                    <Button fullWidth variant='contained' onClick={() => {
+                                        getPurchaseMembership(listDetail.title)
+                                    }
+                                    }>
                                         Purchase
                                     </Button>
                                 </Box>
@@ -82,6 +191,33 @@ const PurchaseMembership = () => {
                     </Grid>
                 ))}
             </Grid>
+            <UpdateBox id="update-box">
+                <Box maxWidth="500px" sx={{ backgroundColor: theme.palette.background.alt, position: "relative", top: "50%", left: "50%", transform: "translate(-50%, -50%)", boxShadow: "0px 0px 10px rgba(0,0,0,0.5)", borderRadius: "5px", padding: '20px' }}>
+                    <IconButton sx={{ float: "right" }}>
+                        <CancelIcon onClick={() => { hidePurchaseBox() }} />
+                    </IconButton>
+                    <Button variant='contained' fullWidth sx={{ marginTop: '10px' }} onClick={() => { purchaseWithFlowToken() }}>Purchase with {flowToken} FlowTokens</Button>
+                    <Button variant='contained' fullWidth sx={{ marginTop: '10px' }}>Purchase with Credit/Debit Card</Button>
+                </Box>
+            </UpdateBox>
+
+            <Snackbar open={openSuccess} autoHideDuration={3000} onClose={handleCloseSuccess} anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+            }}>
+                <Alert variant="filled" onClose={handleCloseSuccess} severity="success" sx={{ width: '100%' }}>
+                    Purchase Success!
+                </Alert>
+            </Snackbar>
+
+            <Snackbar open={openError} autoHideDuration={3000} onClose={handleCloseSuccess} anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+            }}>
+                <Alert variant="filled" onClose={handleCloseError} severity="error" sx={{ width: '100%' }}>
+                    Purchase Failed! Not enough FlowTokens
+                </Alert>
+            </Snackbar>
         </>
     );
 }

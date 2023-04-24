@@ -1,21 +1,21 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Box, Button, Grid, Link, TextField, InputAdornment, useTheme } from '@mui/material';
 import axios from 'axios';
 
-const DeleteReviews = () => {
+const DeletePayment = () => {
 
-    const [id, setID] = useState("");
+    const [productID, setPID] = useState("");
 
     const theme = useTheme();
 
-    const onSubmitDeleteReviews = async event => {
+    const onSubmitDeletePayments = async event => {
         event.preventDefault();
 
         try {
-            axios.delete(`http://localhost:8090/review/delete/${id}`);
-            alert('Deleting Successful!');
+            axios.delete(`http://localhost:8090/product/delete/${paymentID}`);
+            alert('Payment Deleting Successful!');
         } catch (err) {
-            alert('Product deleting failed! ' + err)
+            alert('Payment deleting failed! ' + err)
         }
     };
 
@@ -23,9 +23,9 @@ const DeleteReviews = () => {
 
         <>
 
-            <Grid display="flex" justifyContent="center"><h1>Delete Reviews Here</h1></Grid>
+            <Grid display="flex" justifyContent="center"><h1>Delete Payment Here</h1></Grid>
 
-            <form onSubmit={onSubmitDeleteReviews}>
+            <form onSubmit={onSubmitDeletePayments}>
 
                 <Grid
                     display="flex"
@@ -38,12 +38,15 @@ const DeleteReviews = () => {
                     <Grid item>
                         <TextField
 
-                            label="User ID"
+                            id="id-input"
+                            name="paymentID"
+                            label="Payment ID"
                             type="text"
                             margin="normal"
+                            value={paymentID}
                             sx={{ width: 300 }}
                             onChange={(e) => {
-                                setID(e.target.value)
+                                setPID(e.target.value)
                             }} />
                     </Grid>
 
@@ -57,6 +60,7 @@ const DeleteReviews = () => {
 
         </>
     )
+    
 }
 
-export default DeleteReviews;
+export default DeletePayment;
