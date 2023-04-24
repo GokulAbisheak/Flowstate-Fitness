@@ -6,5 +6,7 @@ const AttendanceRouter = express.Router();
 AttendanceRouter.get('/', AttendanceController.getAttendance);
 AttendanceRouter.get('/:name', AttendanceController.getAttendanceById);
 AttendanceRouter.post('/add', AttendanceController.createAttendance);
+AttendanceRouter.patch('/update/:name', AttendanceController.updateAttendanceByName);
+AttendanceRouter.delete('/delete/:name', AttendanceController.deleteAttendanceByName)
 
 export default AttendanceRouter;

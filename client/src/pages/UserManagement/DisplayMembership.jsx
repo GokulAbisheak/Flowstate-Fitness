@@ -190,7 +190,7 @@ const DisplayMemberships = () => {
                     </form>
                 </UpdateBoxContent>
             </UpdateBox>
-            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{
+            <Snackbar open={open} autoHideDuration={2000} onClose={handleClose} anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'right',
             }}>

@@ -16,5 +16,3 @@ const Session = mongoose.model('Session', calendarSchema);
 
 export default Session;
 
-module.exports = router;
-
