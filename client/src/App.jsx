@@ -41,6 +41,7 @@ import UpdateFinances from './pages/FinanceManagement/UpdateFinances';
 import DeleteFinances from './pages/FinanceManagement/DeleteFinances';
 import ScanMembership from './pages/UserManagement/ScanMembership';
 import Profile from './pages/UserManagement/Profile';
+import AddTrainer from './pages/TrainerManagement/AddTrainer';
 
 
 
@@ -61,10 +62,13 @@ function App() {
               <Route path="/" element={<Navigate to="/admin/dashboard" />} />
               <Route path="/admin/dashboard" element={<GridPage />} />
               <Route path="/admin/members" element={<DisplayUsers />} />
-              <Route path="/admin/trainers" element={<DisplayTrainers />} />
               <Route path="/admin/users" element={<DisplayUsers />} />
               <Route path="/admin/membership" element={<DisplayMemberships />} />
               <Route path="/admin/scan" element={<ScanMembership />} />
+
+              {/* Trainer Management */}
+              <Route path="/admin/trainers" element={<DisplayTrainers />} />
+              <Route path="/admin/addTrainers" element={<AddTrainer />} />
 
               {/* Product Management */}
               <Route path="/admin/products" element={<ProductHandle />} />
