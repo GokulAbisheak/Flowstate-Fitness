@@ -22,7 +22,7 @@ const Chat = ({ sender, receiver }) => {
   const classes = useStyles();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const socket = io("http://localhost:3030");
+  const socket = io("http://localhost:8090");
 
   useEffect(() => {
     socket.on("connect", () => {

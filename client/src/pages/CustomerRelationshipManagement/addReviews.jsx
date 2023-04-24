@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { TextField, Rating, Button, Grid } from '@mui/material';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 const ReviewForm = () => {
 
   const loggedUser = useSelector((state) => state.user)
 
-  const [id, setID] = useState(loggedUser.email);
+  const [id, setID] = useState(loggedUser.email);//(loggedUser.email);
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState('');
 
@@ -20,11 +21,11 @@ const ReviewForm = () => {
 
   };
 
-  axios.post('http://localhost:8090/review/add', newProduct).then(() => {
+  axios.post('http://localhost:8090/review/add', newReview).then(() => {
       alert('Adding Successful!')
-      window.location.href = '/review'
+      // window.location.href = '/review'
 
-      setID('');
+      // setID('');
       setComment('');
       setRating('');
 
@@ -68,9 +69,9 @@ const ReviewForm = () => {
 
               label="UserID"
               type="text"
-              value={id}
+              // value={id}
               margin="normal"
-              sx={{ width: 300, display: "none" }} />
+              sx={{ width: 300, display: "none" }}/>
           </Grid>
 
           <Grid item>
@@ -80,14 +81,20 @@ const ReviewForm = () => {
               type="text"
               margin="normal"
               multiline
-              sx={{ width: 300 }} />
+              sx={{ width: 300 }} 
+              onChange={(e) => {
+                setComment(e.target.value)
+            }}/>
           </Grid>
 
           <Grid item>
             <Rating
               label="Ratings"
               margin="normal"
-              name="simple-controlled" />
+              name="simple-controlled" 
+              onChange={(e) => {
+                setRating(e.target.value)
+            }}/>
 
           </Grid>
 

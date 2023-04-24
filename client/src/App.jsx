@@ -22,15 +22,17 @@ import UpdateProducts from './pages/ProductManagement/UpdateProducts';
 import DeleteProducts from './pages/ProductManagement/DeleteProducts';
 import AddReviews from './pages/CustomerRelationshipManagement/addReviews';
 import UpdateReviews from './pages/CustomerRelationshipManagement/UpdateReviews';
-import DeleteReviews from './pages/CustomerRelationshipManagement/deleteReviews';
+//import DeleteReviews from './pages/CustomerRelationshipManagement/deleteReviews';
 import Cart from './pages/ProductManagement/Cart';
 import TrainerCalendar from './pages/PersonalTrainingManagement/TrainerCalendar';
 import Attendance from './pages/PersonalTrainingManagement/Attendance';
 import AddAttendance from './pages/PersonalTrainingManagement/AddAttendance';
 import ProductScreen from './pages/ProductManagement/ProductScreen';
 import ProductHandle from './pages/ProductManagement/ProductHandle';
+import DisplayReviewsUser from './pages/CustomerRelationshipManagement/DisplayReviewsUser';
+import DisplayReviewsAdmin from './pages/CustomerRelationshipManagement/DisplayReviewsAdmin';
 
-//import LiveChat from'./pages/CustomerRelationshipManagement/LiveChat';
+
 
 
 
@@ -59,8 +61,10 @@ function App() {
               <Route path="/admin/schedule" element={<TrainerCalendar/>}/>
               <Route path="/admin/attendance" element={<Attendance/>}/>
               <Route path="/admin/addAttendance" element={<AddAttendance/>}/>
+              <Route path="/admin/feedback" element={<DisplayReviewsAdmin/>}/>
 
-              {/* <Route path="/admin/LiveChat" element={<LiveChat/>}/> */}
+
+             
 
               <Route path="/button" element={<Main />} />
             </Route>
@@ -71,9 +75,11 @@ function App() {
               <Route path="/user/membership" element={<PurchaseMembership />} />
               <Route path="/user/addReviews" element={<AddReviews/>}/>
               <Route path="/user/updateReviews" element={<UpdateReviews/>}/>
-              <Route path="/user/deleteReviews" element={<DeleteReviews/>}/>
+              {/* <Route path="/user/deleteReviews" element={<DeleteReviews/>}/> */}
               <Route path="/user/productScreen" element={<ProductScreen/>}/>
               <Route path="/user/cart" element={<Cart/>} />
+              <Route path="/user/displayReviewUser"element={<DisplayReviewsUser/>}/>
+             
 
             </Route>
             <Route path="*" element={<NotFound />} />
