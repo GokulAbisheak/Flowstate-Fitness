@@ -30,6 +30,7 @@ import Attendance from './pages/PersonalTrainingManagement/Attendance';
 import AddAttendance from './pages/PersonalTrainingManagement/AddAttendance';
 import ProductScreen from './pages/ProductManagement/ProductScreen';
 import ProductHandle from './pages/ProductManagement/ProductHandle';
+import UserPrivateRoute from './components/UserPrivateRoute';
 import DisplayReviewsUser from './pages/CustomerRelationshipManagement/DisplayReviewsUser';
 import DisplayReviewsAdmin from './pages/CustomerRelationshipManagement/DisplayReviewsAdmin';
 import UpdateAttendance from './pages/PersonalTrainingManagement/UpdateAttendance';
@@ -94,8 +95,10 @@ function App() {
               {/* User Management */}
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignUp />} />
-              <Route path="/user/membership" element={<PurchaseMembership />} />
-              <Route path="/user/profile" element={<Profile />} />
+              <Route element={<UserPrivateRoute />}>
+                <Route path="/user/membership" element={<PurchaseMembership />} />
+                <Route path="/user/profile" element={<Profile />} />
+              </Route>
 
               {/* Customer Relationship Management */}
               <Route path="/user/addReviews" element={<AddReviews />} />
