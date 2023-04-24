@@ -9,10 +9,7 @@ import reviewRouter from "./routes/Review.route.js";
 import paymentRouter from "./routes/Payment.route.js";
 
 import membershipRouter from "./routes/Membership.route.js";
-<<<<<<< HEAD
-=======
-
->>>>>>> 6263ea8071982797702c81aa51d33cfea091c27a
+import productRouter from './routes/Product.route.js'
 import sessionRouter from "./routes/Session.route.js";
 import financeRouter from "./routes/Finance.route.js"
 import uploadImage from "./uploadImage.js";
