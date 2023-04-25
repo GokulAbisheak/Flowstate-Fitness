@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Button, IconButton, Input, TextField, useTheme } from '@mui/material';
+import { Box, Button, Fab, IconButton, Input, TextField, useTheme } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,6 +11,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import CancelIcon from '@mui/icons-material/Close';
 import '../../styles/index.css'
+import AddTrainer from './AddTrainer';
+import { AlignHorizontalRight } from '@mui/icons-material';
+import {  useNavigate } from 'react-router-dom';
+
 
 const DisplayTrainers = () => {
 
@@ -103,10 +108,25 @@ const DisplayTrainers = () => {
             alert('Update Failed ' + err.message);
         })
 
+
     }
+
+    const navigate = useNavigate()
 
     return (
         <>
+<Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+  <Fab
+    color='primary'
+    aria-label='add'
+    sx={{ margin: '5px 20px 5px 5px', color: '#FFFFFF' }}
+    onClick={()=>{
+        navigate("/admin/addTrainers");
+    }}
+  >
+    <AddIcon />
+  </Fab>
+</Box>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="sticky table">
                     <TableHead sx={{ background: 'linear-gradient(to left, #07a7af, #01519a)' }}>
