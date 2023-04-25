@@ -12,8 +12,9 @@ const Login = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [invalid, setInvalid] = useState('');
+    
     const navigate = useNavigate();
-
     const dispatch = useDispatch()
 
     const handleLoginSubmit = (e) => {
@@ -32,11 +33,10 @@ const Login = () => {
             console.log(user)
             dispatch(setCredentials({user, token}))
 
-            alert('Login Successful!')
-            navigate('/admin/users')
+            navigate('/')
 
         }).catch((err) => {
-            alert('Invalid Credentials')
+            setInvalid('Invalid Credentials')
         })
     }
 
@@ -75,6 +75,7 @@ const Login = () => {
                                     setEmail(e.target.value);
                                 }
                                 }
+                                error={Boolean(invalid)}
                             />
 
                             <TextField
@@ -89,13 +90,15 @@ const Login = () => {
                                     setPassword(e.target.value);
                                 }
                                 }
+                                error={Boolean(invalid)}
+                                helperText={invalid}
                             />
 
                             <Button type="submit" variant="contained" sx={{ margin: "20px auto", width: "100%", color: "#FFFFFF" }}>
                                 login
                             </Button>
                         </form>
-                        <Link href="#" underline="hover">
+                        <Link href="/forgot" underline="hover">
                             Forgot Password?
                         </Link>
                     </Box>
