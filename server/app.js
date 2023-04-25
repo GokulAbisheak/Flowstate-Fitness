@@ -10,6 +10,7 @@ import reviewRouter from "./routes/Review.route.js";
 
 import membershipRouter from "./routes/Membership.route.js";
 
+import productRouter from './routes/Product.route.js'
 import sessionRouter from "./routes/Session.route.js";
 //import financeRouter from "./routes/Finance.route.js"
 import uploadImage from "./uploadImage.js";

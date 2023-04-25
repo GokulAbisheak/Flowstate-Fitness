@@ -20,6 +20,10 @@ const globalTheme = (mode) => {
                     dif: "#0e1c2f",
                 },
 
+                white: {
+                    main: "#FFFFFF"
+                },
+
                 
             } : {
                 primary: {
@@ -35,6 +39,10 @@ const globalTheme = (mode) => {
                     default: "#edf1fa",
                     alt: "#FAFAFF",
                     dif: "#eafbfc",
+                },
+
+                white: {
+                    main: "#FFFFFF"
                 },
 
             })

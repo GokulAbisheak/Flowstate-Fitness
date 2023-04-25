@@ -1,4 +1,4 @@
-import { Button, Card, CardActionArea, CardContent, CardMedia, Grid, Typography, Box, useTheme } from '@mui/material';
+import { Button, Card, CardActionArea, CardContent, CardMedia, Grid, Typography, Box, useTheme, TextField, InputAdornment } from '@mui/material';
 import React, {useState} from "react";
 import axios from 'axios';
 
@@ -22,21 +22,21 @@ export default function Main() {
     const onSubmitMainPayment = (event) => {
         event.preventDefault();
 
-        const data = new FormData()
-        data.append("file", image)
-        data.append("upload_preset", "mernpro")
-        data.append("cloud_name", "dloxej4xv")
-        fetch("https://api.cloudinary.com/v1_1/dloxej4xv/image/upload", {
-            method:"POST",
-            body:data
-        })
-        .then(res=>res.json())
-        .then(data=>{
-            setURL([...url, data.url])
-        })
-        .catch(err=>{
-            console.log(err)
-        })
+        // const data = new FormData()
+        // data.append("file", image)
+        // data.append("upload_preset", "mernpro")
+        // data.append("cloud_name", "dloxej4xv")
+        // fetch("https://api.cloudinary.com/v1_1/dloxej4xv/image/upload", {
+        //     method:"POST",
+        //     body:data
+        // })
+        // .then(res=>res.json())
+        // .then(data=>{
+        //     setURL([...url, data.url])
+        // })
+        // .catch(err=>{
+        //     console.log(err)
+        // })
 
         //Create new payment
         const newPayment = {
