@@ -10,6 +10,7 @@ userRouter.get('/auth/me', UserController.getMe);
 userRouter.get('/search/byemail', UserController.searchUser);
 userRouter.post('/add', UserController.createUser);
 userRouter.patch('/update/:email', UserController.updateUserByEmail);
+userRouter.patch('/changepassword/:email', UserController.changePassword);
 userRouter.delete('/delete/:email', UserController.deleteUserByEmail);
 userRouter.post('/login', UserController.loginUser);
 

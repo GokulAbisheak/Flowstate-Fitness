@@ -72,6 +72,7 @@ const UserController = {
     //Update a user by email
     updateUserByEmail: async (req, res) => {
         try {
+
             const user = await User.findOneAndUpdate(
                 { email: req.params.email },
                 req.body,
@@ -89,10 +90,35 @@ const UserController = {
         }
     },
 
+    //change password
+    changePassword: async (req, res) => {
+        try {
+            const password = req.body.password
+
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(password, salt);
+
+            const user = await User.findOneAndUpdate(
+                { email: req.params.email },
+                { password: hashedPassword },
+                { new: true }
+            );
+            logger.info("User " + req.params.email + " update successful");
+            if (!user) {
+                logger.error("User " + req.params.email + " not found");
+                return res.status(404).json({ message: 'User not found' });
+            }
+            res.status(200).json(user);
+        } catch (error) {
+            res.status(400).json({ message: error.message });
+            logger.error("User " + req.params.email + " update unsuccessful");
+        }
+    },
+
     //Delete a user by email
     deleteUserByEmail: async (req, res) => {
         try {
-            const user = await User.findOneAndDelete({email: req.params.email});
+            const user = await User.findOneAndDelete({ email: req.params.email });
             if (!user) {
                 logger.error("User " + req.params.email + " not found");
                 return res.status(404).json({ message: 'User not found' });
@@ -140,7 +166,7 @@ const UserController = {
                         { firstName: regex }
                     ]
                 },
-                {type: 'user'}
+                { type: 'user' }
             ]
 
         });
