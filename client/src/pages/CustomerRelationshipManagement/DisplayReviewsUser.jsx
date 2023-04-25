@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material';
-import { Card, Grid, CardMedia, CardContent, CardActions, CardActionArea, Typography, Button } from '@material-ui/core';
+import { Box,Card, Grid, CardMedia, CardContent, CardActions, CardActionArea, Typography, Button } from '@material-ui/core';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { styled } from '@mui/material/styles';
+
+
+const GradientBox = styled(Box)(({ theme }) => ({
+    background: 'linear-gradient(to bottom, #0d253f, #1d3d5c)',
+    borderRadius: theme.shape.borderRadius,
+    color: theme.palette.primary.contrastText,
+    padding: theme.spacing(2),
+}));
 
 const DisplayReviewsUser = () => {
 
@@ -48,14 +57,14 @@ const DisplayReviewsUser = () => {
         const theme = useTheme();
         return (
             <>
-                <Grid display="flex" alignItems="center" justifyContent="center"><Grid item><Button href="/user/addReviews" size="normal" color="primary" style={{ marginBottom: '10px' }}>Add Reviews</Button></Grid></Grid>
+                <Grid display="flex" alignItems="center" justifyContent="center" container spacing={2}><Grid item><Button variant='contained' href="/user/addReviews" size="normal" color="primary" style={{ marginBottom: '10px' }}>Add Reviews</Button></Grid></Grid>
                 <Grid container spacing={2}>
                     {userReviews.map((review) => (
                         <Grid item key={review.id} xs={12} sm={6} md={4}>
                             <Card sx={{ height: '100%' }}>
                                 <CardActionArea sx={{ height: '100%' }}>
 
-                                    <CardContent>
+                                    <CardContent><GradientBox>
                                         <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>
                                             {review._id}
                                         </Typography>
@@ -64,13 +73,13 @@ const DisplayReviewsUser = () => {
                                             <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>
                                                 {review.rating}
                                             </Typography>
-                                        </Typography>
+                                        </Typography></GradientBox>
                                         <p>Reply : {review.reply}</p>
                                     </CardContent>
                                 </CardActionArea>
                                 <Card style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <Button size="small" color="primary" href="/user/updateReviews">Update</Button>
-                                    <Button size="small" color="primary" onClick={() => {onSubmitDeleteReviews(review._id)}}>Delete</Button>
+                                    <Button size="small" color="primary" style={{ marginLeft: '10px', marginBottom: '10px' }}  href="/user/updateReviews" variant='contained'>Update</Button>
+                                    <Button size="small" color="primary"  style={{ marginRight: '10px',marginBottom: '10px'}} variant='contained' onClick={() => {onSubmitDeleteReviews(review._id)}}>Delete</Button>
                                 </Card>
                             </Card>
                         </Grid>
