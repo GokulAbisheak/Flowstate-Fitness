@@ -40,6 +40,8 @@ import UpdateFinances from './pages/FinanceManagement/UpdateFinances';
 import DeleteFinances from './pages/FinanceManagement/DeleteFinances';
 import ScanMembership from './pages/UserManagement/ScanMembership';
 import Profile from './pages/UserManagement/Profile';
+import AdminPrivateRoute from './components/AdminPrivateRoute';
+import ForgetPassword from './pages/UserManagement/ForgetPassword';
 
 
 
@@ -57,12 +59,15 @@ function App() {
             <Route element={<AdminLayout />}>
 
               {/* User Management */}
+
               <Route path="/" element={<Navigate to="/admin/dashboard" />} />
               <Route path="/admin/dashboard" element={<GridPage />} />
-              <Route path="/admin/members" element={<DisplayUsers />} />
-              <Route path="/admin/users" element={<DisplayUsers />} />
-              <Route path="/admin/membership" element={<DisplayMemberships />} />
-              <Route path="/admin/scan" element={<ScanMembership />} />
+              <Route element={<AdminPrivateRoute />}>
+                <Route path="/admin/members" element={<DisplayUsers />} />
+                <Route path="/admin/users" element={<DisplayUsers />} />
+                <Route path="/admin/membership" element={<DisplayMemberships />} />
+                <Route path="/admin/scan" element={<ScanMembership />} />
+              </Route>
 
               {/* Product Management */}
               <Route path="/admin/products" element={<ProductHandle />} />
@@ -95,7 +100,10 @@ function App() {
               {/* User Management */}
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignUp />} />
+              <Route path="/forgot" element={<ForgetPassword />} />
+
               <Route element={<UserPrivateRoute />}>
+                <Route path="/user" element={<Navigate to="/user/profile" />} />
                 <Route path="/user/membership" element={<PurchaseMembership />} />
                 <Route path="/user/profile" element={<Profile />} />
               </Route>
