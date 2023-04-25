@@ -1,11 +1,10 @@
-import express from 'express';
-import messageController from '../controllers/LiveChat.controller.js';
 
+import express from  'express';
+import chatController from '../controllers/LiveChat.controller.js';
 
-const livechatRouter = express.Router();
+const chatRouter = express.Router();
 
+chatRouter.get("/:sender/:receiver", chatController.getChats);
+chatRouter.post("/add/:sender", chatController.saveChat);
 
-livechatRouter.post('/send', messageController.sendMessage);
-livechatRouter.get('/:sender/:receiver', messageController.getMessages);
-
-module.exports = livechatRouter;
+module.exports = chatRouter;

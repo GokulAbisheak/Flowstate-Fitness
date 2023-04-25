@@ -44,6 +44,21 @@ import axios from 'axios';
                     pCountry: pCountry,
                     url: url
                 };
+        // const data = new FormData()
+        // data.append("file", image)
+        // data.append("upload_preset", "mernpro")
+        // data.append("cloud_name", "dloxej4xv")
+        // fetch("https://api.cloudinary.com/v1_1/dloxej4xv/image/upload", {
+        //     method:"POST",
+        //     body:data
+        // })
+        // .then(res=>res.json())
+        // .then(data=>{
+        //     setURL([...url, data.url])
+        // })
+        // .catch(err=>{
+        //     console.log(err)
+        // })
 
                 axios.post('http://localhost:8090/payment/add', newPayment)
                     .then(() => {
@@ -58,6 +73,7 @@ import axios from 'axios';
                         setPProv('');
                         setPZip('');
                         setPCountry('');
+                        setURL('');
                         alert('Adding Successful!');
                         window.location.href = '/admin/mnpayment'
                     })

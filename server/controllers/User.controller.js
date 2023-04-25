@@ -6,7 +6,7 @@ import bcrypt from 'bcryptjs';
 //Generate JWT
 const generateToken = (id) => {
     return jwt.sign(
-        {id},
+        { id },
         process.env.JWT_SECRET,
         { expiresIn: '30d' }
     )
@@ -92,7 +92,7 @@ const UserController = {
     //Delete a user by email
     deleteUserByEmail: async (req, res) => {
         try {
-            const user = await User.findOneAndDelete(req.params.email);
+            const user = await User.findOneAndDelete({email: req.params.email});
             if (!user) {
                 logger.error("User " + req.params.email + " not found");
                 return res.status(404).json({ message: 'User not found' });
@@ -108,9 +108,9 @@ const UserController = {
     //login
 
     loginUser: async (req, res) => {
-        const {email, password} = req.body
+        const { email, password } = req.body
         const user = await User.findOne({ email: email });
-        
+
         if (user && (await bcrypt.compare(password, user.password))) {
 
             const userLogin = {
@@ -126,6 +126,26 @@ const UserController = {
 
     getMe: async (req, res) => {
         res.json('Working')
+    },
+
+    searchUser: async (req, res) => {
+
+        const { term } = req.query;
+        const regex = new RegExp(term, 'i');
+        const users = await User.find({
+            $and: [
+                {
+                    $or: [
+                        { email: regex },
+                        { firstName: regex }
+                    ]
+                },
+                {type: 'user'}
+            ]
+
+        });
+
+        res.json(users);
     }
 };
 

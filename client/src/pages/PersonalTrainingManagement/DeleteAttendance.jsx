@@ -2,20 +2,20 @@ import React, {useState} from "react";
 import { Box, Button, Grid, Link, TextField, InputAdornment, useTheme } from '@mui/material';
 import axios from 'axios';
 
-const DeleteReviews = () => {
+const DeleteAttendance = () => {
 
-    const [id, setID] = useState("");
+    const [name, setName] = useState("");
 
     const theme = useTheme();
 
-    const onSubmitDeleteReviews = async event => {
+    const onSubmitDeleteAttendance = async event => {
         event.preventDefault();
 
         try {
-            axios.delete(`http://localhost:8090/review/delete/${id}`);
+            axios.delete(`http://localhost:8090/product/delete/${productID}`);
             alert('Deleting Successful!');
         } catch (err) {
-            alert('Product deleting failed! ' + err)
+            alert('Attendance deleting failed! ' + err)
         }
     };
 
@@ -23,9 +23,9 @@ const DeleteReviews = () => {
 
         <>
 
-            <Grid display="flex" justifyContent="center"><h1>Delete Reviews Here</h1></Grid>
+            <Grid display="flex" justifyContent="center"><h1>Delete Attendance Here</h1></Grid>
 
-            <form onSubmit={onSubmitDeleteReviews}>
+            <form onSubmit={onSubmitDeleteAttendance}>
 
                 <Grid
                     display="flex"
@@ -38,12 +38,16 @@ const DeleteReviews = () => {
                     <Grid item>
                         <TextField
 
-                            label="User ID"
+                            id="id-input"
+                            name="name"
+                            label="Name"
                             type="text"
                             margin="normal"
+                            value={productID}
                             sx={{ width: 300 }}
                             onChange={(e) => {
-                                setID(e.target.value)
+                                setName(e.target.value)
+                                
                             }} />
                     </Grid>
 
@@ -59,4 +63,4 @@ const DeleteReviews = () => {
     )
 }
 
-export default DeleteReviews;
+export default DeleteAttendance;

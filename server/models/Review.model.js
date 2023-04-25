@@ -11,12 +11,16 @@ const reviewSchema = new Schema({
 
   author: {
     type: String,
-    required: true
+    // required: true
   },
 
   rating: {
     type: Number,
     required: true
+  },
+
+  reply: {
+    type: String
   }
 
 }, { timestamps: true });
