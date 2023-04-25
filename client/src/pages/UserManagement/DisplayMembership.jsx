@@ -201,9 +201,7 @@ const DisplayMemberships = () => {
         <>
             <FlexBetween>
                 <FlexBetween>
-                    <Button onClick={() => { window.location.reload() }}>
-                        All
-                    </Button>
+                    
                     <Box display="flex" alignItems="center" width="250px" padding="5px 10px" sx={{ backgroundColor: theme.palette.background.alt, borderRadius: '10px', boxShadow: '0px 0px 2px #000000' }}>
                         <TextField placeholder='Search...' variant='standard' InputProps={{
                             disableUnderline: true
@@ -212,6 +210,9 @@ const DisplayMemberships = () => {
                             <SearchIcon />
                         </IconButton>
                     </Box>
+                    <Button onClick={() => { window.location.reload() }}>
+                        Refresh
+                    </Button>
                 </FlexBetween>
                 <FlexBetween>
                     <TextField
