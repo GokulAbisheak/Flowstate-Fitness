@@ -35,7 +35,7 @@ app.use('/admin', adminRouter);
 app.use('/membership', membershipRouter);
 app.use('/review', reviewRouter);
 app.use('/product', productRouter);
-
+app.use('/trainer', trainerRouter);
 app.use('/session', sessionRouter);
 
 
@@ -53,7 +53,7 @@ app.post("/uploadImage", (req, res) => {
     })
 })
 
-app.use('/trainer', trainerRouter);
+
 
 // Add console.log statement here
 console.log('Routers assigned');

@@ -12,23 +12,44 @@ const AddTrainer = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [qualification, setQualification] = useState("");
 
+  
+
   const handleAddTrainer = async (event) => {
     event.preventDefault();
-    try {
-      const response = await axios.post("/api/trainers", {
-        firstName,
-        lastName,
-        email,
-        nic,
-        password,
-        dateOfBirth,
-        phoneNumber,
-        qualification,
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+
+    const newTrainer = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      nic: nic,
+      password: password,
+      dateOfBirth: dateOfBirth,
+      phoneNumber: phoneNumber,
+      qualification: qualification,
+    };
+    
+   
+
+
+        // Add new user to parent component state
+        axios.post('http://localhost:8090/trainer/add', newTrainer).then(() => {
+            alert('Registration Successful!')
+
+            // window.location.href = '/login'
+
+            // Reset form inputs
+            setFirstName('');
+            setLastName('');
+            setEmail('');
+            setNic('');
+            setPassword('');
+            setDateOfBirth('');
+            setPhoneNumber('');
+            setQualification('');
+
+        }).catch((err) => {
+            alert('User registration failed! ' + err)
+        })
   };
 
   return (
@@ -118,7 +139,7 @@ const AddTrainer = () => {
           onChange={(event) => setQualification(event.target.value)}
           InputLabelProps={{ shrink: true }}
         />
-        <Button type="submit" variant="contained" sx={{ mt: 2 }} size="small">
+        <Button type="submit" variant="contained" sx={{ margin: "20px auto", width: "100%", color: "#FFFFFF" }} size="small">
           Add Trainer
         </Button>
 

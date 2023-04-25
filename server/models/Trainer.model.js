@@ -15,12 +15,12 @@ const trainerSchema = new mongoose.Schema({
         required: true,
         unique: true,
         trim: true,
-        validate: {
+       /* validate: {
             validator: function(v) {
                 return /^\S+@\S+\.\S+$/.test(v);
             },
             message: props => `${props.value} is not a valid email address!`
-        }
+        }*/
     },
 
     nic: {
@@ -28,7 +28,7 @@ const trainerSchema = new mongoose.Schema({
         required: true,
         unique: true,
         trim: true,
-        validate: {
+       /* validate: {
           validator: function(v) {
             if (v.length === 10) {
               return /^[0-10]{9}[xXvV]$/.test(v);
@@ -39,7 +39,7 @@ const trainerSchema = new mongoose.Schema({
             }
           },
           message: props => `${props.value} is not a valid NIC number! Please enter a OLD NIC number with 9 digits and an 'X' or 'V' at the end, or New NIC with 12 digits and all digits between 0-9.`
-        }
+        }*/
       },
     password: {
         type: String,
@@ -53,12 +53,12 @@ const trainerSchema = new mongoose.Schema({
     phoneNumber: {
         type: String,
         required: true,
-        validate: {
+      /*  validate: {
           validator: function(v) {
             return /^07[0124-8]-\d{7}$/.test(v);
           },
           message: props => `${props.value} is not a valid phone number! Format should be 07x-xxxxxxx.`
-        }
+        }*/
       },
     qualification: {
         type: String,
