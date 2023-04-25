@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const DeletePayment = () => {
 
-    const [productID, setPID] = useState("");
+    const [paymentID, setPID] = useState("");
 
     const theme = useTheme();
 
@@ -33,7 +33,7 @@ const DeletePayment = () => {
                     alignItems="center"
                     container spacing={2}
                     direction={"column"}
-                >
+                > 
 
                     <Grid item>
                         <TextField
