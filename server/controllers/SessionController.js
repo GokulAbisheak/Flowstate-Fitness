@@ -31,7 +31,11 @@ getAllSessions: async (_req, res) => {
       // get all sessions from database
       const sessions = await Session.findAll();
       // return sessions array to client
-      res.status(200).json(sessions);
+      if (sessions.length === 0) {
+        res.status(404).send('No sessions found');
+      } else {
+        res.status(200).json(sessions);
+      }
     } catch (error) {
       console.error(error);
       res.status(500).send('Unable to fetch sessions');
@@ -66,6 +70,36 @@ deleteSessionById: (req, res) => {
 export default SessionController;
 
 // app.post('/events', async (req, res) => {
+//     const { title, start, end, description } = req.body;
+//     const event = new Event({ title, start, end, description });
+//     await event.save();
+//     res.json(event);
+//   });
+  
+//   app.get('/events', async (req, res) => {
+//     const events = await Event.find();
+//     res.json(events);
+//   });
+  
+//   app.put('/events/:id', async (req, res) => {
+//     const { id } = req.params;
+//     const { title, start, end, description } = req.body;
+//     const event = await Event.findById(id);
+//     event.title = title;
+//     event.start = start;
+//     event.end = end;
+//     event.description = description;
+//     await event.save();
+//     res.json(event);
+//   });
+  
+//   app.delete('/events/:id', async (req, res) => {
+//     const { id } = req.params;
+//     await Event.findByIdAndDelete(id);
+//     res.json({ message: 'Event deleted' });
+//   });
+
+//   app.post('/events', async (req, res) => {
 //     const { title, start, end, description } = req.body;
 //     const event = new Event({ title, start, end, description });
 //     await event.save();

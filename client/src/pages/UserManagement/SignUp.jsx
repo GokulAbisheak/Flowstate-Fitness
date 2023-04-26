@@ -1,12 +1,25 @@
 import { Box, Button, Grid, Link, TextField, useTheme } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import FlexBetween from '../../components/FlexBetween';
 import InputField from '../../components/InputField';
 import ReCAPTCHA from 'react-google-recaptcha';
 import '../../styles/index.css';
 import axios from 'axios';
+import emailjs from '@emailjs/browser';
 
 const SignUp = () => {
+
+    const form = useRef();
+
+    const sendEmail = () => {
+
+        emailjs.sendForm('service_3rng3bo', 'template_pb4x2kw', form.current, 'hYoftRZFX-bY9Hc6n')
+            .then((result) => {
+                console.log(result.text);
+            }, (error) => {
+                console.log(error.text);
+            });
+    };
 
     const [fName, setFName] = useState("");
     const [lName, setLName] = useState("");
@@ -97,13 +110,14 @@ const SignUp = () => {
             password: password,
             dateOfBirth: dateOfBirth,
             phoneNumber: phoneNumber,
-
+            type: 'user'
         };
 
         // Add new user to parent component state
         axios.post('http://localhost:8090/user/add', newUser).then(() => {
             alert('Registration Successful!')
-            window.location.href = '/login'
+            sendEmail();
+            // window.location.href = '/login'
 
             // Reset form inputs
             setFName('');
@@ -261,6 +275,14 @@ const SignUp = () => {
                     </form>
                 </Grid>
             </Grid>
+
+            <form ref={form} onSubmit={sendEmail} hidden>
+                <label>Name</label>
+                <input type="text" name="user_name" value={fName + ' ' + lName} />
+                <label>Email</label>
+                <input type="email" name="user_email" value={email} />
+                <input type="submit" value="Send" />
+            </form>
 
             {document.addEventListener('DOMContentLoaded', function () { window.setTimeout(document.querySelector('svg').classList.add('animated'), 1000); })}
         </>

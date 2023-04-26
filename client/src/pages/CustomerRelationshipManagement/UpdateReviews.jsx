@@ -1,28 +1,29 @@
 import React, { useState } from "react";
 import { Box, Button, Grid, Link, TextField, InputAdornment, useTheme, Rating } from '@mui/material';
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const UpdateReviews = () => {
 
-    const [id, setID] = useState('');
+    const loggedUser = useSelector((state) => state.user);
+
     const [comment, setComment] = useState('');
     const [rating, setRating] = useState('');
+    const [email, setEmail] = useState(loggedUser.email);
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const newReview = {
 
             text: comment,
-            author: id,
             rating: rating
 
         };
 
-        axios.patch(`http://localhost:8090/review/update/${id}`, newReview).then(() => {
+        axios.patch(`http://localhost:8090/review/update/email/${email}`, newReview).then(() => {
             alert('Updating Successful!')
             window.location.href = '/review'
 
-            setID('');
             setComment('');
             setRating('');
 
@@ -47,17 +48,7 @@ const UpdateReviews = () => {
                         direction={"column"}
 
                     >
-                        <Grid item>
-                            <TextField
-
-                                label="User ID"
-                                type="text"
-                                margin="normal"
-                                sx={{ width: 300 }}
-                                onChange={(e) => {
-                                    setID(e.target.value)
-                                }} />
-                        </Grid>
+                        
 
                         <Grid item>
                             <TextField

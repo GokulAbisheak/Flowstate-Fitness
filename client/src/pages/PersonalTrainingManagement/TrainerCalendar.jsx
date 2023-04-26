@@ -47,18 +47,18 @@ const Calendar = () => {
     setDescription("");
   };
 
-  // const handleInputChange = (event) => {
-  //   const { name, value } = event.target;
-  //   if (name === "title") {
-  //     setTitle(value);
-  //   } else if (name === "start") {
-  //     setStartDate(value);
-  //   } else if (name === "end") {
-  //     setEndDate(value);
-  //   } else if (name === "description") {
-  //     setDescription(value);
-  //   }
-  // };
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    if (name === "title") {
+      setTitle(value);
+    } else if (name === "start") {
+      setStartDate(value);
+    } else if (name === "end") {
+      setEndDate(value);
+    } else if (name === "description") {
+      setDescription(value);
+    }
+  };
 
   // const updateSessionById = (eventInfo) => {
   //   const title = prompt('Edit session title:', eventInfo.event.title);

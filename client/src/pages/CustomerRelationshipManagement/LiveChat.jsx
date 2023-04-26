@@ -1,86 +1,229 @@
-import React, { useState, useEffect } from "react";
-import io from "socket.io-client";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    height: "calc(100vh - 64px)",
+const useStyles = makeStyles({
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100vh",
   },
-  messageBox: {
-    width: "100%",
-    height: "calc(100vh - 200px)",
-    overflowY: "auto",
-    marginBottom: theme.spacing(2),
+  messagesContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    maxHeight: "70vh",
+    overflowY: "scroll",
+    padding: "10px",
+    border: "1px solid gray",
+    borderRadius: "5px",
+    marginBottom: "10px",
   },
-}));
+  message: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "center",
+    padding: "5px",
+    border: "1px solid lightgray",
+    borderRadius: "5px",
+    marginBottom: "5px",
+    maxWidth: "60%",
+    backgroundColor: "white",
+  },
+  sender: {
+    fontWeight: "bold",
+    marginBottom: "5px",
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  textField: {
+    marginBottom: "10px",
+  },
+});
 
-const Chat = ({ sender, receiver }) => {
-  const classes = useStyles();
-  const [message, setMessage] = useState("");
+const Chat = () => {
+  const { sender, receiver } = useParams();
   const [messages, setMessages] = useState([]);
-  const socket = io("http://localhost:3030");
+  const [message, setMessage] = useState("");
+  const classes = useStyles();
 
   useEffect(() => {
-    socket.on("connect", () => {
-      console.log("connected to socket");
-    });
-    socket.on("message", (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
-    });
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+    // Fetch messages from the server here using `fetch` or some other HTTP library
+    // and update the `messages` state with the response data.
+  }, [sender, receiver]);
 
-  const handleSendMessage = (e) => {
-    e.preventDefault();
-    socket.emit("sendMessage", {
-      sender,
-      receiver,
-      message,
-    });
+  
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (message.trim() === "") {
+      return;
+    }
+    // Send the message to the server using `fetch` or some other HTTP library.
+    // Once the message is successfully sent, update the `messages` state with the
+    // new message.
     setMessage("");
   };
 
   return (
-    <Grid container direction="column" className={classes.root}>
-      <Grid item xs={12} className={classes.messageBox}>
-        {messages.map((message, index) => (
-          <div key={index}>
-            {message.sender}: {message.message}
+    <div className={classes.container}>
+      <Typography variant="h4" gutterBottom>
+        Chat with FLOWSTATE{receiver}
+      </Typography>
+      <div className={classes.messagesContainer}>
+        {messages.map((msg, index) => (
+          <div key={index} className={classes.message}>
+            <Typography variant="subtitle2" className={classes.sender}>
+              {msg.sender}
+            </Typography>
+            <Typography variant="body1">{msg.message}</Typography>
           </div>
         ))}
-      </Grid>
-      <Grid item xs={12}>
-        <form onSubmit={handleSendMessage}>
-          <Grid container spacing={2}>
-            <Grid item xs={9}>
-              <TextField
-                variant="outlined"
-                fullWidth
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                fullWidth
-              >
-                Send
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-      </Grid>
-    </Grid>
+      </div>
+      <form onSubmit={handleSubmit} className={classes.form}>
+        <TextField
+          label="Type your message"
+          variant="outlined"
+          value={message}
+          onChange={(event) => setMessage(event.target.value)}
+          className={classes.textField}
+        />
+        <Button variant="contained" color="primary" type="submit">
+          Send
+        </Button>
+      </form>
+    </div>
   );
 };
 
 export default Chat;
+
+// Chat.js (frontend)
+
+// import React, { useEffect, useState } from "react";
+// import { useParams } from "react-router-dom";
+// import { makeStyles } from "@material-ui/core/styles";
+// import TextField from "@material-ui/core/TextField";
+// import Button from "@material-ui/core/Button";
+// import Typography from "@material-ui/core/Typography";
+// import axios from "axios";
+
+// const useStyles = makeStyles({
+//   container: {
+//     display: "flex",
+//     flexDirection: "column",
+//     alignItems: "center",
+//     justifyContent: "center",
+//     height: "100vh",
+//   },
+//   messagesContainer: {
+//     display: "flex",
+//     flexDirection: "column",
+//     alignItems: "center",
+//     justifyContent: "flex-start",
+//     maxHeight: "70vh",
+//     overflowY: "scroll",
+//     padding: "10px",
+//     border: "1px solid gray",
+//     borderRadius: "5px",
+//     marginBottom: "10px",
+//   },
+//   message: {
+//     display: "flex",
+//     flexDirection: "column",
+//     alignItems: "flex-start",
+//     marginBottom: "10px",
+//   },
+//   sender: {
+//     backgroundColor: "#3f51b5",
+//     color: "white",
+//     padding: "10px",
+//     borderRadius: "10px",
+//     alignSelf: "flex-end",
+//   },
+//   receiver: {
+//     backgroundColor: "#f5f5f5",
+//     padding: "10px",
+//     borderRadius: "10px",
+//     alignSelf: "flex-start",
+//   },
+//   form: {
+//     display: "flex",
+//     flexDirection: "column",
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+//   input: {
+//     marginBottom: "10px",
+//   },
+// });
+
+// const Chat = () => {
+//   const classes = useStyles();
+//   const { senderId, receiverId } = useParams();
+//   const [message, setMessage] = useState("");
+//   const [messages, setMessages] = useState([]);
+
+//   const handleMessageChange = (event) => {
+//     setMessage(event.target.value);
+//   };
+
+//   const handleSendMessage = async () => {
+//     try {
+//       const response = await axios.post("/api/chats", {
+//         sender: senderId,
+//         receiver: receiverId,
+//         message: message,
+//       });
+//       setMessage("");
+//       console.log(response.data.message);
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+
+//   useEffect(() => {
+//     const getMessages = async () => {
+//       try {
+//         const response = await axios.get(`/api/chats/${senderId}/${receiverId}`);
+//         setMessages(response.data);
+//       } catch (error) {
+//         console.log(error);
+//       }
+//     };
+//     getMessages();
+//   }, [senderId, receiverId]);
+
+//   return (
+//     <div className={classes.container}>
+//       <Typography variant="h4">Chat with User {receiverId}</Typography>
+//       <div className={classes.messagesContainer}>
+//         {messages.map((message) => (
+//           <div key={message._id} className={`${classes.message} ${message.sender._id === senderId ? classes.sender : classes.receiver}`}>
+//             <Typography variant="subtitle2">{message.sender.username}</Typography>
+//             <Typography variant="body1">{message.message}</Typography>
+//           </div>
+//         ))}
+//       </div>
+//       <form className={classes.form}>
+//         <TextField className={classes.input} label="Message" variant="outlined" value={message} onChange={handleMessageChange} />
+//         <Button variant="contained" color="primary" onClick={handleSendMessage}>
+//           Send
+//         </Button>
+//       </form>
+//     </div>
+//   );
+// };
+
+// export default Chat;
+
