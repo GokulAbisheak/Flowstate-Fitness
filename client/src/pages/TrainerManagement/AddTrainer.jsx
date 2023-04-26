@@ -11,6 +11,7 @@ const AddTrainer = () => {
   const [dateOfBirth, setDateOfBirth] = useState(new Date());
   const [phoneNumber, setPhoneNumber] = useState("");
   const [qualification, setQualification] = useState("");
+  const [photo,setPhoto] = useState("");
 
   
 
@@ -26,7 +27,14 @@ const AddTrainer = () => {
       dateOfBirth: dateOfBirth,
       phoneNumber: phoneNumber,
       qualification: qualification,
+      photo: photo
     };
+
+    const handlePhoto =(e) =>{
+
+      
+
+    }
     
    
 
@@ -139,6 +147,12 @@ const AddTrainer = () => {
           onChange={(event) => setQualification(event.target.value)}
           InputLabelProps={{ shrink: true }}
         />
+        <input
+            type ='file'
+            accept=".png, .jpeg, .jpg "
+            name= "photo"
+            onChange={handlePhoto}
+            />
         <Button type="submit" variant="contained" sx={{ margin: "20px auto", width: "100%", color: "#FFFFFF" }} size="small">
           Add Trainer
         </Button>
