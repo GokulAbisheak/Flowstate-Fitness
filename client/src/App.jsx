@@ -42,7 +42,7 @@ import DeleteFinances from './pages/FinanceManagement/DeleteFinances';
 import ScanMembership from './pages/UserManagement/ScanMembership';
 import Profile from './pages/UserManagement/Profile';
 import AddTrainer from './pages/TrainerManagement/AddTrainer';
-
+import TrainerScreen from './pages/TrainerManagement/DisplayCards';
 
 
 function App() {
@@ -105,6 +105,9 @@ function App() {
                 <Route path="/user/membership" element={<PurchaseMembership />} />
                 <Route path="/user/profile" element={<Profile />} />
               </Route>
+
+              {/* Trainer Management */}
+              <Route path="/trainer/display" element={<TrainerScreen />} />
 
               {/* Customer Relationship Management */}
               <Route path="/user/addReviews" element={<AddReviews />} />

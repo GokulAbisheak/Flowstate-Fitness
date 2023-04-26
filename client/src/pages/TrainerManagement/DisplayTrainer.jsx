@@ -11,8 +11,6 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import CancelIcon from '@mui/icons-material/Close';
 import '../../styles/index.css'
-import AddTrainer from './AddTrainer';
-import { AlignHorizontalRight } from '@mui/icons-material';
 import {  useNavigate } from 'react-router-dom';
 
 
