@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { Box, Card, Grid, CardMedia, CardContent, CardActions, CardActionArea, Typography, Button } from '@material-ui/core';
-import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { Box, Card, Grid, CardMedia, CardContent, CardActions, CardActionArea, Typography, Button, FormControl, Select, MenuItem } from '@material-ui/core'; import axios from 'axios';
 
 const GradientBox = styled(Box)(({ theme }) => ({
     background: 'linear-gradient(to bottom, #0d253f, #1d3d5c)',
@@ -13,42 +13,71 @@ const GradientBox = styled(Box)(({ theme }) => ({
 
 const ProductScreen = () => {
     const [allProducts, setAllProducts] = useState([]);
-    const [productID, setProductID] = useState("");
     const [showMore, setShowMore] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [filteredProducts, setFilteredProducts] = useState([]);
 
-    const addToCart = async () => {
-        try {
-            const { data } = await axios.post('http://localhost:8090/cart/add', {
-                itemID: productID,
-                itemName: productName,
-                itemPrice: price,
-                quantity: 1
-            });
-            alert('Item added to cart!');
-        } catch (err) {
-            console.error(err);
-            alert('Failed to add item to cart');
+    const handleCategoryChange = (event) => {
+        setSelectedCategory(event.target.value);
+        if (event.target.value === 'All Products') {
+            setFilteredProducts(allProducts);
+        } else {
+            const filtered = allProducts.filter(product => product.productCategory === event.target.value);
+            setFilteredProducts(filtered);
         }
-    };
+    }
 
     useEffect(() => {
-        const getAllProducts = () => {
-            axios.get('http://localhost:8090/product').then((res) => {
-                setAllProducts(res.data);
-                setProductID(res.data)
-            }).catch((err) => {
-                alert('Unable to get all products ' + err.message);
-            })
-        }
-        getAllProducts();
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get('http://localhost:8090/product');
+                setAllProducts(response.data);
+                setFilteredProducts(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchProducts();
     }, []);
 
     const theme = useTheme();
 
+    const loggedInUser = useSelector((state) => state.user);
+
     return (
         <>
-            <Grid container spacing={2}>
-                {allProducts.map((product) => (
+            <Grid 
+                container spacing={4}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                direction={"column"}>
+                <Grid item>
+                    <Grid>
+                        <FormControl variant="outlined" sx={{ minWidth: 400, mt: 2, mb: 6 }}>
+                            <Select
+                                value={selectedCategory}
+                                onChange={handleCategoryChange}
+                                displayEmpty
+                                inputProps={{ 'aria-label': 'Select a category' }}
+                            >
+                                <MenuItem value="" disabled>
+                                    Filter Products
+                                </MenuItem>
+                                <MenuItem value="All Products">All Products</MenuItem>
+                                <MenuItem value="Weights">Weights</MenuItem>
+                                <MenuItem value="Resistance Bands">Resistance Bands</MenuItem>
+                                <MenuItem value="Workout Clothes">Workout Clothes</MenuItem>
+                                <MenuItem value="Protein">Protein Supplements</MenuItem>
+                                <MenuItem value="Vitamins">Vitamins</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid container spacing={2} sx={{ mt: 4 }}>
+                {filteredProducts.map((product) => (
                     <Grid item key={product.productId} xs={12} sm={6} md={4}>
                         <Card sx={{ height: '100%' }}>
                             <CardActionArea sx={{ height: '100%' }}>
@@ -56,10 +85,10 @@ const ProductScreen = () => {
                                     component="img"
                                     image={`${product.url}`}
                                     alt={product.productName}
-                                    style={{ height: 350, objectFit: 'cover' }} />
+                                    style={{ height: 400, objectFit: 'cover' }} />
                                 <CardContent><GradientBox>
                                     <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>
-                                        {product.productName}
+                                        {product.productName.toUpperCase()}
                                     </Typography>
                                     <Typography variant="body1" color="text.secondary" sx={{ marginBottom: 1 }}>
                                         {product.productCategory}
@@ -108,7 +137,7 @@ const ProductScreen = () => {
                             </CardActionArea>
                             <CardActions style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <Button size="small" color="primary">Buy Now</Button>
-                                <Button size="small" color="primary" onClick={addToCart}>Add to cart</Button>
+                                <Button size="small" color="primary" onClick={() => addToCart(product.productId, product.productName, product.price)}>Add to cart</Button>
                             </CardActions>
                         </Card>
                     </Grid>

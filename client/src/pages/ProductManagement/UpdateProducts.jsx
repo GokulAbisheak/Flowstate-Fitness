@@ -223,6 +223,16 @@ const UpdateProducts = () => {
 
                 </Grid>
             </form>
+
+            <Snackbar open={open} autoHideDuration={2000} onClose={handleClose} anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+            }}>
+                <Alert variant="filled" onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                    Update Success!
+                </Alert>
+            </Snackbar>
+            
         </>
 
 

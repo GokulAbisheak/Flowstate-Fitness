@@ -1,5 +1,6 @@
 import Product from '../models/Product.model.js';
 import logger from '../utilities/logger.js';
+import mongoose from 'mongoose';
 
 const ProductController = {
     
@@ -79,17 +80,19 @@ const ProductController = {
 
     //Delete a product by id
     deleteProductById: async (req, res) => {
+        const productID = req.params.productID;
+            
         try {
-            const product = await Product.findOneAndDelete(req.params.productID);
+            const product = await Product.findOneAndDelete({ productID: productID });
             if (!product) {
-                logger.error("Product " + req.params.productID + " not found");
+                logger.error(`Product ${productID} not found`);
                 return res.status(404).json({ message: 'Product not found' });
             }
+            logger.info(`Product ${productID} deleted successfully`);
             res.status(200).json({ message: 'Product deleted' });
-            logger.info("Product " + req.params.productID + " deleted successfully");
         } catch (error) {
+            logger.error(`Error deleting product ${productID}: ${error.message}`);
             res.status(400).json({ message: error.message });
-            logger.info("Product " + req.params.productID + " deleted successfully");
         }
     }
 };
