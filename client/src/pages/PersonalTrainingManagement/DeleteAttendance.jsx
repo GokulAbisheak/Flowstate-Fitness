@@ -8,11 +8,11 @@ const DeleteAttendance = () => {
 
     const theme = useTheme();
 
-    const onSubmitDeleteAttendance = async event => {
-        event.preventDefault();
+    const onSubmitDeleteAttendance = async (attendance, name) => {
+        attendance.preventDefault();
 
         try {
-            axios.delete(`http://localhost:8090/product/delete/${productID}`);
+            axios.delete(`http://localhost:8090/attendance/delete/${name}`);
             alert('Deleting Successful!');
         } catch (err) {
             alert('Attendance deleting failed! ' + err)
@@ -25,7 +25,7 @@ const DeleteAttendance = () => {
 
             <Grid display="flex" justifyContent="center"><h1>Delete Attendance Here</h1></Grid>
 
-            <form onSubmit={onSubmitDeleteAttendance}>
+            <form>
 
                 <Grid
                     display="flex"
@@ -43,7 +43,7 @@ const DeleteAttendance = () => {
                             label="Name"
                             type="text"
                             margin="normal"
-                            value={productID}
+                            value={name}
                             sx={{ width: 300 }}
                             onChange={(e) => {
                                 setName(e.target.value)
@@ -52,7 +52,7 @@ const DeleteAttendance = () => {
                     </Grid>
 
                     <Grid item>
-                        <Button variant="contained" margin="normal" color="primary" type="submit">Delete</Button>
+                        <Button variant="contained" margin="normal" color="primary" type="submit" onClick={(event) => onSubmitDeleteAttendance(event, attendance.name)}>Delete</Button>
                     </Grid>
 
                 </Grid>

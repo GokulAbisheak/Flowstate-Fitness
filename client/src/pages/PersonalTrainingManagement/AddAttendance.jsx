@@ -24,8 +24,8 @@ function AddAttendance() {
     const [present, setPresent] = useState(false);
     const [absent, setAbsent] = useState(false);
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    const handleSubmit = (attendance) => {
+        attendance.preventDefault();
 
         //Create new attendance
         const newAttendance = {
@@ -37,7 +37,7 @@ function AddAttendance() {
 
         axios.post('http://localhost:8090/attendance/add',newAttendance).then(() => {
             alert('Adding Successful!')
-            window.location.href = 'admin/attendance'
+            window.location.href = '/admin/attendance'
 
             setName('');
             setDate('');
@@ -68,9 +68,10 @@ function AddAttendance() {
                         label="Please enter your name"
                         type="text"
                         margin='normal'
+                        variant="outlined"
                         required={true}
                         value={name}
-                        onChange={(event) => setName(event.target.value)}
+                        onChange={(attendance) => setName(attendance.target.value)}
                     />
                 </Grid>
                 <Grid item>
@@ -79,9 +80,10 @@ function AddAttendance() {
                         helperText="Please enter a date"
                         type="date"
                         margin='normal'
+                        variant="outlined"
                         value={date}
                         required={true}
-                        onChange={(event) => setDate(event.target.value)}
+                        onChange={(attendance) => setDate(attendance.target.value)}
                     />
                 </Grid>
                 <Grid item>
@@ -89,7 +91,7 @@ function AddAttendance() {
                         control={
                             <Checkbox
                                 checked={present}
-                                onChange={(event) => setPresent(event.target.checked)}
+                                onChange={(attendance) => setPresent(attendance.target.checked)}
                                 name="present"
                                 // required={true}
                             />
@@ -103,7 +105,7 @@ function AddAttendance() {
                         control={
                             <Checkbox
                                 checked={absent}
-                                onChange={(event) => setAbsent(event.target.checked)}
+                                onChange={(attendance) => setAbsent(attendance.target.checked)}
                                 name="absent"
                                 // required={true}
                             />
@@ -112,8 +114,12 @@ function AddAttendance() {
                         
                     />
                 </Grid>
-                <Button variant="contained" color="primary" type="submit" margin="normal">
+                <Button variant="contained" color="primary" type="submit" margin="normal" style={{marginTop:'40px', marginBottom:'10px'}}>
                     Add Attendance
+                </Button>
+
+                <Button variant="contained" color="primary" type="submit" href="/admin/attendance" margin="normal" style={{marginTop:'20px'}} >
+                    View Attendance
                 </Button>
 
             </Grid>
