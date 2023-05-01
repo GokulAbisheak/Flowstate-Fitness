@@ -11,7 +11,9 @@ import {
     Book as BookIcon, Forum as ForumIcon,
     CalendarMonth as CalendarMonthIcon,
     Payment as PaymentIcon,
-    Settings as SettingsIcon
+    Settings as SettingsIcon,
+    CardMembership as MembershipIcon,
+    QrCodeScanner as QRCodeIcon
 } from '@mui/icons-material';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 
@@ -29,9 +31,21 @@ const SideNav = () => {
         },
 
         {
-            text: 'Members',
+            text: 'Users',
             icon: <PeopleAltIcon></PeopleAltIcon>,
-            path: '/admin/members',
+            path: '/admin/users',
+        },
+
+        {
+            text: 'Membership',
+            icon: <MembershipIcon></MembershipIcon>,
+            path: '/admin/membership',
+        },
+
+        {
+            text: 'Scan Card',
+            icon: <QRCodeIcon></QRCodeIcon>,
+            path: '/admin/scan',
         },
 
         {

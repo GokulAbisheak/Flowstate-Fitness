@@ -1,9 +1,44 @@
+import React, { useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { Box, Button, Grid, Link, TextField, useTheme } from '@mui/material';
-import React from 'react';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setCredentials } from '../../state';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
     const theme = useTheme();
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [invalid, setInvalid] = useState('');
+    
+    const navigate = useNavigate();
+    const dispatch = useDispatch()
+
+    const handleLoginSubmit = (e) => {
+
+        e.preventDefault();
+
+        const user = {
+            email: email,
+            password: password,
+        }
+
+        axios.post('http://localhost:8090/user/login', user).then((res) => {
+        
+            const user = res.data.user
+            const token = res.data.token 
+            console.log(user)
+            dispatch(setCredentials({user, token}))
+
+            navigate('/')
+
+        }).catch((err) => {
+            setInvalid('Invalid Credentials')
+        })
+    }
 
     return (
         <>
@@ -27,39 +62,49 @@ const Login = () => {
                                 : '/assets/semi-black.png'
                         } style={{ width: "150px", margin: "10px" }} />
 
+                        <form onSubmit={handleLoginSubmit}>
 
-                        <TextField
-                            id="outlined-basic"
-                            label="Email"
-                            variant="outlined"
-                            sx={{
-                                width: "100%",
-                                marginBottom: "10px"
-                            }}
-                        />
+                            <TextField
+                                label="Email"
+                                variant="outlined"
+                                sx={{
+                                    width: "100%",
+                                    marginBottom: "10px"
+                                }}
+                                onChange={(e) => {
+                                    setEmail(e.target.value);
+                                }
+                                }
+                                error={Boolean(invalid)}
+                            />
 
-                        <TextField
-                            id="outlined-password-input"
-                            label="Password"
-                            type="password"
-                            autoComplete="current-password"
-                            sx={{
-                                width: "100%",
-                                marginBottom: "10px"
-                            }}
-                        />
+                            <TextField
+                                label="Password"
+                                type="password"
+                                autoComplete="current-password"
+                                sx={{
+                                    width: "100%",
+                                    marginBottom: "10px"
+                                }}
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+                                }
+                                }
+                                error={Boolean(invalid)}
+                                helperText={invalid}
+                            />
 
-                        <Button variant="contained" sx={{ margin: "20px auto", width: "100%", color: "#FFFFFF" }}>
-                            login
-                        </Button>
-                        <Link href="#" underline="hover">
+                            <Button type="submit" variant="contained" sx={{ margin: "20px auto", width: "100%", color: "#FFFFFF" }}>
+                                login
+                            </Button>
+                        </form>
+                        <Link href="/forgot" underline="hover">
                             Forgot Password?
                         </Link>
                     </Box>
                 </Grid>
             </Grid>
-
-            {document.addEventListener('DOMContentLoaded', function () {window.setTimeout(document.querySelector('svg').classList.add('animated'),1000);})}
+            {document.addEventListener('DOMContentLoaded', function () { window.setTimeout(document.querySelector('svg').classList.add('animated'), 1000); })}
         </>
     );
 }

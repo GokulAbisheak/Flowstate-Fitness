@@ -26,6 +26,7 @@ body,
     /* background: linear-gradient(to top, #2EAAFA, #1F2F98); */
     /* background-color: #000033; */
     background: linear-gradient(to top, #07a7af, #01519a);
+    z-index: 1000;
 }
 
 .side-nav-link-group {
@@ -111,4 +112,62 @@ body::-webkit-scrollbar-thumb {
     font-weight: 700;
     font-size: 24px;
     text-decoration: none;
+}
+
+.error {
+    border: 1px solid #FF0000;
+    background-color: rgba(255, 0, 0, 0.1);
+    color: #FF0000;
+    font-size: 12px;
+    padding: 10px 60px;
+    border-radius: 5px;
+}
+
+#update-box {
+    display: none;
+    position: fixed;
+}
+
+#purchase-box {
+    display: none;
+}
+
+.scanner {
+    box-shadow: 0 0 10px #000000;
+    background: linear-gradient(to left, #07a7af, #01519a);
+    max-width: 400px;
+    width: 400px;
+    margin: 0px auto;
+    border-radius: 5px;
+}
+
+.scanner-display {
+    box-shadow: 0 0 10px #000000;
+    max-width: 80%;
+    margin: 0px auto;
+    border-radius: 5px;
+    height: 480px;
+    padding: 20px;
+}
+
+.profile-pic {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: #f2f2f2;
+}
+
+.center-box-400 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 40px 20px;
+    width: 400px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+}
+
+.center-box-400 div{
+   margin-bottom: 10px;
 }

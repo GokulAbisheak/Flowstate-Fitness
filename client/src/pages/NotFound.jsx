@@ -12,7 +12,7 @@ const NotFound = () => {
 
     return (
         <>
-            <Header />
+            
             <Box className="center" sx={{ width: { xs: "100%", md: "50%" } }}>
                 <Grid container spacing={2} direction="row" alignItems="center" justifyContent="center">
                     <Grid item xs={12} md={6}>
