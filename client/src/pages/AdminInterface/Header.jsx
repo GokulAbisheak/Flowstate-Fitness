@@ -67,7 +67,7 @@ const Header = () => {
                         <NightsStay sx={{ fontSize: "25px" }} />
                     )}
                 </IconButton>
-                <Avatar alt="Cindy Baker" src="/assets/user.jpg" sx={{ width: "32px", height: "32px" }} onClick={handleClick} />
+                <Avatar alt="Flowstate" src="/assets/user.jpg" sx={{ width: "32px", height: "32px" }} onClick={handleClick} />
                 <Menu
                     id="basic-menu"
                     anchorEl={anchorEl}
