@@ -12,11 +12,17 @@ import CancelIcon from '@mui/icons-material/Cancel';
 
 const Profile = () => {
 
-    const theme = useTheme();
-
     const loggedUser = useSelector((state) => state.user)
     const token = useSelector((state) => state.token)
 
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const theme = useTheme();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -97,7 +103,7 @@ const Profile = () => {
         console.log(base64)
         axios.post("http://localhost:8090/uploadImage", { image: base64 }).then((res) => {
             setUrl(res.data);
-            axios.patch(`http://localhost:8090/user/update/${loggedUser.email}`, { url: res.data })
+            axios.patch(`http://localhost:8090/user/update/${loggedUser.email}`, { url: res.data }, config)
             alert("Image uploaded Succesfully");
             window.location.reload()
         }).then(() => setLoading(false))
@@ -130,7 +136,7 @@ const Profile = () => {
             weight: weight
         }
 
-        await axios.patch(`http://localhost:8090/user/update/${oldEmail}`, updateDetails).then(() => {
+        await axios.patch(`http://localhost:8090/user/update/${oldEmail}`, updateDetails, config).then(() => {
             handleOpen();
             hideUpdateForm();
 
@@ -193,7 +199,7 @@ const Profile = () => {
     let tempId;
 
     useEffect(() => {
-        axios.get(`http://localhost:8090/membership/email/${loggedUser.email}`)
+        axios.get(`http://localhost:8090/membership/email/${loggedUser.email}`, config)
             .then((res) => {
 
                 setId(res.data._id)
@@ -256,7 +262,7 @@ const Profile = () => {
                             </Grid>
                             <Grid item xs={12} md={4} minWidth="280px" align="center">
                                 <Box className="profile-pic" sx={{ overflow: 'hidden' }}>
-                                    <img src={user.url} style={{ width: '200px', height: 'auto' }}></img>
+                                    <img src={user.url} style={{ maxWidth: '200px', minHeight: '200px' }}></img>
                                 </Box>
                                 <Button sx={{ margin: "20px 0px" }} variant="outlined" aria-label="upload picture" component="label" startIcon={<PhotoCameraIcon />}>
                                     Change Profile Picture

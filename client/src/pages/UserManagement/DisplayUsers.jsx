@@ -87,7 +87,7 @@ const DisplayUsers = () => {
             phoneNumber: phoneNumber
         }
 
-        await axios.patch(`http://localhost:8090/user/update/${oldEmail}`, updateDetails).then(() => {
+        await axios.patch(`http://localhost:8090/user/update/${oldEmail}`, updateDetails, config).then(() => {
             handleOpen();
             hideUpdateForm();
 
@@ -102,7 +102,7 @@ const DisplayUsers = () => {
 
     //delete user
     const deleteUser = (email) => {
-        axios.delete(`http://localhost:8090/user/delete/${email}`)
+        axios.delete(`http://localhost:8090/user/delete/${email}`, config)
             .then(() => {
                 alert('User deleted successfully');
                 location.reload();
@@ -153,7 +153,7 @@ const DisplayUsers = () => {
 
     const handleSearch = async () => {
         if (searchTerm != '') {
-            axios.get(`http://localhost:8090/user/search/byemail?term=${searchTerm}`)
+            axios.get(`http://localhost:8090/user/search/byemail?term=${searchTerm}`, config)
                 .then((res) => {
                     setSearchUsers(res.data);
 

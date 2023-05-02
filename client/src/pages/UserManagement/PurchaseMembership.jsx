@@ -10,6 +10,14 @@ import axios from 'axios'
 const PurchaseMembership = () => {
 
     const loggedUser = useSelector((state) => state.user)
+    const token = useSelector((state) => state.token)
+
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    };
 
     const theme = useTheme();
     const [memberEmail, setMembershipEmail] = useState(loggedUser.email)
@@ -99,10 +107,10 @@ const PurchaseMembership = () => {
             availableFlowTokens = res.data.flowTokens
             if (availableFlowTokens >= flowToken) {
                 let newFlowTokens = availableFlowTokens - flowToken + freeFlowToken
-                axios.patch(`http://localhost:8090/user/update/${loggedUser.email}`, { flowTokens: newFlowTokens }).then((res) => {
-                    axios.get(`http://localhost:8090/membership/email/${loggedUser.email}`).then((res) => {
+                axios.patch(`http://localhost:8090/user/update/${loggedUser.email}`, { flowTokens: newFlowTokens }, config).then((res) => {
+                    axios.get(`http://localhost:8090/membership/email/${loggedUser.email}`, config).then((res) => {
                         const tempId = res.data._id;
-                        axios.patch(`http://localhost:8090/membership/update/${tempId}`, { expirationDate: membershipExpiration }).then((res) => {
+                        axios.patch(`http://localhost:8090/membership/update/${tempId}`, { expirationDate: membershipExpiration }, config).then((res) => {
                             handleOpenSuccess();
 
                             //email
@@ -131,7 +139,7 @@ const PurchaseMembership = () => {
                             expirationDate: membershipExpiration
                         }
 
-                        axios.post('http://localhost:8090/membership/add', newMembership).then((res) => {
+                        axios.post('http://localhost:8090/membership/add', newMembership, config).then((res) => {
                             handleOpenSuccess();
                         }).catch(() => {
 
@@ -145,6 +153,7 @@ const PurchaseMembership = () => {
     }
 
     const handleOpenSuccess = () => {
+        hidePurchaseBox()
         setOpenSuccess(true);
     }
 
