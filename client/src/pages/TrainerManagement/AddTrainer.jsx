@@ -11,54 +11,65 @@ const AddTrainer = () => {
   const [dateOfBirth, setDateOfBirth] = useState(new Date());
   const [phoneNumber, setPhoneNumber] = useState("");
   const [qualification, setQualification] = useState("");
-  const [photo,setPhoto] = useState("");
-
-  
+  const [loading, setLoading] = useState(false);
 
   const handleAddTrainer = async (event) => {
     event.preventDefault();
-
+  
     const newTrainer = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      nic: nic,
-      password: password,
-      dateOfBirth: dateOfBirth,
-      phoneNumber: phoneNumber,
-      qualification: qualification,
-      photo: photo
+      firstName,
+      lastName,
+      email,
+      nic,
+      password,
+      dateOfBirth,
+      phoneNumber,
+      qualification
     };
-
-    const handlePhoto =(e) =>{
-
-      
-
+  
+    setLoading(true);
+  
+    // Validate NIC format
+    const nicRegex = /^[0-9]{9}[vVxX]$/;
+    if (!nicRegex.test(nic)) {
+      alert("Please enter a valid Sri Lankan NIC number.");
+      setLoading(false);
+      return;
     }
-    
-   
-
-
-        // Add new user to parent component state
-        axios.post('http://localhost:8090/trainer/add', newTrainer).then(() => {
-            alert('Registration Successful!')
-
-            // window.location.href = '/login'
-
-            // Reset form inputs
-            setFirstName('');
-            setLastName('');
-            setEmail('');
-            setNic('');
-            setPassword('');
-            setDateOfBirth('');
-            setPhoneNumber('');
-            setQualification('');
-
-        }).catch((err) => {
-            alert('User registration failed! ' + err)
-        })
+  
+    // Validate phone number format
+    const phoneRegex = /^(0|\+94)?[1-9][0-9]{8}$/;
+    if (!phoneRegex.test(phoneNumber)) {
+      alert("Please enter a valid Sri Lankan phone number.");
+      setLoading(false);
+      return;
+    }
+  
+    try {
+      // Add new user to parent component state
+      const response = await axios.post(
+        "http://localhost:8090/trainer/add",
+        newTrainer
+      );
+      alert("Registration Successful!");
+      console.log(response.data);
+  
+      // Reset form inputs
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setNic("");
+      setPassword("");
+      setDateOfBirth(new Date());
+      setPhoneNumber("");
+      setQualification("");
+    } catch (error) {
+      alert(`User registration failed! ${error.message}`);
+    }
+  
+    setLoading(false);
   };
+  
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -127,8 +138,8 @@ const AddTrainer = () => {
           fullWidth
           margin="normal"
           type="date"
-          value={dateOfBirth}
-          onChange={(event) => setDateOfBirth(event.target.value)}
+          defaultValue={dateOfBirth.toISOString().substr(0, 10)}
+          onChange={(event) => setDateOfBirth(new Date(event.target.value))}
           InputLabelProps={{ shrink: true }}
         />
         <TextField
@@ -147,16 +158,20 @@ const AddTrainer = () => {
           onChange={(event) => setQualification(event.target.value)}
           InputLabelProps={{ shrink: true }}
         />
-        <input
-            type ='file'
-            accept=".png, .jpeg, .jpg "
-            name= "photo"
-            onChange={handlePhoto}
-            />
-        <Button type="submit" variant="contained" sx={{ margin: "20px auto", width: "100%", color: "#FFFFFF" }} size="small">
-          Add Trainer
-        </Button>
 
+        <Button
+          type="submit"
+          variant="contained"
+          sx={{
+            margin: "20px auto",
+            width: "100%",
+            color: "#FFFFFF"
+          }}
+          size="small"
+          disabled={loading}
+        >
+          {loading ? "Adding..." : "Add Trainer"}
+        </Button>
       </Box>
     </Box>
   );
