@@ -43,22 +43,22 @@ const Header = () => {
     const NavDetails = [
         {
             title: "Home",
-            link: "",
+            link: "/user/home",
         },
 
         {
             title: "Blog",
-            link: "",
+            link: "/user/blog",
         },
 
         {
             title: "About",
-            link: "",
+            link: "/user/about",
         },
 
         {
             title: "Training",
-            link: "",
+            link: "/user/training",
         },
 
         {
@@ -68,12 +68,12 @@ const Header = () => {
 
         {
             title: "Products",
-            link: "",
+            link: "/user/products",
         },
 
         {
             title: "Contact",
-            link: "",
+            link: "/user/contact",
         },
     ]
 
