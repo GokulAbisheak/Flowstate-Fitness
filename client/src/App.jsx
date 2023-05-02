@@ -42,7 +42,8 @@ import ScanMembership from './pages/UserManagement/ScanMembership';
 import Profile from './pages/UserManagement/Profile';
 import AdminPrivateRoute from './components/AdminPrivateRoute';
 import ForgetPassword from './pages/UserManagement/ForgetPassword';
-
+import CommonLayout from './pages/CommonInterface/CommonLayout';
+import LoggedRedirect from './components/LoggedRedirect';
 
 
 function App() {
@@ -61,8 +62,8 @@ function App() {
               {/* User Management */}
 
               <Route path="/" element={<Navigate to="/admin/dashboard" />} />
-              <Route path="/admin/dashboard" element={<GridPage />} />
               <Route element={<AdminPrivateRoute />}>
+                <Route path="/admin/dashboard" element={<GridPage />} />
                 <Route path="/admin/members" element={<DisplayUsers />} />
                 <Route path="/admin/users" element={<DisplayUsers />} />
                 <Route path="/admin/membership" element={<DisplayMemberships />} />
@@ -95,13 +96,17 @@ function App() {
               <Route path="/admin/feedback" element={<DisplayReviewsAdmin />} />
             </Route>
 
+
+            <Route element={<CommonLayout />}>
+              <Route element={<LoggedRedirect />}>
+                {/* User Management */}
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/forgot" element={<ForgetPassword />} />
+              </Route>
+            </Route>
+
             <Route element={<UserLayout />}>
-
-              {/* User Management */}
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/forgot" element={<ForgetPassword />} />
-
               <Route element={<UserPrivateRoute />}>
                 <Route path="/user" element={<Navigate to="/user/profile" />} />
                 <Route path="/user/membership" element={<PurchaseMembership />} />
