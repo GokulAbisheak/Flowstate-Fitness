@@ -18,7 +18,7 @@ const DeleteAttendance = () => {
             alert('Attendance deleting failed! ' + err)
         }
     };
-
+    
     return (
 
         <>

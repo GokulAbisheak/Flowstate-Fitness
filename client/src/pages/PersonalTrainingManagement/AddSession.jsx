@@ -132,7 +132,7 @@ function AddSession() {
         </Grid>
 
         <Grid item xs={12}>
-          <Button type="submit" sx={{ mt: 3, borderRadius: '16px', p: '12px 24px' }} variant="contained" color="primary">
+          <Button type="submit" sx={{ mt: 3, borderRadius: '16px', p: '12px 24px' }} variant="contained" color="primary" href="/admin/schedule">
             Add Session
           </Button>
         </Grid>
