@@ -37,7 +37,7 @@ function AddAttendance() {
 
         axios.post('http://localhost:8090/attendance/add',newAttendance).then(() => {
             alert('Adding Successful!')
-            window.location.href = '/admin/attendance'
+            window.location.href = '/admin/addAttendance'
 
             setName('');
             setDate('');

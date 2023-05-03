@@ -8,9 +8,9 @@ import reviewRouter from "./routes/Review.route.js";
 //import paymentRouter from "./routes/Payment.route.js";
 //import paymentRouter from "./routes/Payment.route.js";
 
-import membershipRouter from "./routes/Membership.route.js";
+// import membershipRouter from "./routes/Membership.route.js";
 
-import productRouter from './routes/Product.route.js'
+// import productRouter from './routes/Product.route.js'
 import sessionRouter from "./routes/Session.route.js";
 //import financeRouter from "./routes/Finance.route.js"
 import uploadImage from "./uploadImage.js";
@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 
 app.use('/user', userRouter);
 app.use('/admin', adminRouter);
-app.use('/membership', membershipRouter);
+// app.use('/membership', membershipRouter);
 app.use('/review', reviewRouter);
 app.use('/product', productRouter);
 
