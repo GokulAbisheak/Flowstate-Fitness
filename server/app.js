@@ -15,7 +15,7 @@ import sessionRouter from "./routes/Session.route.js";
 //import financeRouter from "./routes/Finance.route.js"
 import uploadImage from "./uploadImage.js";
 import attendanceRouter from "./routes/Attendance.route.js";
-import productRouter from "./routes/Product.route.js";
+// import productRouter from "./routes/Product.route.js";
 
 const app = express();
 

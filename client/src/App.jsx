@@ -23,7 +23,7 @@ import UpdateProducts from './pages/ProductManagement/UpdateProducts';
 import DeleteProducts from './pages/ProductManagement/DeleteProducts';
 import AddReviews from './pages/CustomerRelationshipManagement/addReviews';
 import UpdateReviews from './pages/CustomerRelationshipManagement/UpdateReviews';
-import DeleteReviews from './pages/CustomerRelationshipManagement/deleteReviews';
+// import DeleteReviews from './pages/CustomerRelationshipManagement/deleteReviews';
 
 import DeletePayment from './pages/PaymentManagement/DeletePayment';
 
@@ -46,16 +46,16 @@ import AdminPayment from './pages/PaymentManagement/AdminPayment';
 //import TrainerCalendar from './pages/PersonalTrainingManagement/TrainerCalendar';
 
 // import Cart from './pages/ProductManagement/Cart';
-import MainPayment from './pages/PaymentManagement/MainPayment';
-import AdminPayment from './pages/PaymentManagement/AdminPayment';
+// import MainPayment from './pages/PaymentManagement/MainPayment';
+// import AdminPayment from './pages/PaymentManagement/AdminPayment';
 import TrainerCalendar from './pages/PersonalTrainingManagement/TrainerCalendar';
 import Attendance from './pages/PersonalTrainingManagement/Attendance';
 import AddAttendance from './pages/PersonalTrainingManagement/AddAttendance';
 import ProductScreen from './pages/ProductManagement/ProductScreen';
 import ProductHandle from './pages/ProductManagement/ProductHandle';
 
-import DisplayReviewsUser from './pages/CustomerRelationshipManagement/DisplayReviewsUser';
-import DisplayReviewsAdmin from './pages/CustomerRelationshipManagement/DisplayReviewsAdmin';
+// import DisplayReviewsUser from './pages/CustomerRelationshipManagement/DisplayReviewsUser';
+// import DisplayReviewsAdmin from './pages/CustomerRelationshipManagement/DisplayReviewsAdmin';
 
 import UserPrivateRoute from './components/UserPrivateRoute';
 import DisplayReviewsUser from './pages/CustomerRelationshipManagement/DisplayReviewsUser';
