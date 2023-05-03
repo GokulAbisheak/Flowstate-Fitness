@@ -22,7 +22,7 @@ const UpdatePayment = () => {
         event.preventDefault();
 
         const data = new FormData()
-        data.append("file", image)
+        //data.append("file", image)
         data.append("upload_preset", "mernpro")
         data.append("cloud_name", "dloxej4xv")
         fetch("https://api.cloudinary.com/v1_1/dloxej4xv/image/upload", {

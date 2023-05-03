@@ -1,9 +1,9 @@
-import { Button, Card, CardActionArea, CardContent, CardMedia, Grid, Typography, Box, useTheme } from '@mui/material';
+import { Button, Card, CardActionArea, CardContent, CardMedia, Grid, Typography, Box, useTheme, TextField, InputAdornment } from '@mui/material';
 import React, {useState} from "react";
 import axios from 'axios';
 
-export default function Main() {
-  //const Main = () => {
+//export default function Main() {
+  const MainPayment = () => {
 
     const [paymentID, setPID] = useState("");
     const [paymentAmount, setPAmount] = useState("");
@@ -16,6 +16,7 @@ export default function Main() {
     const [pProvince, setPProv] = useState("");
     const [pZip, setPZip] = useState("");
     const [pCountry, setPCountry] = useState("");
+    const [url, setURL] = useState("");
 
     const theme = useTheme();
 
@@ -23,55 +24,149 @@ export default function Main() {
         event.preventDefault();
 
         const data = new FormData()
-        data.append("file", image)
+        //data.append("file", image)
         data.append("upload_preset", "mernpro")
         data.append("cloud_name", "dloxej4xv")
-        fetch("https://api.cloudinary.com/v1_1/dloxej4xv/image/upload", {
-            method:"POST",
-            body:data
-        })
-        .then(res=>res.json())
-        .then(data=>{
-            setURL([...url, data.url])
-        })
-        .catch(err=>{
-            console.log(err)
-        })
+        const checkUrlAndUpdatePayment = () => {
+            if (url === '') { // check if the url state is empty
+                setTimeout(checkUrlAndUpdatePayment, 500); // wait for 0.5 second before checking again
+            } else {
+                const newPayment = {
+                    paymentID: paymentID,
+                    paymentAmount: paymentAmount,
+                    paymentDescription: paymentDescription,
+                    paymentDate: paymentDate,
+                    pAddressl1: pAddressl1,
+                    pAddressl2: pAddressl2, 
+                    pAddressl3: pAddressl3,
+                    pState: pState,
+                    pZip: pZip,
+                    pCountry: pCountry,
+                    url: url
+                };
+        // const data = new FormData()
+        // data.append("file", image)
+        // data.append("upload_preset", "mernpro")
+        // data.append("cloud_name", "dloxej4xv")
+        // fetch("https://api.cloudinary.com/v1_1/dloxej4xv/image/upload", {
+        //     method:"POST",
+        //     body:data
+        // })
+        // .then(res=>res.json())
+        // .then(data=>{
+        //     setURL([...url, data.url])
+        // })
+        // .catch(err=>{
+        //     console.log(err)
+        // })
 
-        //Create new payment
-        const newPayment = {
-            paymentID: paymentID,
-            paymentAmount: paymentAmount,
-            paymentDescription: paymentDescription,
-            paymentDate: paymentDate,
-            pAddressl1: pAddressl1,
-            pAddressl2: pAddressl2, 
-            pAddressl3: pAddressl3,
-            pState: pState,
-            pZip: pZip,
-            pCountry: pCountry
+                axios.post('http://localhost:8090/payment/add', newPayment)
+                    .then(() => {
+                        setPID('');
+                        setPAmount('');
+                        setPDescription('');
+                        setPDate('');
+                        setPAdr1('');
+                        setPAdr2('');
+                        setPAdr3('');
+                        setPState('');
+                        setPProv('');
+                        setPZip('');
+                        setPCountry('');
+                        setURL('');
+                        alert('Adding Successful!');
+                        window.location.href = '/admin/mnpayment'
+                    })
+                    .catch(err => {
+                        alert('Payment adding failed! ' + err);
+                    });
+            }
         };
 
-        axios.post('http://localhost:8090/payment/add', newPayment).then(() => {
-            alert('Payment Adding Successful!')
-            window.location.href = '/payment'
+        // fetch("https://api.cloudinary.com/v1_1/dloxej4xv/image/upload", {
+        //     method: "POST",
+        //     body: data
+        // })
+            // .then(response => response.json())
+            // .then(imageData => {
+            //     setURL(imageData.url);
+            //     checkUrlAndUpdatePayment();
+            // })
+            // .catch(err => {
+            //     alert('Image uploading failed! ' + err);
+            // });
+    };
+    //**********************************************************************************/
+    // const [paymentID, setPID] = useState("");
+    // const [paymentAmount, setPAmount] = useState("");
+    // const [paymentDescription, setPDescription] = useState("");
+    // const [paymentDate, setPDate] = useState("");
+    // const [pAddressl1, setPAdr1] = useState("");
+    // const [pAddressl2, setPAdr2] = useState("");
+    // const [pAddressl3, setPAdr3] = useState("");
+    // const [pState, setPState] = useState("");
+    // const [pProvince, setPProv] = useState("");
+    // const [pZip, setPZip] = useState("");
+    // const [pCountry, setPCountry] = useState("");
 
-            setPID('');
-            setPAmount('');
-            setPDescription('');
-            setPDate('');
-            setPAdr1('');
-            setPAdr2('');
-            setPAdr3('');
-            setPState('');
-            setPProv('');
-            setPZip('');
-            setPCountry('');
+    // const theme = useTheme();
 
-        }).catch((err) => {
-            alert('Payment adding failed! ' + err)
-        })
-  };
+    // const onSubmitMainPayment = (event) => {
+    //     event.preventDefault();
+
+    //     const data = new FormData()
+    //     data.append("file", image)
+    //     data.append("upload_preset", "mernpro")
+    //     data.append("cloud_name", "dloxej4xv")
+        
+    //   };
+
+    //     fetch("https://api.cloudinary.com/v1_1/dloxej4xv/image/upload", {
+    //         method:"POST",
+    //         body: data
+    //     })
+    //     .then(res=>res.json())
+    //     .then(data => {
+    //         setURL([...url, data.url])
+    //     })
+    //     .catch(err=>{
+    //         console.log(err)
+    //     })
+
+    //     //Create new payment
+    //     const newPayment = {
+    //         paymentID: paymentID,
+    //         paymentAmount: paymentAmount,
+    //         paymentDescription: paymentDescription,
+    //         paymentDate: paymentDate,
+    //         pAddressl1: pAddressl1,
+    //         pAddressl2: pAddressl2, 
+    //         pAddressl3: pAddressl3,
+    //         pState: pState,
+    //         pZip: pZip,
+    //         pCountry: pCountry
+    //     };
+
+    //     axios.post('http://localhost:8090/payment/add', newPayment).then(() => {
+    //         alert('Payment Adding Successful!')
+    //         window.location.href = '/payment'
+
+    //         setPID('');
+    //         setPAmount('');
+    //         setPDescription('');
+    //         setPDate('');
+    //         setPAdr1('');
+    //         setPAdr2('');
+    //         setPAdr3('');
+    //         setPState('');
+    //         setPProv('');
+    //         setPZip('');
+    //         setPCountry('');
+
+    //     }).catch((err) => {
+    //         alert('Payment adding failed! ' + err)
+    //     })
+  
 
   return (
 
@@ -80,7 +175,7 @@ export default function Main() {
       <Grid
         display="flex"
         justifyContent="center"
-        lignItems="center"
+        alignItems="center"
         container spacing={2}
         direction={"column"}
 
@@ -269,4 +364,4 @@ export default function Main() {
 
 
 
-//export default MainPayment ;
+export default MainPayment ;
