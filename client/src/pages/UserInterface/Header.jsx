@@ -17,38 +17,11 @@ const Header = () => {
 
     const loggedUser = useSelector((state) => state.user)
 
-    const loggedUser = useSelector((state) => state.user)
-
     const dispatch = useDispatch();
-    const theme = useTheme();
     const navigate = useNavigate();
+    const theme = useTheme();
 
     const [user, setUser] = useState();
-
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
-    
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const handleProfile = () => {
-        navigate('user/profile')
-        setAnchorEl(null);
-    };
-
-    const handleLogout = () => {
-        dispatch(setLogout())
-        setAnchorEl(null);
-        navigate('/login')
-    };
-
-    const [user, setUser] = useState();
-
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     
