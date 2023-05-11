@@ -15,6 +15,7 @@ import financeRouter from "./routes/Finance.route.js"
 import uploadImage from "./uploadImage.js";
 import attendanceRouter from "./routes/Attendance.route.js";
 import trainerRouter from "./routes/Trainer.route.js";
+import trainerAppRouter from "./routes/TrainerApp.route.js";
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use('/membership', membershipRouter);
 app.use('/review', reviewRouter);
 app.use('/product', productRouter);
 app.use('/trainer', trainerRouter);
+app.use('/trainer/applicant',trainerAppRouter)
 app.use('/session', sessionRouter);
 
 
