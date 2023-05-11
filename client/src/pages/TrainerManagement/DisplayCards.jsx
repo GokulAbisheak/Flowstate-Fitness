@@ -52,28 +52,34 @@ const DisplayCards = () => {
   }, []);
 
   return (
-<Grid container spacing={1} sx={{ mt:1  }}>
-  {allTrainers.map((trainer) => (
-    <Grid item key={trainer.email} xs={12} sm={6} md={4} lg={3} sx={{ flexGrow: 1 }}>
-        <Link to={`/trainers/${trainer.email}`}></Link>
-      <Card sx={{ height: '100%' }}>
-        <CardActionArea sx={{ height: '100%' }}>
-          <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '20px' }}>
-            <Avatar {...stringAvatar(trainer.firstName)} sx={{ width: 56, height: 56 }} />
-          </div>
-          <CardContent>
-            <GradientBox>
-              <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>
-                {trainer.firstName} {trainer.lastName}
-              </Typography>
-            </GradientBox>
-          </CardContent>
-        </CardActionArea>
-      </Card>
+    <>
+    <banner>
+      <img src="/assets/Trainer.jpeg" alt="" style={{ width: "100%", height: "400px", objectFit: "cover", objectPosition: "top" }} />
+    </banner>
+    <Grid container spacing={1} sx={{ mt: 3 }}>
+      {allTrainers.map((trainer) => (
+        <Grid item key={trainer.email} xs={12} sm={6} md={4} lg={3} sx={{ flexGrow: 1 }}>
+          <Link to={`/trainers/${trainer.email}`}>
+            <Card sx={{ height: '100%' }}>
+              <CardActionArea sx={{ height: '100%' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '20px' }}>
+                  <Avatar {...stringAvatar(trainer.firstName)} sx={{ width: 56, height: 56 }} />
+                </div>
+                <CardContent>
+                  <GradientBox sx={{ bgcolor: '#ffffff80' }}>
+                    <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>
+                      {trainer.firstName} {trainer.lastName}
+                    </Typography>
+                  </GradientBox>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Link>
+        </Grid>
+      ))}
     </Grid>
-  ))}
-</Grid>
-
+  </>
+  
   );
 };
 

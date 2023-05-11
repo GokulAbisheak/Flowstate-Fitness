@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Button, Fab, IconButton, Input, TextField, useTheme } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+import { Box, Button, IconButton, Input, TextField, useTheme } from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -11,8 +10,6 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import CancelIcon from '@mui/icons-material/Close';
 import '../../styles/index.css'
-import {  useNavigate } from 'react-router-dom';
-
 
 const DisplayTrainers = () => {
 
@@ -23,7 +20,8 @@ const DisplayTrainers = () => {
     const [phoneNumber, setPhoneNumber] = useState("");
     const [email, setEmail] = useState("");
     const [oldEmail, setOldEmail] = useState("");
-    const[searchTerm,setSearchTerm] = useState("");
+    const[SearchTerm,setSearchTerm] = useState("");
+
 
     const theme = useTheme();
 
@@ -49,7 +47,7 @@ const DisplayTrainers = () => {
     }
 
     const getTrainer = (email) => {
-        axios.get(`http://localhost:8090/trainer/get/${email}`).then((res) => {
+        axios.get(`http://localhost:8090/trainer/${email}`).then((res) => {
             setFName(res.data.firstName);
             setLName(res.data.lastName);
             setEmail(res.data.email);
@@ -115,27 +113,15 @@ const DisplayTrainers = () => {
             );
           });
 
-
     }
-
-    const navigate = useNavigate()
 
     return (
         <>
-     
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Fab
-            color='primary'
-            aria-label='add'
-            sx={{ margin: '5px 20px 5px 5px', color: '#FFFFFF' }}
-            onClick={()=>{
-              navigate("/admin/addTrainers");
-            }}
-          >
-            <AddIcon />
-          </Fab>
-        </Box>2
-    
+            <TextField
+        sx={{ width: '100%', margin: '10px' }}
+        label="Search Trainers"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}/>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="sticky table">
                     <TableHead sx={{ background: 'linear-gradient(to left, #07a7af, #01519a)' }}>
@@ -228,7 +214,7 @@ const DisplayTrainers = () => {
                     </form>
                 </Box>
             </Box>
-            
+
         </>
     );
 }

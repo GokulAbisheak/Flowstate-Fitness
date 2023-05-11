@@ -11,6 +11,7 @@ const AddTrainer = () => {
   const [dateOfBirth, setDateOfBirth] = useState(new Date());
   const [phoneNumber, setPhoneNumber] = useState("");
   const [qualification, setQualification] = useState("");
+  const[description,setDescription] = useState("")
   const [loading, setLoading] = useState(false);
 
   const handleAddTrainer = async (event) => {
@@ -24,7 +25,8 @@ const AddTrainer = () => {
       password,
       dateOfBirth,
       phoneNumber,
-      qualification
+      qualification,
+      description
     };
   
     setLoading(true);
@@ -62,7 +64,8 @@ const AddTrainer = () => {
       setPassword("");
       setDateOfBirth(new Date());
       setPhoneNumber("");
-      setQualification("");
+      setQualification("")
+      setDescription("");
     } catch (error) {
       alert(`User registration failed! ${error.message}`);
     }
@@ -155,6 +158,14 @@ const AddTrainer = () => {
           fullWidth
           margin="normal"
           value={qualification}
+          onChange={(event) => setQualification(event.target.value)}
+          InputLabelProps={{ shrink: true }}
+        />
+                <TextField
+          label="Description"
+          fullWidth
+          margin="normal"
+          value={description}
           onChange={(event) => setQualification(event.target.value)}
           InputLabelProps={{ shrink: true }}
         />
