@@ -68,7 +68,10 @@ import DeleteAttendance from './pages/PersonalTrainingManagement/DeleteAttendanc
 
 
 
-
+import AddTrainer from './pages/TrainerManagement/AddTrainer';
+import DisplayCards from './pages/TrainerManagement/DisplayCards';
+import ApplyTrainer from './pages/TrainerManagement/ApplyTrainer';
+import VeiwApp  from './pages/TrainerManagement/DisplayApplication';
 
 
 // import ScanMembership from './pages/UserManagement/ScanMembership';
@@ -94,7 +97,6 @@ function App() {
               <Route path="/" element={<Navigate to="/admin/dashboard" />} />
               <Route path="/admin/dashboard" element={<GridPage />} />
               {/* <Route path="/admin/members" element={<DisplayUsers />} />
-              <Route path="/admin/trainers" element={<DisplayTrainers />} />
               <Route path="/admin/users" element={<DisplayUsers />} />
               <Route path="/admin/membership" element={<DisplayMemberships />} /> */}
               {/* <Route path="/admin/products" element={<ProductHandle/>}/>
@@ -119,6 +121,11 @@ function App() {
               {/* <Route path="/admin/scan" element={<ScanMembership />}/> */}
 
               {/* <Route path="/admin/scan" element={<ScanMembership />} /> */}
+
+              {/* Trainer Management */}
+              <Route path="/admin/trainers" element={<DisplayTrainers />} />
+              <Route path="/admin/addTrainers" element={<AddTrainer />} />
+              <Route path="/admin/viewApp" element={<VeiwApp/>}/>
 
               {/* Product Management */}
               <Route path="/admin/products" element={<ProductHandle />} />
@@ -187,6 +194,11 @@ function App() {
                 {/* <Route path="/user/membership" element={<PurchaseMembership />} />
                 <Route path="/user/profile" element={<Profile />} /> */}
               </Route>
+
+              {/* Trainer Management */}
+              <Route path="/user/displayTrainer" element={<DisplayCards />} />
+              <Route path="/user/applyTrainer" element={<ApplyTrainer/>}/>
+              
 
               {/* Customer Relationship Management */}
               {/* <Route path="/user/addReviews" element={<AddReviews />} />
