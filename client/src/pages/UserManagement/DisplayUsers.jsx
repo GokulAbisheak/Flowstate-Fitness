@@ -69,9 +69,59 @@ const DisplayUsers = () => {
             })
     }
 
+
+    //errors
+    const [errors, setErrors] = useState({});
+
+    //validation
+    const validateInputs = () => {
+        let errors = {};
+
+        // Validate first name
+        if (!fName.trim()) {
+            errors.fName = 'First name is required';
+        }
+
+        // Validate last name
+        if (!lName.trim()) {
+            errors.lName = 'Last name is required';
+        }
+
+        // Validate email
+        const emailRegex = /^\S+@\S+\.\S+$/;
+        if (!email.trim()) {
+            errors.email = 'Email is required';
+        } else if (!emailRegex.test(email)) {
+            errors.email = 'Email is invalid';
+        }
+
+        //validate date of birth
+        if (!dateOfBirth) {
+            errors.dateOfBirth = 'Date of birth is required';
+        }
+
+        //validate phone number
+        const phoneRegex = /^[0-9]{10,}$/;
+        if (!phoneNumber) {
+            errors.phoneNumber = 'Phone number is required';
+        } else if (!phoneRegex.test(phoneNumber)) {
+            errors.phoneNumber = 'Phone number must contain only numbers and be at least 10'
+        }
+
+        return errors;
+    };
+
     const handleSubmit = async (e) => {
 
         e.preventDefault();
+
+        // Check for validation errors
+        const validationErrors = validateInputs();
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            console.log("Have Errors");
+            return;
+        }
 
         console.log(email);
         console.log(fName);
@@ -87,7 +137,7 @@ const DisplayUsers = () => {
             phoneNumber: phoneNumber
         }
 
-        await axios.patch(`http://localhost:8090/user/update/${oldEmail}`, updateDetails).then(() => {
+        await axios.patch(`http://localhost:8090/user/update/${oldEmail}`, updateDetails, config).then(() => {
             handleOpen();
             hideUpdateForm();
 
@@ -102,7 +152,13 @@ const DisplayUsers = () => {
 
     //delete user
     const deleteUser = (email) => {
-        axios.delete(`http://localhost:8090/user/delete/${email}`)
+        const del = confirm(`Confirm delete user ${email}?`);
+
+        if(del == false) {
+            return
+        }
+
+        axios.delete(`http://localhost:8090/user/delete/${email}`, config)
             .then(() => {
                 alert('User deleted successfully');
                 location.reload();
@@ -144,6 +200,20 @@ const DisplayUsers = () => {
         location.reload();
     }
 
+    const [deleteOpen, setDeleteOpen] = useState(false)
+
+    //delete success
+    //alert open
+    const handleDeleteOpen = () => {
+        setDeleteOpen(true);
+    }
+
+    //alert close
+    const handleDeleteClose = () => {
+        setDeleteOpen(false);
+        location.reload();
+    }
+
     //search
     const [searchTerm, setSearchTerm] = useState('');
     const [searchUsers, setSearchUsers] = useState([]);
@@ -153,7 +223,7 @@ const DisplayUsers = () => {
 
     const handleSearch = async () => {
         if (searchTerm != '') {
-            axios.get(`http://localhost:8090/user/search/byemail?term=${searchTerm}`)
+            axios.get(`http://localhost:8090/user/search/byemail?term=${searchTerm}`, config)
                 .then((res) => {
                     setSearchUsers(res.data);
 
@@ -177,9 +247,7 @@ const DisplayUsers = () => {
             {/* search bar */}
             <FlexBetween>
                 <FlexBetween>
-                    <Button onClick={() => { window.location.reload() }}>
-                        All
-                    </Button>
+
                     <Box display="flex" alignItems="center" width="250px" padding="5px 10px" sx={{ backgroundColor: theme.palette.background.alt, borderRadius: '10px', boxShadow: '0px 0px 2px #000000' }}>
                         <TextField placeholder='Search...' variant='standard' InputProps={{
                             disableUnderline: true
@@ -188,6 +256,9 @@ const DisplayUsers = () => {
                             <SearchIcon />
                         </IconButton>
                     </Box>
+                    <Button onClick={() => { window.location.reload() }}>
+                        Refresh
+                    </Button>
                 </FlexBetween>
             </FlexBetween>
 
@@ -283,7 +354,10 @@ const DisplayUsers = () => {
                         <TextField sx={{ width: "calc(100% - 80px)", margin: "10px 40px" }}
                             label="Email"
                             value={email}
+                            error={Boolean(errors.email)}
+                            helperText={errors.email}
                             InputLabelProps={{ shrink: true }}
+                            disabled
                             onChange={(e) => {
                                 setEmail(e.target.value);
                             }} />
@@ -291,6 +365,8 @@ const DisplayUsers = () => {
                         <TextField sx={{ width: "calc(100% - 80px)", margin: "10px 40px" }}
                             label="First Name"
                             value={fName}
+                            error={Boolean(errors.fName)}
+                            helperText={errors.fName}
                             InputLabelProps={{ shrink: true }}
                             onChange={(e) => {
                                 setFName(e.target.value);
@@ -299,6 +375,8 @@ const DisplayUsers = () => {
                         <TextField sx={{ width: "calc(100% - 80px)", margin: "10px 40px" }}
                             label="Last Name"
                             value={lName}
+                            error={Boolean(errors.lName)}
+                            helperText={errors.lName}
                             InputLabelProps={{ shrink: true }}
                             onChange={(e) => {
                                 setLName(e.target.value);
@@ -308,6 +386,8 @@ const DisplayUsers = () => {
                             type="date"
                             label="Date of Birth"
                             value={dateOfBirth.substring(0, 10)}
+                            error={Boolean(errors.dateOfBirth)}
+                            helperText={errors.dateOfBirth}
                             InputLabelProps={{ shrink: true }}
                             onChange={(e) => {
                                 setDateOfBirth(e.target.value);
@@ -316,6 +396,8 @@ const DisplayUsers = () => {
                         <TextField sx={{ width: "calc(100% - 80px)", margin: "10px 40px" }}
                             label="Phone Number"
                             value={phoneNumber}
+                            error={Boolean(errors.phoneNumber)}
+                            helperText={errors.phoneNumber}
                             InputLabelProps={{ shrink: true }}
                             onChange={(e) => {
                                 setPhoneNumber(e.target.value);
@@ -333,6 +415,15 @@ const DisplayUsers = () => {
                 horizontal: 'right',
             }}>
                 <Alert variant="filled" onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                    Update Success!
+                </Alert>
+            </Snackbar>
+
+            <Snackbar open={deleteOpen} autoHideDuration={2000} onClose={handleDeleteClose} anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+            }}>
+                <Alert variant="filled" onClose={handleDeleteClose} severity="success" sx={{ width: '100%' }}>
                     Update Success!
                 </Alert>
             </Snackbar>

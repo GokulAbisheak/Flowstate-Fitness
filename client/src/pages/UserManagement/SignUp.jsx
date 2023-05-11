@@ -1,5 +1,6 @@
 import { Box, Button, Grid, Link, TextField, useTheme } from '@mui/material';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'
 import FlexBetween from '../../components/FlexBetween';
 import InputField from '../../components/InputField';
 import ReCAPTCHA from 'react-google-recaptcha';
@@ -32,6 +33,7 @@ const SignUp = () => {
     const [human, setHuman] = useState(false);
 
     const theme = useTheme();
+    const navigate = useNavigate()
 
     //validation
     const validateInputs = () => {
@@ -115,9 +117,8 @@ const SignUp = () => {
 
         // Add new user to parent component state
         axios.post('http://localhost:8090/user/add', newUser).then(() => {
-            alert('Registration Successful!')
             sendEmail();
-            // window.location.href = '/login'
+            navigate('/login')
 
             // Reset form inputs
             setFName('');
@@ -131,7 +132,8 @@ const SignUp = () => {
             setHuman(false);
 
         }).catch((err) => {
-            alert('User registration failed! ' + err)
+
+            setErrors({email: 'Email already exists'})
         })
     };
 
@@ -140,7 +142,7 @@ const SignUp = () => {
         <>
             <Grid container spacing={0}>
                 <Grid item xs={12} lg={6} display="flex" justifyContent="center" alignItems="center" minHeight="90vh" sx={{ display: { xs: "none", lg: "flex" } }}>
-                    <img style={{ width: "80%", height: "auto" }} src="/assets/pilates-animate.svg" />
+                    <img style={{ width: "80%", height: "auto" }} src="/assets/jogging-new.svg" />
                 </Grid>
                 <Grid item xs={12} lg={6} display="flex" justifyContent="center" alignItems="center" minHeight="90vh">
                     <form onSubmit={handleSubmit}>
@@ -263,10 +265,6 @@ const SignUp = () => {
                                     </Box>
                                 </Grid>
                             </Grid>
-
-
-
-
 
                             <Button type="submit" variant="contained" sx={{ margin: "20px auto", width: "100%", color: "#FFFFFF" }}>
                                 Sign up

@@ -155,4 +155,20 @@ body::-webkit-scrollbar-thumb {
     height: 200px;
     border-radius: 50%;
     background-color: #f2f2f2;
+    background-image: url(/client/public/assets/user.jpg);
+}
+
+.center-box-400 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 40px 20px;
+    width: 400px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+}
+
+.center-box-400 div{
+   margin-bottom: 10px;
 }

@@ -44,6 +44,10 @@ import AdminPrivateRoute from './components/AdminPrivateRoute';
 import ForgetPassword from './pages/UserManagement/ForgetPassword';
 import CommonLayout from './pages/CommonInterface/CommonLayout';
 import LoggedRedirect from './components/LoggedRedirect';
+import AdminPrivateRoute from './components/AdminPrivateRoute';
+import ForgetPassword from './pages/UserManagement/ForgetPassword';
+import CommonLayout from './pages/CommonInterface/CommonLayout';
+import LoggedRedirect from './components/LoggedRedirect';
 
 
 function App() {
@@ -62,6 +66,13 @@ function App() {
               {/* User and Membership Management */}
 
               <Route path="/" element={<Navigate to="/admin/dashboard" />} />
+              <Route element={<AdminPrivateRoute />}>
+                <Route path="/admin/dashboard" element={<GridPage />} />
+                <Route path="/admin/members" element={<DisplayUsers />} />
+                <Route path="/admin/users" element={<DisplayUsers />} />
+                <Route path="/admin/membership" element={<DisplayMemberships />} />
+                <Route path="/admin/scan" element={<ScanMembership />} />
+              </Route>
               <Route element={<AdminPrivateRoute />}>
                 <Route path="/admin/dashboard" element={<GridPage />} />
                 <Route path="/admin/members" element={<DisplayUsers />} />
@@ -107,7 +118,18 @@ function App() {
             </Route>
 
             <Route element={<UserLayout />}>
+            <Route element={<CommonLayout />}>
+              <Route element={<LoggedRedirect />}>
+                {/* User Management */}
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/forgot" element={<ForgetPassword />} />
+              </Route>
+            </Route>
+
+            <Route element={<UserLayout />}>
               <Route element={<UserPrivateRoute />}>
+                <Route path="/user" element={<Navigate to="/user/profile" />} />
                 <Route path="/user" element={<Navigate to="/user/profile" />} />
                 <Route path="/user/membership" element={<PurchaseMembership />} />
                 <Route path="/user/profile" element={<Profile />} />

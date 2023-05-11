@@ -10,6 +10,14 @@ import axios from 'axios'
 const PurchaseMembership = () => {
 
     const loggedUser = useSelector((state) => state.user)
+    const token = useSelector((state) => state.token)
+
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    };
 
     const theme = useTheme();
     const [memberEmail, setMembershipEmail] = useState(loggedUser.email)
@@ -99,11 +107,26 @@ const PurchaseMembership = () => {
             availableFlowTokens = res.data.flowTokens
             if (availableFlowTokens >= flowToken) {
                 let newFlowTokens = availableFlowTokens - flowToken + freeFlowToken
-                axios.patch(`http://localhost:8090/user/update/${loggedUser.email}`, { flowTokens: newFlowTokens }).then((res) => {
-                    axios.get(`http://localhost:8090/membership/email/${loggedUser.email}`).then((res) => {
+                axios.patch(`http://localhost:8090/user/update/${loggedUser.email}`, { flowTokens: newFlowTokens }, config).then((res) => {
+                    axios.get(`http://localhost:8090/membership/email/${loggedUser.email}`, config).then((res) => {
                         const tempId = res.data._id;
-                        axios.patch(`http://localhost:8090/membership/update/${tempId}`, { expirationDate: membershipExpiration }).then((res) => {
+                        axios.patch(`http://localhost:8090/membership/update/${tempId}`, { expirationDate: membershipExpiration }, config).then((res) => {
                             handleOpenSuccess();
+
+                            //email
+
+                            // var emailParams = {
+                            //     user_email: loggedUser.email,
+                            //     user_name: loggedUser.firstName + ' ' + loggedUser.lastName,
+                            //     membership_type: membershipType
+                            // };
+
+                            // emailjs.send('service_3rng3bo', 'template_pb4x2kw', emailParams, 'hYoftRZFX-bY9Hc6n')
+                            //     .then(function (response) {
+                            //         console.log("Email sent successfully:", response);
+                            //     }, function (error) {
+                            //         console.log("Email failed to send:", error);
+                            //     });
                         })
                     }).catch(() => {
                         console.log(memberEmail)
@@ -111,12 +134,12 @@ const PurchaseMembership = () => {
                         console.log(membershipExpiration)
 
                         const newMembership = {
-                            email : memberEmail,
+                            email: memberEmail,
                             membershipType: membershipType,
                             expirationDate: membershipExpiration
                         }
 
-                        axios.post('http://localhost:8090/membership/add', newMembership).then((res) => {
+                        axios.post('http://localhost:8090/membership/add', newMembership, config).then((res) => {
                             handleOpenSuccess();
                         }).catch(() => {
 
@@ -130,6 +153,7 @@ const PurchaseMembership = () => {
     }
 
     const handleOpenSuccess = () => {
+        hidePurchaseBox()
         setOpenSuccess(true);
     }
 

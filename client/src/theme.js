@@ -15,8 +15,8 @@ const globalTheme = (mode) => {
                 },
 
                 background: {
-                    default: "#121212",
-                    alt: "#222222",
+                    default: "#222222",
+                    alt: "#2a2a2a",
                     dif: "#0e1c2f",
                 },
 

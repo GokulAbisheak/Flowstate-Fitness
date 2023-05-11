@@ -2,27 +2,25 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Navigate, Outlet } from 'react-router-dom';
 
-const UserPrivateRoute = () => {
+const LoggedRedirect = () => {
 
   const loggedUser = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
 
-  let type;
+  let notLogged;
 
   if (!loggedUser) {
-    type = 'notuser'
-  } else if (loggedUser.type === 'user') {
-    type = 'user'
+    notLogged = true
   } else {
-    type = 'notuser'
+    notLogged = false
   }
 
 
   return (
     <>
-      {type === 'user' ? <Outlet /> : <Navigate to='/' />}
+      {notLogged === true ? <Outlet /> : <Navigate to='/user' />}
     </>
   );
 };
 
-export default UserPrivateRoute;
+export default LoggedRedirect;

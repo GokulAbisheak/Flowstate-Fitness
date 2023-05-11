@@ -14,8 +14,19 @@ import UpdateBox from '../../components/UpdateBox.js';
 import UpdateBoxContent from '../../components/UpdateBoxContent.js';
 import SearchIcon from '@mui/icons-material/Search';
 import FlexBetween from '../../components/FlexBetween.js'
+import { useSelector } from 'react-redux';
 
 const DisplayMemberships = () => {
+
+    const loggedUser = useSelector((state) => state.user)
+    const token = useSelector((state) => state.token)
+
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    };
 
     const [allMemberships, setAllMemberships] = useState([]);
     const [membershipType, setMembershipType] = useState("");
@@ -48,7 +59,7 @@ const DisplayMemberships = () => {
 
     useEffect(() => {
         const getAllMemberships = () => {
-            axios.get('http://localhost:8090/membership').then((res) => {
+            axios.get('http://localhost:8090/membership', config).then((res) => {
                 setAllMemberships(res.data);
             }).catch((err) => {
                 alert('Unable to get all memberships ' + err.message);
@@ -58,7 +69,7 @@ const DisplayMemberships = () => {
     }, [])
 
     const deleteMembership = (memberId) => {
-        axios.delete(`http://localhost:8090/membership/delete/${memberId}`).then(() => {
+        axios.delete(`http://localhost:8090/membership/delete/${memberId}`, config).then(() => {
             alert('Membership deleted successfully');
             location.reload();
         }).catch((err) => {
@@ -67,7 +78,7 @@ const DisplayMemberships = () => {
     }
 
     const getMembership = (memberId) => {
-        axios.get(`http://localhost:8090/membership/${memberId}`).then((res) => {
+        axios.get(`http://localhost:8090/membership/${memberId}`, config).then((res) => {
             setMembershipType(res.data.membershipType);
             setExpirationDate(res.data.expirationDate);
             setMemberId(res.data._id);
@@ -103,7 +114,7 @@ const DisplayMemberships = () => {
             membershipEmail: membershipEmail
         }
 
-        await axios.patch(`http://localhost:8090/membership/update/${memberId}`, updateDetails).then(() => {
+        await axios.patch(`http://localhost:8090/membership/update/${memberId}`, updateDetails, config).then(() => {
             handleOpen();
             hideUpdateForm();
 
@@ -125,7 +136,7 @@ const DisplayMemberships = () => {
     //search
     const handleSearch = async () => {
         if (searchTerm != '') {
-            axios.get(`http://localhost:8090/membership/search/byemail?term=${searchTerm}`).then((res) => {
+            axios.get(`http://localhost:8090/membership/search/byemail?term=${searchTerm}`, config).then((res) => {
                 setSearchMemberships(res.data);
                 if (res.data.length === 0) {
                     setNoResult('No results')
@@ -147,7 +158,7 @@ const DisplayMemberships = () => {
         console.log('test 1')
         if (term != '') {
             console.log('test 2')
-            axios.get(`http://localhost:8090/membership/sort/${term}`).then((res) => {
+            axios.get(`http://localhost:8090/membership/sort/${term}`, config).then((res) => {
 
                 setSortMemberships(res.data);
                 if (res.data.length === 0) {
@@ -201,9 +212,7 @@ const DisplayMemberships = () => {
         <>
             <FlexBetween>
                 <FlexBetween>
-                    <Button onClick={() => { window.location.reload() }}>
-                        All
-                    </Button>
+
                     <Box display="flex" alignItems="center" width="250px" padding="5px 10px" sx={{ backgroundColor: theme.palette.background.alt, borderRadius: '10px', boxShadow: '0px 0px 2px #000000' }}>
                         <TextField placeholder='Search...' variant='standard' InputProps={{
                             disableUnderline: true
@@ -212,6 +221,9 @@ const DisplayMemberships = () => {
                             <SearchIcon />
                         </IconButton>
                     </Box>
+                    <Button onClick={() => { window.location.reload() }}>
+                        Refresh
+                    </Button>
                 </FlexBetween>
                 <FlexBetween>
                     <TextField

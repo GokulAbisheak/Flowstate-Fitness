@@ -1,4 +1,4 @@
-import { Box, Button, Grid, IconButton, useTheme, TextField } from '@mui/material';
+import { Box, Button, Grid, IconButton, useTheme, TextField, Snackbar, Alert } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 import { useSelector } from 'react-redux';
@@ -8,14 +8,21 @@ import ContentBox from '../../components/ContentBox.js'
 import QRCode from 'qrcode'
 import FlexBetween from '../../components/FlexBetween';
 import { useNavigate } from 'react-router-dom';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const Profile = () => {
-
-    const theme = useTheme();
 
     const loggedUser = useSelector((state) => state.user)
     const token = useSelector((state) => state.token)
 
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const theme = useTheme();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -38,6 +45,18 @@ const Profile = () => {
 
     const [display, setDisplay] = useState('none');
 
+    const [fName, setFName] = useState("");
+    const [lName, setLName] = useState("");
+    const [dateOfBirth, setDateOfBirth] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [email, setEmail] = useState("");
+    const [oldEmail, setOldEmail] = useState("");
+    const [height, setHeight] = useState();
+    const [weight, setWeight] = useState();
+    const [flowTokens, setFlowTokens] = useState();
+    const [open, setOpen] = useState(false);
+    const [displayUpdate, setDisplayUpdate] = useState('none')
+    const [errors, setErrors] = useState({});
 
 
     const convertBase64 = (file) => {
@@ -59,6 +78,15 @@ const Profile = () => {
         const getUser = () => {
             axios.get('http://localhost:8090/user/' + loggedUser.email).then((res) => {
                 setUser(res.data);
+                setFName(res.data.firstName);
+                setLName(res.data.lastName);
+                setEmail(res.data.email);
+                setOldEmail(res.data.email);
+                setDateOfBirth(res.data.dateOfBirth);
+                setPhoneNumber(res.data.phoneNumber);
+                setHeight(res.data.height)
+                setWeight(res.data.weight)
+                setFlowTokens(res.data.flowTokens)
             }).catch((err) => {
                 alert('Unable to get user ' + err.message);
             })
@@ -76,7 +104,7 @@ const Profile = () => {
         console.log(base64)
         axios.post("http://localhost:8090/uploadImage", { image: base64 }).then((res) => {
             setUrl(res.data);
-            axios.patch(`http://localhost:8090/user/update/${loggedUser.email}`, { url: res.data })
+            axios.patch(`http://localhost:8090/user/update/${loggedUser.email}`, { url: res.data }, config)
             alert("Image uploaded Succesfully");
             window.location.reload()
         }).then(() => setLoading(false))
@@ -89,52 +117,90 @@ const Profile = () => {
         }
     };
 
+    const handleSubmit = async (e) => {
+
+        e.preventDefault();
+
+        // Check for validation errors
+        const validationErrors = validateInputs();
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            console.log("Have Errors");
+            return;
+        }
+
+        console.log(email);
+        console.log(fName);
+        console.log(lName);
+        console.log(dateOfBirth);
+        console.log(phoneNumber);
+
+        const updateDetails = {
+            firstName: fName,
+            lastName: lName,
+            email: email,
+            dateOfBirth: dateOfBirth,
+            phoneNumber: phoneNumber,
+            height: height,
+            weight: weight
+        }
+
+        await axios.patch(`http://localhost:8090/user/update/${oldEmail}`, updateDetails, config).then(() => {
+            handleOpen();
+            hideUpdateForm();
+
+        }).catch((err) => {
+            alert('Update Failed ' + err.message);
+        })
+
+    }
+
     const userDetails = [
         {
             label: "First Name",
-            value: user.firstName,
+            value: fName,
 
         },
 
         {
             label: "Last Name",
-            value: user.lastName,
+            value: lName,
 
         },
 
         {
             label: "Email",
-            value: user.email,
+            value: email,
 
         },
 
         {
             label: "Date of Birth",
-            value: formatDate(user.dateOfBirth),
+            value: formatDate(dateOfBirth),
 
         },
 
         {
             label: "Phone Number",
-            value: user.phoneNumber,
+            value: phoneNumber,
 
         },
 
         {
             label: "Flow Tokens",
-            value: user.flowTokens,
+            value: flowTokens,
 
         },
 
         {
             label: "Height",
-            value: user.height,
+            value: height,
 
         },
 
         {
             label: "Weight",
-            value: user.weight,
+            value: weight,
 
         },
     ]
@@ -142,7 +208,7 @@ const Profile = () => {
     let tempId;
 
     useEffect(() => {
-        axios.get(`http://localhost:8090/membership/email/${loggedUser.email}`)
+        axios.get(`http://localhost:8090/membership/email/${loggedUser.email}`, config)
             .then((res) => {
 
                 setId(res.data._id)
@@ -171,6 +237,63 @@ const Profile = () => {
         })
     }
 
+    //alert open
+    const handleOpen = () => {
+        setOpen(true);
+    }
+
+    //alert close
+    const handleClose = () => {
+        setOpen(false);
+    }
+
+    //display updateform
+    const displayUpdateForm = () => {
+        document.getElementById('update-box').style.display = "block";
+    }
+
+    //hide updateform
+    const hideUpdateForm = () => {
+        document.getElementById('update-box').style.display = "none";
+    }
+
+    //validation
+    const validateInputs = () => {
+        let errors = {};
+
+        // Validate first name
+        if (!fName.trim()) {
+            errors.fName = 'First name is required';
+        }
+
+        // Validate last name
+        if (!lName.trim()) {
+            errors.lName = 'Last name is required';
+        }
+
+        // Validate email
+        const emailRegex = /^\S+@\S+\.\S+$/;
+        if (!email.trim()) {
+            errors.email = 'Email is required';
+        } else if (!emailRegex.test(email)) {
+            errors.email = 'Email is invalid';
+        }
+
+        //validate date of birth
+        if (!dateOfBirth) {
+            errors.dateOfBirth = 'Date of birth is required';
+        }
+
+        //validate phone number
+        const phoneRegex = /^[0-9]{10,}$/;
+        if (!phoneNumber) {
+            errors.phoneNumber = 'Phone number is required';
+        } else if (!phoneRegex.test(phoneNumber)) {
+            errors.phoneNumber = 'Phone number must contain only numbers and be at least 10'
+        }
+
+        return errors;
+    };
 
     return (
         <>
@@ -186,7 +309,7 @@ const Profile = () => {
                             </Grid>
                             <Grid item xs={12} md={4} minWidth="280px" align="center">
                                 <Box className="profile-pic" sx={{ overflow: 'hidden' }}>
-                                    <img src={user.url} style={{ width: '200px', height: 'auto' }}></img>
+                                    <img src={user.url} style={{ maxWidth: '200px', minHeight: '200px' }}></img>
                                 </Box>
                                 <Button sx={{ margin: "20px 0px" }} variant="outlined" aria-label="upload picture" component="label" startIcon={<PhotoCameraIcon />}>
                                     Change Profile Picture
@@ -206,11 +329,18 @@ const Profile = () => {
                                                 InputProps={{
                                                     readOnly: true,
                                                     shrink: false,
-                                                    disableUnderline: true
+                                                    disableUnderline: true,
+                                                    style: {
+                                                        fontSize: '18px'
+                                                    }
                                                 }}
                                                 InputLabelProps={{
                                                     shrink: true,
+                                                    style: {
+                                                        fontSize: '18px'
+                                                    }
                                                 }}
+                                                sx={{ fontSize: '30px' }}
                                             />
                                         </Grid>
                                     ))}
@@ -267,6 +397,9 @@ const Profile = () => {
                                 </Grid>
                             </Grid>
                         </Grid>
+                        <Button sx={{ float: 'right', marginBottom: '10px' }} onClick={() => {
+                            displayUpdateForm()
+                        }}>Edit Details</Button>
                     </ContentBox>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={3} sx={{ display: display }}>
@@ -283,6 +416,99 @@ const Profile = () => {
                     </ContentBox>
                 </Grid>
             </Grid >
+
+            {/* Update User */}
+            <Box id="update-box" sx={{ backgroundColor: "rgba(0,0,0,0.3)", width: "100%", height: "100%", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex:10000 }}>
+                <Box maxWidth="500px" sx={{ backgroundColor: theme.palette.background.alt, position: "relative", top: "50%", left: "50%", transform: "translate(-50%, -50%)", boxShadow: "0px 0px 10px rgba(0,0,0,0.5)", borderRadius: "5px" }}>
+                    <IconButton sx={{ float: "right", margin: "5px" }}>
+                        <CancelIcon onClick={() => { hideUpdateForm() }} />
+                    </IconButton>
+                    { }
+                    <form onSubmit={handleSubmit}>
+                        <TextField sx={{ width: "calc(100% - 80px)", margin: "10px 40px" }}
+                            label="Email"
+                            value={email}
+                            error={Boolean(errors.email)}
+                            helperText={errors.email}
+                            InputLabelProps={{ shrink: true }}
+                            onChange={(e) => {
+                                setEmail(e.target.value);
+                            }} />
+
+                        <TextField sx={{ width: "calc(100% - 80px)", margin: "10px 40px" }}
+                            label="First Name"
+                            value={fName}
+                            error={Boolean(errors.fName)}
+                            helperText={errors.fName}
+                            InputLabelProps={{ shrink: true }}
+                            onChange={(e) => {
+                                setFName(e.target.value);
+                            }} />
+
+                        <TextField sx={{ width: "calc(100% - 80px)", margin: "10px 40px" }}
+                            label="Last Name"
+                            value={lName}
+                            error={Boolean(errors.lName)}
+                            helperText={errors.lName}
+                            InputLabelProps={{ shrink: true }}
+                            onChange={(e) => {
+                                setLName(e.target.value);
+                            }} />
+
+                        <TextField sx={{ width: "calc(100% - 80px)", margin: "10px 40px" }}
+                            type="date"
+                            label="Date of Birth"
+                            value={dateOfBirth.substring(0, 10)}
+                            error={Boolean(errors.dateOfBirth)}
+                            helperText={errors.dateOfBirth}
+                            InputLabelProps={{ shrink: true }}
+                            onChange={(e) => {
+                                setDateOfBirth(e.target.value);
+                            }} />
+
+                        <TextField sx={{ width: "calc(100% - 80px)", margin: "10px 40px" }}
+                            label="Phone Number"
+                            value={phoneNumber}
+                            error={Boolean(errors.phoneNumber)}
+                            helperText={errors.phoneNumber}
+                            InputLabelProps={{ shrink: true }}
+                            onChange={(e) => {
+                                setPhoneNumber(e.target.value);
+                            }} />
+
+                        <TextField sx={{ width: "calc(100% - 80px)", margin: "10px 40px" }}
+                            label="Height"
+                            value={height}
+                            InputLabelProps={{ shrink: true }}
+                            onChange={(e) => {
+                                setHeight(e.target.value);
+                            }}
+                            type="number" />
+
+                        <TextField sx={{ width: "calc(100% - 80px)", margin: "10px 40px" }}
+                            label="Weight"
+                            value={weight}
+                            InputLabelProps={{ shrink: true }}
+                            onChange={(e) => {
+                                setWeight(e.target.value);
+                            }}
+                            type="number" />
+
+                        <Button type="submit" color="success" variant='contained' sx={{ margin: "10px 40px", width: "calc(100% - 80px)" }}>
+                            Confirm Update
+                        </Button>
+                    </form>
+                </Box>
+            </Box>
+
+            <Snackbar open={open} autoHideDuration={2000} onClose={handleClose} anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+            }}>
+                <Alert variant="filled" onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                    Update Success!
+                </Alert>
+            </Snackbar>
         </>
     );
 }

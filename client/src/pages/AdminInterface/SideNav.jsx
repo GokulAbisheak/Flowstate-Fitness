@@ -12,7 +12,8 @@ import {
     CalendarMonth as CalendarMonthIcon,
     Payment as PaymentIcon,
     Settings as SettingsIcon,
-    CardMembership as MembershipIcon
+    CardMembership as MembershipIcon,
+    QrCodeScanner as QRCodeIcon
 } from '@mui/icons-material';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 
@@ -39,6 +40,12 @@ const SideNav = () => {
             text: 'Membership',
             icon: <MembershipIcon></MembershipIcon>,
             path: '/admin/membership',
+        },
+
+        {
+            text: 'Scan Card',
+            icon: <QRCodeIcon></QRCodeIcon>,
+            path: '/admin/scan',
         },
 
         {
