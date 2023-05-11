@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, Avatar } from '@mui/material';
+import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, Avatar, useTheme } from '@mui/material';
 import styled from '@mui/material/styles/styled';
 import Box from '@mui/material/Box';
 import { Link } from 'react-router-dom';
@@ -11,6 +11,7 @@ const GradientBox = styled(Box)(({ theme }) => ({
   color: theme.palette.primary.contrastText,
   padding: theme.spacing(2),
 }));
+
 
 function stringToColor(string) {
   let hash = 0;
@@ -53,28 +54,52 @@ const DisplayCards = () => {
 
   return (
     <>
-    <banner>
+    {<banner>
       <img src="/assets/Trainer.jpeg" alt="" style={{ width: "100%", height: "400px", objectFit: "cover", objectPosition: "top" }} />
-    </banner>
-    <Grid container spacing={1} sx={{ mt: 3 }}>
+    </banner> }
+    <Grid container spacing={4} sx={{ 
+      px: 3,
+      mt: 3,  
+    }}
+    fullWidth
+      >
       {allTrainers.map((trainer) => (
-        <Grid item key={trainer.email} xs={12} sm={6} md={4} lg={3} sx={{ flexGrow: 1 }}>
-          <Link to={`/trainers/${trainer.email}`}>
-            <Card sx={{ height: '100%' }}>
+        <Grid item key={trainer.email} xs={12} sm={6} md={4} lg={3} sx={{
+         }}>
+          
+            <Card sx={{ 
+              py:5,
+              borderRadius: '12px',
+              boxShadow: "1px 1px 1px 1px rgba(0, 0, 0, 0.1)",
+              height: '100%' }}
+              elevation={0}>
               <CardActionArea sx={{ height: '100%' }}>
-                <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '20px' }}>
-                  <Avatar {...stringAvatar(trainer.firstName)} sx={{ width: 56, height: 56 }} />
+                <div style={{ display: 'flex', justifyContent: "center", paddingTop: '20px' }}>
+                  <Avatar src ={trainer.url} sx={{ width: 76, height: 76 }} />
                 </div>
                 <CardContent>
-                  <GradientBox sx={{ bgcolor: '#ffffff80' }}>
-                    <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>
+                  <Box sx={{ 
+                      outline: '1px solid #000'
+                    }}>
+                      <Link 
+                      style={{
+                        textDecoration: 'none',
+                      }}
+          to={`/trainers/${trainer.email}`}>
+                    <Typography sx={{ 
+                      boxShadow: "0px 1px 0px 0.5px rgba(0, 0, 0, 0.1)",
+                      borderRadius: "12px",
+                      py: 1,
+                      color: '#000',
+                      textAlign: 'center' }}>
                       {trainer.firstName} {trainer.lastName}
                     </Typography>
-                  </GradientBox>
+                    </Link>
+                  </Box>
                 </CardContent>
               </CardActionArea>
             </Card>
-          </Link>
+          
         </Grid>
       ))}
     </Grid>

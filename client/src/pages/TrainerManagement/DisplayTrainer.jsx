@@ -12,6 +12,9 @@ import Paper from '@mui/material/Paper';
 import CancelIcon from '@mui/icons-material/Close';
 import '../../styles/index.css'
 import {  useNavigate } from 'react-router-dom';
+import SearchIcon from '@mui/icons-material/Search';
+import FlexBetween from '../../components/FlexBetween.js'
+
 
 
 const DisplayTrainers = () => {
@@ -23,8 +26,7 @@ const DisplayTrainers = () => {
     const [phoneNumber, setPhoneNumber] = useState("");
     const [email, setEmail] = useState("");
     const [oldEmail, setOldEmail] = useState("");
-    const [searchQuery, setSearchQuery] = useState('');
-    const [filteredData, setFilteredData] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
 
     const theme = useTheme();
 
@@ -60,6 +62,16 @@ const DisplayTrainers = () => {
         }).catch((err) => {
             alert('Unable to get trainer ' + err.message);
         })
+    }
+
+    const handleSearch = () => {
+        console.log(searchTerm)
+        setAllTrainers(prevTrainers => prevTrainers.filter(trainer => {
+            return trainer.firstName.toLowerCase().includes(searchTerm.toLowerCase())
+            || trainer.lastName.toLowerCase().includes(searchTerm.toLowerCase())
+            || trainer.email.toLowerCase().includes(searchTerm.toLowerCase())
+            
+        }))
     }
 
     const formatDate = (date) => {
@@ -108,38 +120,21 @@ const DisplayTrainers = () => {
             alert('Update Failed ' + err.message);
         })
 
-        const filteredTrainers = allTrainers.filter((trainer) => {
-            return (
-              trainer.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              trainer.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              trainer.email.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-          });
-
 
     }
 
-    const handleSearchInputChange = (event) => {
-        setSearchQuery(event.target.value);
-      };
-      
-      const handleSearch = (event) => {
-        event.preventDefault();
-        const filtered = data.filter((row) =>
-          Object.values(row)
-            .join('')
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase())
-        );
-        setFilteredData(filtered);
-      };
- 
+
+
+
+    //search
+
+
+
 
     const navigate = useNavigate()
 
     return (
         <>
-
 
 <Box sx={{    display: 'flex',
     justifyContent: 'flex-end',
@@ -157,7 +152,43 @@ const DisplayTrainers = () => {
     <AddIcon />
   </Fab>
 </Box>
-            <TableContainer component={Paper}>
+
+<Box sx={{    display: 'flex',
+    justifyContent: 'flex-end',
+    position: "absolute",
+    top: '84px',
+    right: '10px' }}>
+  <Button
+    color='primary'
+    variant='contained'
+    aria-label='viewAppl'
+    sx={{ margin: '5px 20px 5px 5px', color: '#FFFFFF' }}
+    onClick={()=>{
+        navigate("/admin/viewApp");
+    }}
+  >
+    Applications
+  </Button>
+</Box>
+            {/* search bar */}
+            <FlexBetween>
+                <FlexBetween>
+                    <Button onClick={() => { window.location.reload() }}>
+                        All
+                    </Button>
+                    <Box display="flex" alignItems="center" width="250px" padding="5px 10px" sx={{ backgroundColor: theme.palette.background.alt, borderRadius: '10px', boxShadow: '0px 0px 2px #000000' }}>
+                        <TextField placeholder='Search...' variant='standard' InputProps={{
+                            disableUnderline: true
+                        }} type="text" value={searchTerm} onChange={(e) => {
+                            console.log("search",e.target.value)
+                            setSearchTerm(e.target.value)}} />
+                        <IconButton onClick={() => handleSearch()} sx={{ width: "40px" }}>
+                            <SearchIcon />
+                        </IconButton>
+                    </Box>
+                </FlexBetween>
+            </FlexBetween>
+            <TableContainer component={Paper} sx={{marginTop: '50px'}}>
                 <Table sx={{ minWidth: 650 }} aria-label="sticky table">
                     <TableHead sx={{ background: 'linear-gradient(to left, #07a7af, #01519a)' }}>
                         <TableRow>

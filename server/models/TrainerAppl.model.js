@@ -37,6 +37,9 @@ const trainerapplSchema = new mongoose.Schema({
     description: {
         type: String,
         trim: true
+      },
+      url:{
+        type: String
       }
 });
 

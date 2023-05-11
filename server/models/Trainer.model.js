@@ -68,6 +68,9 @@ const trainerSchema = new mongoose.Schema({
     description: {
       type: String,
       trim: true
+    },
+    url:{
+      type: String
     }
 });
 

@@ -43,6 +43,8 @@ import ScanMembership from './pages/UserManagement/ScanMembership';
 import Profile from './pages/UserManagement/Profile';
 import AddTrainer from './pages/TrainerManagement/AddTrainer';
 import DisplayCards from './pages/TrainerManagement/DisplayCards';
+import ApplyTrainer from './pages/TrainerManagement/ApplyTrainer';
+import VeiwApp  from './pages/TrainerManagement/DisplayApplication';
 
 
 function App() {
@@ -69,6 +71,7 @@ function App() {
               {/* Trainer Management */}
               <Route path="/admin/trainers" element={<DisplayTrainers />} />
               <Route path="/admin/addTrainers" element={<AddTrainer />} />
+              <Route path="/admin/viewApp" element={<VeiwApp/>}/>
 
               {/* Product Management */}
               <Route path="/admin/products" element={<ProductHandle />} />
@@ -107,7 +110,9 @@ function App() {
               </Route>
 
               {/* Trainer Management */}
-              <Route path="/trainer/display" element={<DisplayCards />} />
+              <Route path="/user/displayTrainer" element={<DisplayCards />} />
+              <Route path="/user/applyTrainer" element={<ApplyTrainer/>}/>
+              
 
               {/* Customer Relationship Management */}
               <Route path="/user/addReviews" element={<AddReviews />} />

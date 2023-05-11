@@ -8,5 +8,6 @@ const trainerAppRouter = express.Router();
 trainerAppRouter.post('/add', TrainerAppController.createTrainerAppl);
 trainerAppRouter.delete('/delete/:email',TrainerAppController.deleteTrainerAppByEmail);
 trainerAppRouter.get('/get', TrainerAppController.getAllTrainersApp);
+trainerAppRouter.get('/get/:email', TrainerAppController.getTrainerByEmail);
 
 export default trainerAppRouter;
