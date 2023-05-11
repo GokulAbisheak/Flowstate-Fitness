@@ -56,6 +56,7 @@ const Profile = () => {
     const [flowTokens, setFlowTokens] = useState();
     const [open, setOpen] = useState(false);
     const [displayUpdate, setDisplayUpdate] = useState('none')
+    const [errors, setErrors] = useState({});
 
 
     const convertBase64 = (file) => {
@@ -119,6 +120,14 @@ const Profile = () => {
     const handleSubmit = async (e) => {
 
         e.preventDefault();
+
+        // Check for validation errors
+        const validationErrors = validateInputs();
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            console.log("Have Errors");
+            return;
+        }
 
         console.log(email);
         console.log(fName);
@@ -247,6 +256,44 @@ const Profile = () => {
     const hideUpdateForm = () => {
         document.getElementById('update-box').style.display = "none";
     }
+
+    //validation
+    const validateInputs = () => {
+        let errors = {};
+
+        // Validate first name
+        if (!fName.trim()) {
+            errors.fName = 'First name is required';
+        }
+
+        // Validate last name
+        if (!lName.trim()) {
+            errors.lName = 'Last name is required';
+        }
+
+        // Validate email
+        const emailRegex = /^\S+@\S+\.\S+$/;
+        if (!email.trim()) {
+            errors.email = 'Email is required';
+        } else if (!emailRegex.test(email)) {
+            errors.email = 'Email is invalid';
+        }
+
+        //validate date of birth
+        if (!dateOfBirth) {
+            errors.dateOfBirth = 'Date of birth is required';
+        }
+
+        //validate phone number
+        const phoneRegex = /^[0-9]{10,}$/;
+        if (!phoneNumber) {
+            errors.phoneNumber = 'Phone number is required';
+        } else if (!phoneRegex.test(phoneNumber)) {
+            errors.phoneNumber = 'Phone number must contain only numbers and be at least 10'
+        }
+
+        return errors;
+    };
 
     return (
         <>
@@ -381,6 +428,8 @@ const Profile = () => {
                         <TextField sx={{ width: "calc(100% - 80px)", margin: "10px 40px" }}
                             label="Email"
                             value={email}
+                            error={Boolean(errors.email)}
+                            helperText={errors.email}
                             InputLabelProps={{ shrink: true }}
                             onChange={(e) => {
                                 setEmail(e.target.value);
@@ -389,6 +438,8 @@ const Profile = () => {
                         <TextField sx={{ width: "calc(100% - 80px)", margin: "10px 40px" }}
                             label="First Name"
                             value={fName}
+                            error={Boolean(errors.fName)}
+                            helperText={errors.fName}
                             InputLabelProps={{ shrink: true }}
                             onChange={(e) => {
                                 setFName(e.target.value);
@@ -397,6 +448,8 @@ const Profile = () => {
                         <TextField sx={{ width: "calc(100% - 80px)", margin: "10px 40px" }}
                             label="Last Name"
                             value={lName}
+                            error={Boolean(errors.lName)}
+                            helperText={errors.lName}
                             InputLabelProps={{ shrink: true }}
                             onChange={(e) => {
                                 setLName(e.target.value);
@@ -406,6 +459,8 @@ const Profile = () => {
                             type="date"
                             label="Date of Birth"
                             value={dateOfBirth.substring(0, 10)}
+                            error={Boolean(errors.dateOfBirth)}
+                            helperText={errors.dateOfBirth}
                             InputLabelProps={{ shrink: true }}
                             onChange={(e) => {
                                 setDateOfBirth(e.target.value);
@@ -414,6 +469,8 @@ const Profile = () => {
                         <TextField sx={{ width: "calc(100% - 80px)", margin: "10px 40px" }}
                             label="Phone Number"
                             value={phoneNumber}
+                            error={Boolean(errors.phoneNumber)}
+                            helperText={errors.phoneNumber}
                             InputLabelProps={{ shrink: true }}
                             onChange={(e) => {
                                 setPhoneNumber(e.target.value);

@@ -155,6 +155,7 @@ body::-webkit-scrollbar-thumb {
     height: 200px;
     border-radius: 50%;
     background-color: #f2f2f2;
+    background-image: url(/client/public/assets/user.jpg);
 }
 
 .center-box-400 {
