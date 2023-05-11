@@ -24,33 +24,59 @@ function UpdateAttendance() {
     const [present, setPresent] = useState(false);
     const [absent, setAbsent] = useState(false);
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
 
-        //Create new attendance
-        const newAttendance = {
-            name: name,
-            date: date,
-            present: present,
-            absent: absent,
-        };
+    //     //Create new attendance
+    //     const newAttendance = {
+    //         name: name,
+    //         date: date,
+    //         present: present,
+    //         absent: absent,
+    //     };
 
-        axios.patch(`http://localhost:8090/attendance/update/${name}`, newAttendance).then(() => {
+    //     axios.patch(`http://localhost:8090/attendance/update/${name}`, newAttendance).then(() => {
+    //         alert('Update Successful!')
+    //         window.location.href = '/admin/attendance'
+
+    //         setName('');
+    //         setDate('');
+    //         setPresent('');
+    //         setAbsent('');
+    //     })
+    //         .then((response) => {
+    //             console.log(response.data);
+    //         })
+    //         .catch((error) => {
+    //             console.error(error);
+    //         });
+    // };
+
+    const handleSubmit = (attendance) => {
+        attendance.preventDefault();
+      
+        // Create updated attendance object
+        const updatedAttendance = {};
+        if (date !== '') {
+          updatedAttendance.date = date;
+        }
+        if (present !== '') {
+          updatedAttendance.present = present;
+        }
+        if (absent !== '') {
+          updatedAttendance.absent = absent;
+        }
+      
+        // Make API call to update attendance
+        axios.patch(`http://localhost:8090/attendance/updatebyname?name=${name}&date=${date}`, updatedAttendance)
+          .then(() => {
             alert('Update Successful!')
-            window.location.href = '/admin/attendance'
-
-            setName('');
-            setDate('');
-            setPresent('');
-            setAbsent('');
-        })
-            .then((response) => {
-                console.log(response.data);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    };
+            window.location.href = '/admin/attendance';
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      };
 
     return (
         <form className={classes.root} onSubmit={handleSubmit}>
@@ -68,9 +94,10 @@ function UpdateAttendance() {
                         label="Please enter your name"
                         type="text"
                         margin='normal'
+                        variant="outlined"
                         required={true}
                         value={name}
-                        onChange={(event) => setName(event.target.value)}
+                        onChange={(attendance) => setName(attendance.target.value)}
                     />
                 </Grid>
                 <Grid item>
@@ -79,9 +106,10 @@ function UpdateAttendance() {
                         helperText="Please enter a date"
                         type="date"
                         margin='normal'
+                        variant="outlined"
                         value={date}
                         required={true}
-                        onChange={(event) => setDate(event.target.value)}
+                        onChange={(attendance) => setDate(attendance.target.value)}
                     />
                 </Grid>
                 <Grid item>
@@ -89,7 +117,7 @@ function UpdateAttendance() {
                         control={
                             <Checkbox
                                 checked={present}
-                                onChange={(event) => setPresent(event.target.checked)}
+                                onChange={(attendance) => setPresent(attendance.target.checked)}
                                 name="present"
                                 // required={true}
                             />
@@ -103,7 +131,7 @@ function UpdateAttendance() {
                         control={
                             <Checkbox
                                 checked={absent}
-                                onChange={(event) => setAbsent(event.target.checked)}
+                                onChange={(attendance) => setAbsent(attendance.target.checked)}
                                 name="absent"
                                 // required={true}
                             />
@@ -112,8 +140,12 @@ function UpdateAttendance() {
                         
                     />
                 </Grid>
-                <Button variant="contained" color="primary" type="submit" margin="normal">
+                <Button variant="contained" color="primary" type="submit" margin="normal" style={{marginTop:'40px', marginBottom:'10px'}}>
                     Update Attendance
+                </Button>
+
+                <Button variant="contained" color="primary" type="submit" href="/admin/attendance" margin="normal" style={{marginTop:'20px'}} >
+                    View Attendance
                 </Button>
 
             </Grid>

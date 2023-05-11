@@ -4,6 +4,11 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import axios from 'axios';
+import Button from '@material-ui/core/Button';
+import { Grid } from '@mui/material';
+//import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+//import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 const Calendar = () => {
 
@@ -99,10 +104,13 @@ const Calendar = () => {
       });
   };
 
+  // const classes = useStyles();
+
   return (
+
     <div>
       <form onSubmit={handleFormSubmit}>
-        <label>
+        {/* <label>
           Title:
           <input type="text" value={title} onChange={e => setTitle(e.target.value)} required />
         </label>
@@ -121,28 +129,47 @@ const Calendar = () => {
           Description:
           <textarea value={description} onChange={e => setDescription(e.target.value)} required />
         </label>
-        <br />
-        <button type="submit">Add Session</button>
+        <br /> */}
+
+        <Grid 
+          container spacing={1}
+          display="flex" alignItems="center" justifyContent="space-between"   direction={"row"}
+        >
+
+          <Button size="small" color="primary" variant='contained' href="/admin/addSession" style={{marginBottom:'10px', marginLeft:'10px'}}>Add Session</Button>
+
+          <Button size="small" color="primary" variant='contained' href="/admin/addAttendance" style={{marginBottom:'10px'}}> Attendance</Button>
+
+        </Grid>
+
+
+
+        <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          initialView="dayGridMonth"
+          headerToolbar={{
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay',
+          }}
+          editable={true}
+          selectable={true}
+          selectMirror={true}
+          dayMaxEvents={true}
+          events={events}
+          // eventClick={updateSessionById}
+          // eventRemove={deleteSessionById}
+          eventsFetch={getAllSessions}
+          eventAdd={handleInputChange}
+        />
+
       </form>
-      <FullCalendar
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        initialView="dayGridMonth"
-        headerToolbar={{
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay',
-        }}
-        editable={true}
-        selectable={true}
-        selectMirror={true}
-        dayMaxEvents={true}
-        events={events}
-        // eventClick={updateSessionById}
-        // eventRemove={deleteSessionById}
-        eventsFetch={getAllSessions}
-      />
     </div>
+
   );
 }
 
 export default Calendar;
+
+
+

@@ -5,7 +5,8 @@ const SessionController = {
 
 //Add a session 
 addSession: async (req, res) => {
-
+  try {
+    logger.info(req.body)
     const { title, start, end, description } = req.body;
 
     const newSession = new Session({
@@ -14,11 +15,14 @@ addSession: async (req, res) => {
         end,
         description,
     });
-    newSession.save()
-    .then(()=> res.json('Session Added'))
-    .catch(err => res.status(400).json('Error:' +err));
+    await attendance.save();
+    res.status(201).json(newSession);
+    logger.info("Session create successful");
+} catch (error) {
+    res.status(400).json({ message: error.message });
+    logger.error("Session create failed");
+}
 },
-
 // //Get all sessions
 // getAllSessions: (req, res) => {
 //     Session.find()

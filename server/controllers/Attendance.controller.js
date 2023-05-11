@@ -37,6 +37,29 @@ const AttendanceController = {
         }
     },
 
+    updateAttendance: async (req, res) => {
+        try {
+            const attendance = await Attendance.findOneAndUpdate(
+                
+                {$and: [
+                    {name: req.query.name},
+                    {date: req.query.date}
+                ]},
+                req.body,
+                { new: true }
+            );
+            logger.info("Attendance " + req.query.name + " update successful");
+            if (!attendance) {
+                logger.error("Attendance " + req.query.name + " not found");
+                return res.status(404).json({ message: 'Name not found' });
+            }
+            res.status(200).json(attendance);
+        } catch (error) {
+            res.status(400).json({ message: error.message });
+            logger.error("Attendace " + req.query.name + " update unsuccessful");
+        }
+    },
+
     //Get products by id
     getAttendanceById: async (req, res) => {
         try {
@@ -79,7 +102,7 @@ const AttendanceController = {
 //Delete a product by id
 deleteAttendanceByName: async (req, res) => {
     try {
-        const attendance = await Attendance.findOneAndDelete(req.params.name);
+        const attendance = await Attendance.findOneAndDelete({name: req.params.name});
         if (!attendance) {
             logger.error("Attendance " + req.params.name + " not found");
             return res.status(404).json({ message: 'Attendance not found' });
