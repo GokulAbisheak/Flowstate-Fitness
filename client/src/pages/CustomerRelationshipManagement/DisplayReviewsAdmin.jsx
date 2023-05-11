@@ -69,7 +69,7 @@ const DisplayReviewsAdmin = () => {
     const theme = useTheme();
     return (
         <>
-            <Grid container spacing={2} display="flex" alignItems="center" justifyContent="center" ><Grid item><Button size="normal" color="primary" style={{ marginBottom: '10px' }}> Reviews</Button></Grid></Grid>
+            <Grid container spacing={2} display="flex" alignItems="center" justifyContent="center" ><Grid item><h1> Reviews</h1></Grid></Grid>
             <Grid container spacing={2}>
                 {userReviews.map((review) => (
                     <Grid item key={review.id} xs={12} sm={6} md={4}>
@@ -104,13 +104,14 @@ const DisplayReviewsAdmin = () => {
                                         type="text"
                                         margin="normal"
                                         sx={{ width: 200, display: "none" }}
+                                        style={{ marginLeft: '20px', marginBottom: '5px',marginInline:'10px' }}
                                         onChange={(e) => {
                                             setReply(e.target.value)
                                             setEmail(review.author)
                                             console.log(review.author)
                                             console.log((e.target.value))
                                         }} />
-                                    <Button type="submit" size="small" color="primary"variant='contained'style={{ marginLeft: '50px',marginBottom: '2px'}} sx={{ margin: "10px 40px", width: "calc(100% - 80px)" }} endIcon={<SendIcon />}>Reply</Button>
+                                    <Button type="submit" size="small" color="primary"variant='contained'style={{ marginLeft: '20px',marginBottom: '10px',marginInline:'38px'}} sx={{ margin: "10px 30px", width: "calc(100% - 80px)" }} endIcon={<SendIcon />}>Reply</Button>
                                 </form>
                             </Card>
                         </Card>

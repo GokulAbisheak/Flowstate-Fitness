@@ -26,6 +26,7 @@ const UpdateReviews = () => {
 
             setComment('');
             setRating('');
+            window.location.href = '/user/displayReviewUser'
 
 
         }).catch((err) => {
