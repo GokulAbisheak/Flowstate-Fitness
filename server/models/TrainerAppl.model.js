@@ -33,7 +33,11 @@ const trainerapplSchema = new mongoose.Schema({
     qualification: {
         type: String,
         required: true
-    }
+    },
+    description: {
+        type: String,
+        trim: true
+      }
 });
 
 const Trainerappl = mongoose.model('Trainerappl', trainerapplSchema);

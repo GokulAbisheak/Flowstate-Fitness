@@ -23,7 +23,8 @@ const DisplayTrainers = () => {
     const [phoneNumber, setPhoneNumber] = useState("");
     const [email, setEmail] = useState("");
     const [oldEmail, setOldEmail] = useState("");
-    const[searchTerm,setSearchTerm] = useState("");
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredData, setFilteredData] = useState([]);
 
     const theme = useTheme();
 
@@ -118,24 +119,44 @@ const DisplayTrainers = () => {
 
     }
 
+    const handleSearchInputChange = (event) => {
+        setSearchQuery(event.target.value);
+      };
+      
+      const handleSearch = (event) => {
+        event.preventDefault();
+        const filtered = data.filter((row) =>
+          Object.values(row)
+            .join('')
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase())
+        );
+        setFilteredData(filtered);
+      };
+ 
+
     const navigate = useNavigate()
 
     return (
         <>
-     
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Fab
-            color='primary'
-            aria-label='add'
-            sx={{ margin: '5px 20px 5px 5px', color: '#FFFFFF' }}
-            onClick={()=>{
-              navigate("/admin/addTrainers");
-            }}
-          >
-            <AddIcon />
-          </Fab>
-        </Box>2
-    
+
+
+<Box sx={{    display: 'flex',
+    justifyContent: 'flex-end',
+    position: 'fixed',
+    bottom: '0',
+    right: '0' }}>
+  <Fab
+    color='primary'
+    aria-label='add'
+    sx={{ margin: '5px 20px 5px 5px', color: '#FFFFFF' }}
+    onClick={()=>{
+        navigate("/admin/addTrainers");
+    }}
+  >
+    <AddIcon />
+  </Fab>
+</Box>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="sticky table">
                     <TableHead sx={{ background: 'linear-gradient(to left, #07a7af, #01519a)' }}>
