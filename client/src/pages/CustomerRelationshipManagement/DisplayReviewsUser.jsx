@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Rating, useTheme, Snackbar, Alert } from '@mui/material';
-import { Box,Card, Grid, CardMedia, CardContent, CardActions, CardActionArea, Typography, Button } from '@material-ui/core';
+import { Box,Card, Grid, CardMedia, CardContent, CardActions, CardActionArea, Typography, Button, FormControl,Select,MenuItem } from '@material-ui/core';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { styled } from '@mui/material/styles';
@@ -25,6 +25,18 @@ const DisplayReviewsUser = () => {
     const [deleteId, setDeleteId] = useState('');
     const [openSuccess, setOpenSuccess] = useState(false);
     const [openError, setOpenError] = useState(false);
+    const [filteredReviews, setFilteredReviews] = useState([]);
+    const [selectedRating, setSelectedRating] = useState('');
+
+    const handleCategoryChange = (event) => {
+        setSelectedRating(event.target.value);
+        if (event.target.value === 'All Reviews') {
+            setFilteredReviews(allReviews);
+        } else {
+            const filtered = allReviews.filter(review => review.rating === event.target.value);
+            setFilteredReviews(filtered);
+        }
+    }
 
     useEffect(() => {
         const getReviews = () => {
@@ -41,6 +53,7 @@ const DisplayReviewsUser = () => {
         const getAllReviews = () => {
             axios.get('http://localhost:8090/review').then((res) => {
                 setAllReviews(res.data);
+                setFilteredReviews(res.data);
             }).catch((err) => {
                 alert('Unable to get all Reviews ' + err.message);
             })
@@ -80,8 +93,37 @@ const DisplayReviewsUser = () => {
         return (
             <>
                 <Grid display="flex" alignItems="center" justifyContent="center" container spacing={2}><Grid item><Button variant='contained' href="/user/addReviews" size="normal" color="primary" style={{ marginBottom: '10px' }}>Add Reviews</Button></Grid></Grid>
+                <Grid 
+                container spacing={4}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                direction={"column"}>
+                <Grid item>
+                    <Grid>
+                        <FormControl variant="outlined" sx={{ minWidth: 400, mt: 2, mb: 6 }}>
+                            <Select
+                                value={selectedRating}
+                                onChange={handleCategoryChange}
+                                displayEmpty
+                                inputProps={{ 'aria-label': 'Select a category' }}
+                            >
+                                <MenuItem value="" disabled>
+                                    Reviews
+                                </MenuItem>
+                                <MenuItem value="All Reviews">All Reviews</MenuItem>
+                                <MenuItem value={5}>five</MenuItem>
+                                <MenuItem value={4}>four</MenuItem>
+                                <MenuItem value={3}>Three</MenuItem>
+                                <MenuItem value={2}>Two</MenuItem>
+                                <MenuItem value={1}>One</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                </Grid>
+            </Grid>
                 <Grid container spacing={2}>
-                    {userReviews.map((review) => (
+                    {filteredReviews.map((review) => (
                         <Grid item key={review.id} xs={12} sm={6} md={4}>
                             <Card sx={{ height: '100%' }}>
                                 <CardActionArea sx={{ height: '100%' }}>
@@ -117,7 +159,7 @@ const DisplayReviewsUser = () => {
 
                 <Grid display="flex" alignItems="center" justifyContent="center"><Grid item></Grid></Grid>
                 <Grid container spacing={2}>
-                    {allReviews.map((review) => (
+                    {filteredReviews.map((review) => (
                         <Grid item key={review.id} xs={12} sm={6} md={4}>
                             <Card sx={{ height: '100%' }}>
                                 <CardActionArea sx={{ height: '100%' }}>
