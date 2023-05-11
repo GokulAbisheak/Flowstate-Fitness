@@ -112,11 +112,11 @@ const DisplayReviewsUser = () => {
                                     Reviews
                                 </MenuItem>
                                 <MenuItem value="All Reviews">All Reviews</MenuItem>
-                                <MenuItem value={5}>five</MenuItem>
-                                <MenuItem value={4}>four</MenuItem>
-                                <MenuItem value={3}>Three</MenuItem>
-                                <MenuItem value={2}>Two</MenuItem>
-                                <MenuItem value={1}>One</MenuItem>
+                                <MenuItem value={5}>Five Star</MenuItem>
+                                <MenuItem value={4}>Four Star</MenuItem>
+                                <MenuItem value={3}>Three Star</MenuItem>
+                                <MenuItem value={2}>Two Star</MenuItem>
+                                <MenuItem value={1}>One Star</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
