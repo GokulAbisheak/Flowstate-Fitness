@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Box, Button, Grid, TextField, InputAdornment, useTheme } from '@mui/material';
+import { Box, Button, Grid, TextField, InputAdornment, useTheme, Snackbar, Alert } from '@mui/material';
 import axios from 'axios';
+// import { useSelector } from 'react-redux';
+
 
 
 const AddProducts = () => {
@@ -15,7 +17,11 @@ const AddProducts = () => {
     const [image, setImage] = useState("");
     const [url, setURL] = useState("");
 
+    const [openSuccess, setOpenSuccess] = useState(false);
+    const [openError, setOpenError] = useState(false);
+
     const theme = useTheme();
+    // const loggedUser = useSelector((state) => state.user)
 
     const onSubmitAddProducts = (event) => {
         event.preventDefault();
@@ -51,11 +57,13 @@ const AddProducts = () => {
                         setPEXPDate('');
                         setImage('');
                         setURL('');
-                        alert('Adding Successful!');
+                        //alert('Adding Successful!');
+                        handleOpenSuccess();
                         window.location.href = '/admin/products'
                     })
                     .catch(err => {
-                        alert('Product adding failed! ' + err);
+                        //alert('Product adding failed! ' + err);
+                        handleOpenError();
                     });
             }
         };
@@ -74,164 +82,186 @@ const AddProducts = () => {
             });
     };
 
+    const handleOpenSuccess = () => {
+        setOpenSuccess(true);
+    }
+
+    const handleCloseSuccess = () => {
+        setOpenSuccess(false);
+    }
+
+    const handleOpenError = () => {
+        setOpenError(true);
+    }
+
+    const handleCloseError = () => {
+        setOpenError(false);
+    }
+
     return (
 
-        <form onSubmit={onSubmitAddProducts}>
+        <>
+            <form onSubmit={onSubmitAddProducts}>
 
-            <Grid
+                <Grid
 
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                container spacing={2}
-                direction={"column"}
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    container spacing={2}
+                    direction={"column"}
 
-            >
-                <Grid item>
-                    <TextField
+                >
+                    <Grid item>
+                        <TextField
 
-                        id="id-input"
-                        name="productID"
-                        label="Product ID"
-                        type="text"
-                        margin="normal"
-                        sx={{ width: 300 }}
-                        required={true}
-                        onChange={(e) => {
-                            setPID(e.target.value)
-                        }}
+                            id="id-input"
+                            name="productID"
+                            label="Product ID"
+                            type="text"
+                            margin="normal"
+                            sx={{ width: 300 }}
+                            required={true}
+                            onChange={(e) => {
+                                setPID(e.target.value);
+                            }} />
+                    </Grid>
 
-                    />
+                    <Grid item>
+                        <TextField
+
+                            id="name-input"
+                            name="productName"
+                            label="Product Name"
+                            type="text"
+                            margin="normal"
+                            sx={{ width: 300 }}
+                            required={true}
+                            onChange={(e) => {
+                                setPName(e.target.value);
+                            }} />
+                    </Grid>
+
+                    <Grid item>
+                        <TextField
+
+                            id="category-input"
+                            name="productCategory"
+                            label="Product Category"
+                            type="text"
+                            margin="normal"
+                            sx={{ width: 300 }}
+                            required={true}
+                            onChange={(e) => {
+                                setPCategory(e.target.value);
+                            }} />
+                    </Grid>
+
+                    <Grid item>
+                        <TextField
+
+                            id="price-input"
+                            name="productPrice"
+                            label="Product Price"
+                            type="text"
+                            margin="normal"
+                            startadornment={<InputAdornment position="start">Rs.</InputAdornment>}
+                            sx={{ width: 300 }}
+                            required={true}
+                            onChange={(e) => {
+                                setPPrice(e.target.value);
+                            }} />
+                    </Grid>
+
+                    <Grid item>
+                        <TextField
+
+                            id="description-input"
+                            name="productDescription"
+                            label="Product Description"
+                            type="text"
+                            margin="normal"
+                            multiline
+                            sx={{ width: 300 }}
+                            required={true}
+                            onChange={(e) => {
+                                setPDescription(e.target.value);
+                            }} />
+                    </Grid>
+
+                    <Grid item>
+                        <TextField
+
+                            id="mfg-input"
+                            name="productMFGDate"
+                            helperText="Please select manufactured date"
+                            type="date"
+                            margin="normal"
+                            sx={{ width: 300 }}
+                            //required={true}
+                            onChange={(e) => {
+                                setPMFGDate(e.target.value);
+                            }} />
+                    </Grid>
+
+                    <Grid item>
+                        <TextField
+
+                            id="exp-input"
+                            name="productEXPDate"
+                            helperText="Please select expiration date"
+                            type="date"
+                            margin="normal"
+                            sx={{ width: 300 }}
+                            //required={true}
+                            onChange={(e) => {
+                                setPEXPDate(e.target.value);
+                            }} />
+                    </Grid>
+
+                    <Grid item>
+                        <TextField
+                            label="Image"
+                            type="file"
+                            sx={{ width: 300 }}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+
+                                    </InputAdornment>
+                                ),
+                            }}
+                            onChange={(e) => setImage(e.target.files[0])}
+                            margin="normal"
+                            required={true} />
+                    </Grid>
+
+                    <Grid item>
+                        <Button variant="contained" margin="normal" color="primary" type="submit">Add</Button>
+                    </Grid>
+
                 </Grid>
+            </form>
 
-                <Grid item>
-                    <TextField
+            <Snackbar open={openSuccess} autoHideDuration={4000} onClose={handleCloseSuccess} anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+            }}>
+                <Alert variant="filled" onClose={handleCloseSuccess} severity="success" sx={{ width: '100%' }}>
+                    Product Adding Success!
+                </Alert>
+            </Snackbar>
 
-                        id="name-input"
-                        name="productName"
-                        label="Product Name"
-                        type="text"
-                        margin="normal"
-                        sx={{ width: 300 }}
-                        required={true}
-                        onChange={(e) => {
-                            setPName(e.target.value)
-                        }}
+            <Snackbar open={openError} autoHideDuration={4000} onClose={handleCloseSuccess} anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+            }}>
+                <Alert variant="filled" onClose={handleCloseError} severity="error" sx={{ width: '100%' }}>
+                    Product Adding Failed!
+                </Alert>
+            </Snackbar>
 
-                    />
-                </Grid>
-
-                <Grid item>
-                    <TextField
-
-                        id="category-input"
-                        name="productCategory"
-                        label="Product Category"
-                        type="text"
-                        margin="normal"
-                        sx={{ width: 300 }}
-                        required={true}
-                        onChange={(e) => {
-                            setPCategory(e.target.value)
-                        }}
-
-                    />
-                </Grid>
-
-                <Grid item>
-                    <TextField
-
-                        id="price-input"
-                        name="productPrice"
-                        label="Product Price"
-                        type="text"
-                        margin="normal"
-                        startadornment={<InputAdornment position="start">Rs.</InputAdornment>}
-                        sx={{ width: 300 }}
-                        required={true}
-                        onChange={(e) => {
-                            setPPrice(e.target.value)
-                        }}
-
-                    />
-                </Grid>
-
-                <Grid item>
-                    <TextField
-
-                        id="description-input"
-                        name="productDescription"
-                        label="Product Description"
-                        type="text"
-                        margin="normal"
-                        multiline
-                        sx={{ width: 300 }}
-                        required={true}
-                        onChange={(e) => {
-                            setPDescription(e.target.value)
-                        }}
-
-                    />
-                </Grid>
-
-                <Grid item>
-                    <TextField
-
-                        id="mfg-input"
-                        name="productMFGDate"
-                        helperText="Please select manufactured date"
-                        type="date"
-                        margin="normal"
-                        sx={{ width: 300 }}
-                        //required={true}
-                        onChange={(e) => {
-                            setPMFGDate(e.target.value)
-                        }}
-
-                    />
-                </Grid>
-
-                <Grid item>
-                    <TextField
-
-                        id="exp-input"
-                        name="productEXPDate"
-                        helperText="Please select expiration date"
-                        type="date"
-                        margin="normal"
-                        sx={{ width: 300 }}
-                        //required={true}
-                        onChange={(e) => {
-                            setPEXPDate(e.target.value)
-                        }}
-
-                    />
-                </Grid>
-
-                <Grid item>
-                    <TextField
-                        label="Image"
-                        type="file"
-                        sx={{ width: 300 }}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-
-                                </InputAdornment>
-                            ),
-                        }}
-                        onChange={(e) => setImage(e.target.files[0])}
-                        margin="normal"
-                        required={true}
-                    />
-                </Grid>
-
-                <Grid item>
-                    <Button variant="contained" margin="normal" color="primary" type="submit">Add</Button>
-                </Grid>
-
-            </Grid>
-        </form>
+        </>
 
     )
 }

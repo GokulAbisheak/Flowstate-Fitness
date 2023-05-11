@@ -68,7 +68,7 @@ const Header = () => {
 
         {
             title: "Products",
-            link: "",
+            link: "user/productScreen",
         },
 
         {
@@ -130,7 +130,7 @@ const Header = () => {
                     }
                 </FlexBetween>
                 <FlexBetween>
-                    <IconButton sx={{ marginRight: "5px" }}>
+                    <IconButton sx={{ marginRight: "5px" }} >
                         <ShoppingCart sx={{ fontSize: "25px" }} />
                     </IconButton>
                     <IconButton sx={{ marginRight: "5px" }} onClick={() => dispatch(setMode())}>

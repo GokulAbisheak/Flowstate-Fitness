@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Box, Card, Grid, CardMedia, CardContent, CardActions, CardActionArea, Typography, Button } from '@material-ui/core';
+import {Snackbar, Alert} from '@mui/material'
 import axios from 'axios';
 
 const GradientBox = styled(Box)(({ theme }) => ({
@@ -15,6 +16,9 @@ const ProductHandle = () => {
 
     const [allProducts, setAllProducts] = useState([]);
     const [showMore, setShowMore] = useState(false);
+
+    const [openSuccess, setOpenSuccess] = useState(false);
+    const [openError, setOpenError] = useState(false);
 
     useEffect(() => {
 
@@ -36,14 +40,32 @@ const ProductHandle = () => {
 
         try {
             await axios.delete(`http://localhost:8090/product/delete/${productID}`);
-            alert('Deleting Successful!');
+            //alert('Deleting Successful!');
+            handleOpenSuccess();
             setAllProducts(allProducts.filter((product) => product.productID !== productID));
         } catch (err) {
-            alert('Product deleting failed! ' + err);
+            //alert('Product deleting failed! ' + err);
+            handleCloseError();
         }
     };
 
     const theme = useTheme();
+
+    const handleOpenSuccess = () => {
+        setOpenSuccess(true);
+    }
+
+    const handleCloseSuccess = () => {
+        setOpenSuccess(false);
+    }
+
+    const handleOpenError = () => {
+        setOpenError(true);
+    }
+
+    const handleCloseError = () => {
+        setOpenError(false);
+    }
 
     return (
         <>
@@ -149,6 +171,24 @@ const ProductHandle = () => {
                 ))}
 
             </Grid>
+
+            <Snackbar open={openSuccess} autoHideDuration={4000} onClose={handleCloseSuccess} anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+            }}>
+                <Alert variant="filled" onClose={handleCloseSuccess} severity="success" sx={{ width: '100%' }}>
+                    Deleting Success!
+                </Alert>
+            </Snackbar>
+
+            <Snackbar open={openError} autoHideDuration={4000} onClose={handleCloseSuccess} anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+            }}>
+                <Alert variant="filled" onClose={handleCloseError} severity="error" sx={{ width: '100%' }}>
+                    Deleting Failed!
+                </Alert>
+            </Snackbar>
 
         </>
     )

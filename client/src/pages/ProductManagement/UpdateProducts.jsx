@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Grid, Link, TextField, InputAdornment, useTheme } from '@mui/material';
+import { Box, Button, Grid, Link, TextField, InputAdornment, useTheme, Snackbar, Alert } from '@mui/material';
 import axios from 'axios';
 
 
@@ -14,6 +14,9 @@ const UpdateProducts = () => {
     const [productEXPDate, setPEXPDate] = useState("");
     const [image, setImage] = useState("");
     const [url, setURL] = useState("");
+
+    const [openSuccess, setOpenSuccess] = useState(false);
+    const [openError, setOpenError] = useState(false);
 
     const theme = useTheme();
 
@@ -51,11 +54,13 @@ const UpdateProducts = () => {
                         setPEXPDate('');
                         setImage('');
                         setURL('');
-                        alert('Adding Successful!');
+                        //alert('Adding Successful!');
+                        handleOpenSuccess()
                         window.location.href = '/admin/products'
                     })
                     .catch(err => {
-                        alert('Product adding failed! ' + err);
+                        //alert('Product adding failed! ' + err);
+                        handleOpenError()
                     });
             }
         };
@@ -73,6 +78,23 @@ const UpdateProducts = () => {
                 alert('Image uploading failed! ' + err);
             });
     };
+
+    const handleOpenSuccess = () => {
+        setOpenSuccess(true);
+    }
+
+    const handleCloseSuccess = () => {
+        setOpenSuccess(false);
+    }
+
+    const handleOpenError = () => {
+        setOpenError(true);
+    }
+
+    const handleCloseError = () => {
+        setOpenError(false);
+    }
+
     return (
 
 
@@ -224,14 +246,24 @@ const UpdateProducts = () => {
                 </Grid>
             </form>
 
-            <Snackbar open={open} autoHideDuration={2000} onClose={handleClose} anchorOrigin={{
+            <Snackbar open={openSuccess} autoHideDuration={4000} onClose={handleCloseSuccess} anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'right',
             }}>
-                <Alert variant="filled" onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-                    Update Success!
+                <Alert variant="filled" onClose={handleCloseSuccess} severity="success" sx={{ width: '100%' }}>
+                    Product Updating Success!
                 </Alert>
             </Snackbar>
+
+            <Snackbar open={openError} autoHideDuration={4000} onClose={handleCloseSuccess} anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+            }}>
+                <Alert variant="filled" onClose={handleCloseError} severity="error" sx={{ width: '100%' }}>
+                    Product Updating Failed!
+                </Alert>
+            </Snackbar>
+
             
         </>
 

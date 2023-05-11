@@ -16,6 +16,7 @@ const ProductScreen = () => {
     const [showMore, setShowMore] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [filteredProducts, setFilteredProducts] = useState([]);
+    const [cart, setCart] = useState([]);
 
     const handleCategoryChange = (event) => {
         setSelectedCategory(event.target.value);
@@ -40,6 +41,34 @@ const ProductScreen = () => {
 
         fetchProducts();
     }, []);
+
+    const addToCart = (productID) => {
+
+        if(cart.some((item) => item.productID === productID)){
+            alert("Product Already in cart")
+        }else{
+            const item = filteredProducts.find((product) => product.productID === productID);
+            console.log(item)
+            axios.post('http://localhost:8090/cart/add', {
+                productID: item.productID,
+                productName: item.productName,
+                productPrice: item.price,
+                numberOfUnits: 1,
+              })
+                .then((response) => {
+                    console.log(response);
+                    const newCartItem = response.data;
+                    setCart((prevCart) => [...prevCart, newCartItem]);
+                })
+                .catch((error) => {
+                  console.error(error);
+                });
+            }
+    }
+
+    useEffect(() => {
+        console.log(cart);
+      }, [cart]);
 
     const theme = useTheme();
 
@@ -78,7 +107,7 @@ const ProductScreen = () => {
             </Grid>
             <Grid container spacing={2} sx={{ mt: 4 }}>
                 {filteredProducts.map((product) => (
-                    <Grid item key={product.productId} xs={12} sm={6} md={4}>
+                    <Grid item key={product.productID} xs={12} sm={6} md={4}>
                         <Card sx={{ height: '100%' }}>
                             <CardActionArea sx={{ height: '100%' }}>
                                 <CardMedia
@@ -137,7 +166,7 @@ const ProductScreen = () => {
                             </CardActionArea>
                             <CardActions style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <Button size="small" color="primary">Buy Now</Button>
-                                <Button size="small" color="primary" onClick={() => addToCart(product.productId, product.productName, product.price)}>Add to cart</Button>
+                                <Button size="small" color="primary" onClick={() => addToCart(product.productID)}>Add to cart</Button>
                             </CardActions>
                         </Card>
                     </Grid>
