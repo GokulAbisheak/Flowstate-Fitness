@@ -125,7 +125,7 @@ function App() {
 
 
                 {/* Trainer Managment */}
-                <Route path="/user/displayTrainer" element={<DisplayCards />} />
+                <Route path="/user/trainers" element={<DisplayCards />} />
 
                 {/* Customer Relationship Management */}
                 <Route path="/user/addReviews" element={<AddReviews />} />

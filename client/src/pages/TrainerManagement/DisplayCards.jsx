@@ -1,46 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, Avatar, useTheme } from '@mui/material';
+import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, Avatar, useTheme ,IconButton,TextField,Button} from '@mui/material';
 import styled from '@mui/material/styles/styled';
 import Box from '@mui/material/Box';
 import { Link } from 'react-router-dom';
+import CancelIcon from '@mui/icons-material/Close';
+import SearchIcon from '@mui/icons-material/Search';
+import {  useNavigate } from 'react-router-dom';
 
-const GradientBox = styled(Box)(({ theme }) => ({
-  background: 'linear-gradient(to bottom, #0d253f, #1d3d5c)',
-  borderRadius: theme.shape.borderRadius,
-  color: theme.palette.primary.contrastText,
-  padding: theme.spacing(2),
-}));
-
-
-function stringToColor(string) {
-  let hash = 0;
-  let i;
-
-  for (i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash);
-  }
-
-  let color = '#';
-
-  for (i = 0; i < 3; i += 1) {
-    const value = (hash >> (i * 8)) & 0xff;
-    color += `00${value.toString(16)}`.slice(-2);
-  }
-
-  return color;
-}
-
-function stringAvatar(name) {
-  return {
-    sx: {
-      bgcolor: stringToColor(name),
-    },
-  };
-}
 
 const DisplayCards = () => {
+  
   const [allTrainers, setAllTrainers] = useState([]);
+  const [fName, setFName] = useState("");
+  const [lName, setLName] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [qualification, setQualification] = useState("");
+  const[description,setDescription] = useState("")
+
+  const [oldEmail, setOldEmail] = useState("");
+
+  const theme = useTheme();
 
   useEffect(() => {
     axios.get('http://localhost:8090/trainer/get')
@@ -51,6 +33,38 @@ const DisplayCards = () => {
         console.error('Error getting all trainers:', err);
       });
   }, []);
+
+  const displayUpdateForm = () => {
+    document.getElementById('update-box').style.display = "block";
+}
+
+const hideUpdateForm = () => {
+    document.getElementById('update-box').style.display = "none";
+    setFName('');
+    setLName('');
+    setEmail('');
+    setDateOfBirth('');
+    setPhoneNumber('');
+    setOldEmail('');
+}
+
+const getTrainer = (email) => {
+  axios.get(`http://localhost:8090/trainer/get/${email}`).then((res) => {
+      setFName(res.data.firstName);
+      setLName(res.data.lastName);
+      setEmail(res.data.email);
+      setDateOfBirth(res.data.dateOfBirth);
+      setPhoneNumber(res.data.phoneNumber);
+      setOldEmail(res.data.email);
+      setQualification(res.data.qualification);
+      setDescription(res.data.description);
+      
+  }).catch((err) => {
+      alert('Unable to get trainer ' + err.message);
+  })
+}
+
+const navigate = useNavigate()
 
   return (
     <>
@@ -73,19 +87,19 @@ const DisplayCards = () => {
               boxShadow: "1px 1px 1px 1px rgba(0, 0, 0, 0.1)",
               height: '100%' }}
               elevation={0}>
-              <CardActionArea sx={{ height: '100%' }}>
-                <div style={{ display: 'flex', justifyContent: "center", paddingTop: '20px' }}>
-                  <Avatar src ={trainer.url} sx={{ width: 76, height: 76 }} />
+
+                <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '20px' }}>
+                  <Avatar  sx={{ width: 76, height: 76 }} />
                 </div>
                 <CardContent>
                   <Box sx={{ 
-                      outline: '1px solid #000'
-                    }}>
-                      <Link 
+                      
+                    }}
+                   
                       style={{
                         textDecoration: 'none',
                       }}
-          to={`/trainers/${trainer.email}`}>
+                     to={`/trainers/${trainer.email}`}>
                     <Typography sx={{ 
                       boxShadow: "0px 1px 0px 0.5px rgba(0, 0, 0, 0.1)",
                       borderRadius: "12px",
@@ -94,18 +108,81 @@ const DisplayCards = () => {
                       textAlign: 'center' }}>
                       {trainer.firstName} {trainer.lastName}
                     </Typography>
-                    </Link>
                   </Box>
                 </CardContent>
-              </CardActionArea>
+                <Button variant='contained' color='primary' sx={{ margin: '5px', color: '#FFFFFF' }} onClick={() => {
+                                        getTrainer(trainer.email);
+                                        displayUpdateForm();
+                                    }}>view more</Button>
             </Card>
           
         </Grid>
       ))}
     </Grid>
+
+    <Box sx={{    display: 'flex',
+    justifyContent: 'flex-end',
+    position: "absolute",
+    top: '84px',
+    right: '10px' }}>
+  <Button
+    color='primary'
+    variant='contained'
+    aria-label='trainerApp'
+    sx={{ margin: '5px 20px 5px 5px', color: '#FFFFFF' }}
+    onClick={()=>{
+       navigate("/user/applyTrainer");
+    }}
+  >
+    Apply to become a Trainer
+  </Button>
+</Box>
+
+<Box id="update-box" sx={{ backgroundColor: "rgba(0,0,0,0.3)", width: "100%", height: "100%", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+<Box maxWidth="500px" height="520px" sx={{ backgroundColor: theme.palette.background.alt, position: "relative", top: "50%", left: "50%", transform: "translate(-50%, -50%)", boxShadow: "0px 0px 10px rgba(0,0,0,0.5)", borderRadius: "5px" }}>
+  <IconButton sx={{ float: "right", margin: "5px" }}>
+    <CancelIcon onClick={() => { hideUpdateForm() }} />
+  </IconButton>
+  <Box sx={{ margin: "20px" }}>
+      <Typography variant="h5" sx={{ marginBottom: "20px" }}>
+        Trainer Details
+      </Typography>
+      <Typography variant="body1" sx={{ marginBottom: "10px" }}>
+        <strong>Email:</strong> {email}
+      </Typography>
+      <Typography variant="body1" sx={{ marginBottom: "10px" }}>
+        <strong>First Name:</strong> {fName}
+      </Typography>
+      <Typography variant="body1" sx={{ marginBottom: "10px" }}>
+        <strong>Last Name:</strong> {lName}
+      </Typography>
+      <Typography variant="body1" sx={{ marginBottom: "10px" }}>
+        <strong>Phone Number:</strong> {phoneNumber}
+      </Typography>
+      <Typography variant="body1" sx={{ marginBottom: "10px" }}>
+        <strong>Qualification:</strong> {qualification}
+      </Typography>
+      <Typography variant="body1" sx={{ marginBottom: "10px" }}>
+        <strong>Description:</strong> {description}
+      </Typography>
+    </Box>
+    <Button
+      type="submit"
+      color="primary"
+      variant="contained"
+      onClick={() => {navigate('/user/addSession')}}
+      sx={{ margin: "20px", width: "calc(100% - 40px)" }}
+    >
+      Make An Appointment
+    </Button>
+</Box>
+</Box>
+
+
+            
   </>
   
   );
 };
 
-export default DisplayCards;
+export default DisplayCards;

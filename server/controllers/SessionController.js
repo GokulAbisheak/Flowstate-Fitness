@@ -1,5 +1,6 @@
+import moment from 'moment';
 import Session from '../models/Session.model.js';
-
+import logger from '../utilities/logger.js'
 const SessionController = {
 
 
@@ -15,7 +16,7 @@ addSession: async (req, res) => {
         end,
         description,
     });
-    await attendance.save();
+    await newSession.save();
     res.status(201).json(newSession);
     logger.info("Session create successful");
 } catch (error) {
@@ -23,112 +24,58 @@ addSession: async (req, res) => {
     logger.error("Session create failed");
 }
 },
-// //Get all sessions
-// getAllSessions: (req, res) => {
-//     Session.find()
-//      .then(()=> res.json(Session))
-//      .catch(err => res.status(400).json('Error:' +err));
-// },
 
+//get session
 getAllSessions: async (_req, res) => {
     try {
       // get all sessions from database
-      const sessions = await Session.findAll();
-      // return sessions array to client
-      if (sessions.length === 0) {
-        res.status(404).send('No sessions found');
-      } else {
-        res.status(200).json(sessions);
-      }
+      const sessions = await Session.find();
+      console.log(sessions.length);
+      res.status(200).json(sessions);
     } catch (error) {
       console.error(error);
       res.status(500).send('Unable to fetch sessions');
     }
+    Session.remove()
   },
 
-//Update a session
+  //Update a session
 updateSessionById: (req, res) => {
-    Session.findById(req.param.id)
-     .then(session => {
-     session.title = req.body.title;
-     session.date = req.body.date
-     session.time = req.body.time;
-     session.description = req.body.description;
+  Session.findById(req.param.id)
+   .then(session => {
+   session.title = req.body.title;
+   session.date = req.body.date
+   session.time = req.body.time;
+   session.description = req.body.description;
 
-     session.save()
-    .then(()=> res.json('Session Updated'))
-    .catch(err => res.status(400).json('Error:' +err));
-     })
-     .catch(err => res.status(400).json('Error:' +err));
+   session.save()
+  .then(()=> res.json('Session Updated'))
+  .catch(err => res.status(400).json('Error:' +err));
+   })
+   .catch(err => res.status(400).json('Error:' +err));
 },
 
-//Delete a session
 deleteSessionById: (req, res) => {
-    Session.findByIdAndDelete(req.param.id)
-    .then(()=> res.json('Session Deleted'))
-    .catch(err => res.status(400).json('Error:' +err));
+  Session.findByIdAndDelete(req.params.id)
+    .then(() => res.status(200).json("Session Deleted"))
+    .catch((err) => res.status(400).json("Error:" + err));
 },
 
-}
+
+// deleteSessionById: async (req, res) => {
+//   try {
+//       const session = await session.findOneAndDelete({id: req.params.id});
+//       if (!session) {
+//           logger.error("Attendance " + req.params.id + " not found");
+//           return res.status(404).json({ message: 'Attendance not found' });
+//       }
+//       res.status(200).json({ message: 'Attendance deleted' });
+//       logger.info("Attendance " + req.params.id + " deleted successfully");
+//   } catch (error) {
+//       res.status(400).json({ message: error.message });
+//       logger.info("Attendance " + req.params.id + " deleted successfully");
+//   }
+// }
+ }
 
 export default SessionController;
-
-// app.post('/events', async (req, res) => {
-//     const { title, start, end, description } = req.body;
-//     const event = new Event({ title, start, end, description });
-//     await event.save();
-//     res.json(event);
-//   });
-  
-//   app.get('/events', async (req, res) => {
-//     const events = await Event.find();
-//     res.json(events);
-//   });
-  
-//   app.put('/events/:id', async (req, res) => {
-//     const { id } = req.params;
-//     const { title, start, end, description } = req.body;
-//     const event = await Event.findById(id);
-//     event.title = title;
-//     event.start = start;
-//     event.end = end;
-//     event.description = description;
-//     await event.save();
-//     res.json(event);
-//   });
-  
-//   app.delete('/events/:id', async (req, res) => {
-//     const { id } = req.params;
-//     await Event.findByIdAndDelete(id);
-//     res.json({ message: 'Event deleted' });
-//   });
-
-//   app.post('/events', async (req, res) => {
-//     const { title, start, end, description } = req.body;
-//     const event = new Event({ title, start, end, description });
-//     await event.save();
-//     res.json(event);
-//   });
-  
-//   app.get('/events', async (req, res) => {
-//     const events = await Event.find();
-//     res.json(events);
-//   });
-  
-//   app.put('/events/:id', async (req, res) => {
-//     const { id } = req.params;
-//     const { title, start, end, description } = req.body;
-//     const event = await Event.findById(id);
-//     event.title = title;
-//     event.start = start;
-//     event.end = end;
-//     event.description = description;
-//     await event.save();
-//     res.json(event);
-//   });
-  
-//   app.delete('/events/:id', async (req, res) => {
-//     const { id } = req.params;
-//     await Event.findByIdAndDelete(id);
-//     res.json({ message: 'Event deleted' });
-//   });

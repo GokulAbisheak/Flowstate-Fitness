@@ -80,6 +80,7 @@ const UpdateReviews = () => {
 
                                 label="Comment"
                                 type="text"
+                                required ={true}
                                 margin="normal"
                                 sx={{ width: 300 }}
                                 onChange={(e) => {
@@ -92,6 +93,7 @@ const UpdateReviews = () => {
 
                                 label="Rating"
                                 type="text"
+                                required ={true}
                                 margin="normal"
                                 sx={{ width: 300 }}
                                 onChange={(e) => {

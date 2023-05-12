@@ -105,6 +105,7 @@ const handleCloseError = () => {
               label="Comment"
               type="text"
               margin="normal"
+              required ={true}
               multiline
               sx={{ width: 300 }} 
               onChange={(e) => {
@@ -116,6 +117,7 @@ const handleCloseError = () => {
             <Rating
               label="Ratings"
               margin="normal"
+              required ={true}
               name="simple-controlled" 
               onChange={(e) => {
                 setRating(e.target.value)

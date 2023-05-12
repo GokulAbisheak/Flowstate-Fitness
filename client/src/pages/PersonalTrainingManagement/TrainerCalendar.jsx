@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -12,18 +12,15 @@ import TextField from '@material-ui/core/TextField';
 
 const Calendar = () => {
 
+  // const loggedUser = useSelector((state) => state.user)
+
+  // const[id, setID] =useState(loggedUser.email)
   const [events, setEvents] = useState([]);
   const [title, setTitle] = useState("");
   const [start, setStartDate] = useState("");
   const [end, setEndDate] = useState("");
   const [description, setDescription] = useState("");
 
-  // const addSession = (selectInfo) => {
-  //   setTitle("");
-  //   setStartDate(selectInfo.startStr);
-  //   setEnd(selectInfo.endStr);
-  //   setDescription("");
-  // };
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -32,10 +29,10 @@ const Calendar = () => {
     // setEndDate(selectInfo.endStr);
     // setDescription("");
     const sessionData = {
-      title,
-      start,
-      end,
-      description,
+      title: event.title,
+      start: moment(event.start).toDate(),
+      end: moment(event.end).toDate(),
+      description: event.description,
     };
     axios.post('http://localhost:8090/session/add', sessionData)
       .then(res => {
@@ -52,84 +49,59 @@ const Calendar = () => {
     setDescription("");
   };
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    if (name === "title") {
-      setTitle(value);
-    } else if (name === "start") {
-      setStartDate(value);
-    } else if (name === "end") {
-      setEndDate(value);
-    } else if (name === "description") {
-      setDescription(value);
-    }
-  };
-
-  // const updateSessionById = (eventInfo) => {
-  //   const title = prompt('Edit session title:', eventInfo.event.title);
-  //   const description = prompt('Edit session description:', eventInfo.event.extendedProps.description);
-  //   if (title) {
-  //     const eventData = {
-  //       ...eventInfo.event.extendedProps,
-  //       title,
-  //       description,
-  //     };
-  //     axios.patch(`http://localhost:8090/session/update/${eventInfo.event.id}`, eventData)
-  //       .then(res => {
-  //         setEvents(events.map(event => (event.id === res.data.id ? res.data : event)));
-  //       })
-  //       .catch(err => {
-  //         console.error(err);
-  //       });
+  // const handleInputChange = (event) => {
+  //   const { name, value } = event.target;
+  //   if (name === "title") {
+  //     setTitle(value);
+  //   } else if (name === "start") {
+  //     setStartDate(value);
+  //   } else if (name === "end") {
+  //     setEndDate(value);
+  //   } else if (name === "description") {
+  //     setDescription(value);
   //   }
   // };
 
-  // const deleteSessionById = (eventInfo) => {
-  //   axios.delete(`http://localhost:8090/session/delete/${sessionInfo.session.id}`)
-  //     .then(() => {
-  //       setEvents(events.filter(event => event.id !== eventInfo.event.id));
-  //     })
-  //     .catch(err => {
-  //       console.error(err);
-  //     });
-  // };
+  
 
-  const getAllSessions = (fetchInfo, successCallback) => {
-    axios.get(`http://localhost:8090/session/${fetchInfo.event.id})`)
-      .then(res => {
-        successCallback(res.data);
+
+
+  const deleteSession = (id) => {
+    axios
+    .delete(`http://localhost:8090/session/delete/${id}`)
+    .then((data) => {
+      if (data.status === 200) {
+        setEvents((prevData) => {
+          return prevData.filter((e) => e._id !== id);
+        });
+      }
+    });
+  };
+
+
+  const getAllSessions = useCallback(() => {
+    axios
+      .get(`http://localhost:8090/session`)
+      .then((res) => {
+        setEvents(res.data);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
-  };
+  }, []);
+
+
+  useEffect(() => {
+    getAllSessions();
+  }, [getAllSessions]);
 
   // const classes = useStyles();
 
+ console.log(events);
   return (
 
     <div>
       <form onSubmit={handleFormSubmit}>
-        {/* <label>
-          Title:
-          <input type="text" value={title} onChange={e => setTitle(e.target.value)} required />
-        </label>
-        <br />
-        <label>
-          Start Date:
-          <input type="datetime-local" value={start} onChange={e => setStartDate(e.target.value)} required />
-        </label>
-        <br />
-        <label>
-          End Date:
-          <input type="datetime-local" value={end} onChange={e => setEndDate(e.target.value)} required />
-        </label>
-        <br />
-        <label>
-          Description:
-          <textarea value={description} onChange={e => setDescription(e.target.value)} required />
-        </label>
-        <br /> */}
 
         <Grid 
           container spacing={1}
@@ -152,15 +124,40 @@ const Calendar = () => {
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay',
           }}
+          
+          
           editable={true}
+          eventAllow={(dropInfo, draggedEvent) => {
+            return draggedEvent ? true : false; // Allow event deletion if event is not being dragged
+          }}
+          eventClick={
+            (clickInfo) => {
+            if (confirm("Are you sure you want to delete this event?")) {
+              clickInfo.event.remove();
+              const id = clickInfo.event.extendedProps._id;
+              deleteSession(id)
+              // Call API to delete event from database
+              axios.delete(`http://localhost:8090/session/delete/${id}`)
+                .then(() => {
+                  console.log("Event deleted successfully");
+                  console.log(id)
+                })
+                .catch((err) => {
+                  console.error(err);
+                });
+            }
+          }
+        }
+          const handleEventClick = {(args) => {
+            const id = args.event.extendedProps._id;
+            deleteSession(id)
+          }}
+          
           selectable={true}
           selectMirror={true}
           dayMaxEvents={true}
           events={events}
-          // eventClick={updateSessionById}
-          // eventRemove={deleteSessionById}
-          eventsFetch={getAllSessions}
-          eventAdd={handleInputChange}
+          
         />
 
       </form>
@@ -169,7 +166,4 @@ const Calendar = () => {
   );
 }
 
-export default Calendar;
-
-
-
+export default Calendar;

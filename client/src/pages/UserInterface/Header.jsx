@@ -57,6 +57,11 @@ const Header = () => {
         },
 
         {
+            title: "Trainers",
+            link: "/user/trainers",
+        },
+
+        {
             title: "Membership",
             link: "/user/membership",
         },
