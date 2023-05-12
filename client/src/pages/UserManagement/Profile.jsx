@@ -57,6 +57,7 @@ const Profile = () => {
     const [open, setOpen] = useState(false);
     const [displayUpdate, setDisplayUpdate] = useState('none')
     const [errors, setErrors] = useState({});
+    const [exp, setExp] = useState('');
 
 
     const convertBase64 = (file) => {
@@ -212,6 +213,7 @@ const Profile = () => {
             .then((res) => {
 
                 setId(res.data._id)
+                setExp(res.data.expirationDate)
                 tempId = res.data._id
                 console.log(res.data._id)
                 generateQRCode()
@@ -410,9 +412,12 @@ const Profile = () => {
                         Click the QR Code to Download
                     </ContentBox>
                 </Grid>
-                <Grid item xs={12} sm={6} md={8} lg={9}>
-                    <ContentBox backgroundColor={theme.palette.background.alt} sx={{ textAlign: 'center' }}>
-
+                <Grid item xs={12} sm={6} md={6} lg={6}>
+                    <ContentBox backgroundColor={theme.palette.background.alt} sx={{ textAlign: 'center', display: display }}>
+                        <img style={{width: '100px', height: '100px', marginTop:'50px'}} src='/assets/memberlogo.png'>
+                        </img>
+                        <h3>Membership Expiration Date: {formatDate(exp)}</h3>
+                        <Button variant="contained" onClick={() => {navigate('/user/membership')}}>Extend Subscription</Button>
                     </ContentBox>
                 </Grid>
             </Grid >

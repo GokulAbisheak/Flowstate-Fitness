@@ -14,7 +14,6 @@ const GradientBox = styled(Box)(({ theme }) => ({
 
 const ProductHandle = () => {
 
-
     const [allProducts, setAllProducts] = useState([]);
     const [showMore, setShowMore] = useState(false);
 
@@ -22,7 +21,6 @@ const ProductHandle = () => {
     const [openError, setOpenError] = useState(false);
 
     useEffect(() => {
-
 
         const getAllProducts = () => {
             axios.get('http://localhost:8090/product').then((res) => {
@@ -32,13 +30,9 @@ const ProductHandle = () => {
             })
         }
 
-
         getAllProducts();
 
-
     }, []);
-
-    const onSubmitDeleteProduct = async (event, productID) => {
 
     const onSubmitDeleteProduct = async (event, productID) => {
 
@@ -88,34 +82,15 @@ const ProductHandle = () => {
 
             </Grid>
 
-            <Grid
-                container spacing={4}
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                direction={"column"}>
-
-                <Grid item>
-                    <Button variant="contained" size="normal" color="primary" style={{ marginBottom: '10px' }} href="/admin/addProducts">Add Products</Button>
-                </Grid>
-
-            </Grid>
-
             <Grid container spacing={2}>
-
 
                 {allProducts.map((product) => (
 
                     <Grid item key={product.productID} xs={12} sm={6} md={4}>
 
-
-                    <Grid item key={product.productID} xs={12} sm={6} md={4}>
-
                         <Card sx={{ height: '100%' }}>
 
-
                             <CardActionArea sx={{ height: '100%' }}>
-
 
                                 <CardMedia
                                     component="img"
@@ -123,25 +98,19 @@ const ProductHandle = () => {
                                     alt={product.productName}
                                     style={{ height: 400, objectFit: 'cover' }} />
 
-                                    style={{ height: 400, objectFit: 'cover' }} />
-
                                 <CardContent><GradientBox>
-
 
                                     <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>
                                         {product.productName.toUpperCase()}
                                     </Typography>
 
-
                                     <Typography variant="body1" color="text.secondary" sx={{ marginBottom: 1 }}>
                                         {product.productCategory}
                                     </Typography>
 
-
                                     <Typography variant="h6" color="primary" gutterBottom>
                                         Rs.{product.price}
                                     </Typography>
-
 
                                     <Typography variant="body2" color="text.secondary">
                                         {showMore
@@ -149,9 +118,7 @@ const ProductHandle = () => {
                                                 <>
                                                     {product.description}
 
-
                                                     <br /><br />
-
 
                                                     {product.productCategory !== 'Weights' && product.productCategory !== 'Resistance Bands' && product.productCategory !== 'Workout Clothes' && (
                                                         <>
@@ -159,13 +126,11 @@ const ProductHandle = () => {
                                                                 <strong>Manufacture Date:</strong> {product.mfgDate.substring(0, 10)}
                                                             </Typography>
 
-
                                                             <Typography variant="body2" color="text.secondary" sx={{ marginBottom: 1 }}>
                                                                 <strong>Expiry Date:</strong> {product.expDate.substring(0, 10)}
                                                             </Typography>
                                                         </>
                                                     )}
-
 
                                                     <span
                                                         style={{ cursor: 'pointer', fontWeight: 'bold' }}
@@ -179,7 +144,6 @@ const ProductHandle = () => {
                                                 <>
                                                     {product.description.slice(0, 200)}...
 
-
                                                     <span
                                                         style={{ cursor: 'pointer', fontWeight: 'bold' }}
                                                         onClick={() => setShowMore(true)}
@@ -191,28 +155,20 @@ const ProductHandle = () => {
                                         }
                                     </Typography></GradientBox>
 
-
                                 </CardContent>
 
-
                             </CardActionArea>
-
 
                             <CardActions style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <Button size="small" color="primary" href="/admin/updateProducts">Update</Button>
                                 <Button size="small" color="primary" onClick={(event) => onSubmitDeleteProduct(event, product.productID)}>Delete</Button>
-                                <Button size="small" color="primary" onClick={(event) => onSubmitDeleteProduct(event, product.productID)}>Delete</Button>
                             </CardActions>
-
 
                         </Card>
 
-
                     </Grid>
 
-
                 ))}
-
 
             </Grid>
 

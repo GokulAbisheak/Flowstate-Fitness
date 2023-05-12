@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useTheme, IconButton, Typography, Avatar, Button, Box, Menu, MenuItem } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { useTheme, IconButton, Typography, Avatar, Button, Box, Menu, MenuItem } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLogout, setMode } from '../../state';
-import { NightsStay, LightMode, Menu as MenuIcon, ShoppingCart } from '@mui/icons-material';
 import { setLogout, setMode } from '../../state';
 import { NightsStay, LightMode, Menu as MenuIcon, ShoppingCart } from '@mui/icons-material';
 import FlexBetween from '../../components/FlexBetween';
 import { Link, useNavigate } from 'react-router-dom';
 import '../../styles/index.css'
-import axios from 'axios';
 import axios from 'axios';
 
 const Header = () => {
@@ -18,10 +13,11 @@ const Header = () => {
     const loggedUser = useSelector((state) => state.user)
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const theme = useTheme();
+    const navigate = useNavigate();
 
     const [user, setUser] = useState();
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     
@@ -51,18 +47,13 @@ const Header = () => {
         },
 
         {
-            title: "Blog",
-            link: "/user/blog",
-        },
-
-        {
             title: "About",
             link: "/user/about",
         },
 
         {
             title: "Training",
-            link: "/user/training",
+            link: "/user/addSession",
         },
 
         {
@@ -72,27 +63,14 @@ const Header = () => {
 
         {
             title: "Products",
-            link: "user/productScreen",
+            link: "/user/productScreen",
         },
 
         {
             title: "Contact",
-            link: "/user/contact",
+            link: "/user/addReviews",
         },
     ]
-
-    useEffect(() => {
-        const getUser = () => {
-            axios.get('http://localhost:8090/user/' + loggedUser.email).then((res) => {
-                setUser(res.data)
-            }).catch((err) => {
-                console.log(err)
-            })
-        }
-        if(loggedUser != null) {
-            getUser();
-        }
-    })
 
     useEffect(() => {
         const getUser = () => {
@@ -129,7 +107,6 @@ const Header = () => {
                         }
                     }} sx={{ display: { sm: "block", md: "none" }, paddingBottom: { sm: "4px", md: "2px" } }}>
                         <MenuIcon sx={{ fontSize: "25px" }}></MenuIcon>
-                        <MenuIcon sx={{ fontSize: "25px" }}></MenuIcon>
                     </IconButton>
                     <Typography id='brand-name' variant="h6"
                         component={Link}
@@ -148,7 +125,7 @@ const Header = () => {
                     }
                 </FlexBetween>
                 <FlexBetween>
-                    <IconButton sx={{ marginRight: "5px" }} >
+                    <IconButton sx={{ marginRight: "5px" }} onClick={() => {navigate('/user/cart')}}>
                         <ShoppingCart sx={{ fontSize: "25px" }} />
                     </IconButton>
                     <IconButton sx={{ marginRight: "5px" }} onClick={() => dispatch(setMode())}>
@@ -158,19 +135,6 @@ const Header = () => {
                             <NightsStay sx={{ fontSize: "25px" }} />
                         )}
                     </IconButton>
-                    <Avatar alt="Profile Picure" src={user != undefined ? user.url : '/assets/user.jpg'} sx={{ width: "32px", height: "32px" }} onClick={handleClick} />
-                    <Menu
-                        id="basic-menu"
-                        anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleClose}
-                        MenuListProps={{
-                            'aria-labelledby': 'basic-button',
-                        }}
-                    >
-                        <MenuItem onClick={handleProfile}>Profile</MenuItem>
-                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                    </Menu>
                     <Avatar alt="Profile Picure" src={user != undefined ? user.url : '/assets/user.jpg'} sx={{ width: "32px", height: "32px" }} onClick={handleClick} />
                     <Menu
                         id="basic-menu"

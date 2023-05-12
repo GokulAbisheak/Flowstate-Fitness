@@ -3,8 +3,6 @@ import { useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 import { Box, Card, Grid, CardMedia, CardContent, CardActions, CardActionArea, Typography, Button, FormControl, Select, MenuItem } from '@material-ui/core'; import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { Box, Card, Grid, CardMedia, CardContent, CardActions, CardActionArea, Typography, Button, FormControl, Select, MenuItem } from '@material-ui/core'; import axios from 'axios';
 
 const GradientBox = styled(Box)(({ theme }) => ({
     background: 'linear-gradient(to bottom, #0d253f, #1d3d5c)',
@@ -27,29 +25,10 @@ const ProductScreen = () => {
         } else {
             const filtered = allProducts.filter(product => product.productCategory === event.target.value);
             setFilteredProducts(filtered);
-    const handleCategoryChange = (event) => {
-        setSelectedCategory(event.target.value);
-        if (event.target.value === 'All Products') {
-            setFilteredProducts(allProducts);
-        } else {
-            const filtered = allProducts.filter(product => product.productCategory === event.target.value);
-            setFilteredProducts(filtered);
         }
-    }
     }
 
     useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const response = await axios.get('http://localhost:8090/product');
-                setAllProducts(response.data);
-                setFilteredProducts(response.data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        fetchProducts();
         const fetchProducts = async () => {
             try {
                 const response = await axios.get('http://localhost:8090/product');
@@ -95,8 +74,6 @@ const ProductScreen = () => {
 
     const loggedInUser = useSelector((state) => state.user);
 
-    const loggedInUser = useSelector((state) => state.user);
-
     return (
         <>
             <Grid 
@@ -138,10 +115,8 @@ const ProductScreen = () => {
                                     image={`${product.url}`}
                                     alt={product.productName}
                                     style={{ height: 400, objectFit: 'cover' }} />
-                                    style={{ height: 400, objectFit: 'cover' }} />
                                 <CardContent><GradientBox>
                                     <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>
-                                        {product.productName.toUpperCase()}
                                         {product.productName.toUpperCase()}
                                     </Typography>
                                     <Typography variant="body1" color="text.secondary" sx={{ marginBottom: 1 }}>

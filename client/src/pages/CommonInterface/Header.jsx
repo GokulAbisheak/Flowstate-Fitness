@@ -43,12 +43,7 @@ const Header = () => {
     const NavDetails = [
         {
             title: "Home",
-            link: "/user/home",
-        },
-
-        {
-            title: "Blog",
-            link: "/user/blog",
+            link: "/home",
         },
 
         {
@@ -57,18 +52,8 @@ const Header = () => {
         },
 
         {
-            title: "Training",
-            link: "/user/training",
-        },
-
-        {
-            title: "Membership",
-            link: "/user/membership",
-        },
-
-        {
-            title: "Products",
-            link: "/user/products",
+            title: "Carrier",
+            link: "/user/applyTrainer",
         },
 
         {
