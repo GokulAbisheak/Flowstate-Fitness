@@ -22,6 +22,8 @@ const Cart = () => {
 
     //const loggedInUser = useSelector((state) => state.user);
 
+    
+
     useEffect(() => {
         const fetchCartItems = async () => {
             try {
@@ -83,7 +85,8 @@ const Cart = () => {
         const totalAmount = calculateTotal();
         // Add your code here to send the totalAmount to the payment portal
         console.log('Total Amount:', totalAmount);
-    };
+        window.location.href = `/user/mnpayment?totalAmount=${totalAmount}`;
+    };
 
     const handleSnackbarClose = () => {
         setSnackbarOpen(false);
@@ -153,9 +156,12 @@ const Cart = () => {
                             <Typography variant="h6">TOTAL AMOUNT: Rs. {calculateTotal()}</Typography>
                         </Grid>
                         <Grid item>
+                            <Typography variant="h6">TOTAL AMOUNT: Rs. {calculateTotal()}</Typography>
+                        </Grid>
+                        <Grid item>
                             <Button variant="outlined" color="inherit" onClick={handlePayment}>
                                 Proceed to Payment
-                            </Button>
+                            </Button>
                         </Grid>
                     </Grid>
                 </>

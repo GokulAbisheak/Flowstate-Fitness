@@ -44,9 +44,9 @@ const ProductScreen = () => {
 
     const addToCart = (productID) => {
 
-        if(cart.some((item) => item.productID === productID)){
+        if (cart.some((item) => item.productID === productID)) {
             alert("Product Already in cart")
-        }else{
+        } else {
             const item = filteredProducts.find((product) => product.productID === productID);
             console.log(item)
             axios.post('http://localhost:8090/cart/add', {
@@ -54,29 +54,34 @@ const ProductScreen = () => {
                 productName: item.productName,
                 productPrice: item.price,
                 numberOfUnits: 1,
-              })
+            })
                 .then((response) => {
                     console.log(response);
                     const newCartItem = response.data;
                     setCart((prevCart) => [...prevCart, newCartItem]);
                 })
                 .catch((error) => {
-                  console.error(error);
+                    console.error(error);
                 });
-            }
+        }
     }
 
     useEffect(() => {
         console.log(cart);
-      }, [cart]);
+    }, [cart]);
 
     const theme = useTheme();
 
     const loggedInUser = useSelector((state) => state.user);
 
+    const handleBuyNow = (productPrice) => {
+        // Redirect to the payment page with the product price as a parameter
+        window.location.href = `user/mnpayment?productPrice=${productPrice}`;
+    };
+
     return (
         <>
-            <Grid 
+            <Grid
                 container spacing={4}
                 display="flex"
                 justifyContent="center"
@@ -165,7 +170,7 @@ const ProductScreen = () => {
                                 </CardContent>
                             </CardActionArea>
                             <CardActions style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <Button size="small" color="primary">Buy Now</Button>
+                                <Button size="small" color="primary" onClick={() => handleBuyNow(product.price)}>Buy Now</Button>
                                 <Button size="small" color="primary" onClick={() => addToCart(product.productID)}>Add to cart</Button>
                             </CardActions>
                         </Card>

@@ -68,7 +68,7 @@ function App() {
               <Route path="/" element={<Navigate to="/admin/dashboard" />} />
               <Route path="/admin" element={<Navigate to="/admin/dashboard" />} />
               <Route element={<AdminPrivateRoute />}>
-                <Route path="/admin/dashboard" element={<GridPage />} />
+                <Route path="/admin/dashboard" element={<Navigate to="/admin/members" />} />
                 <Route path="/admin/members" element={<DisplayUsers />} />
                 <Route path="/admin/users" element={<DisplayUsers />} />
                 <Route path="/admin/membership" element={<DisplayMemberships />} />
