@@ -110,7 +110,7 @@ const Calendar = () => {
 
           <Button size="small" color="primary" variant='contained' href="/admin/addSession" style={{marginBottom:'10px', marginLeft:'10px'}}>Add Session</Button>
 
-          <Button size="small" color="primary" variant='contained' href="/admin/addAttendance" style={{marginBottom:'10px'}}> Attendance</Button>
+          <Button size="small" color="primary" variant='contained' href="/admin/addAttendance" style={{marginBottom:'10px',spacebetween:'50px', marginLeft:'100px'}}> Attendance</Button>
 
         </Grid>
 
@@ -118,6 +118,7 @@ const Calendar = () => {
 
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          backgroundcolor="#00000000"
           initialView="dayGridMonth"
           headerToolbar={{
             left: 'prev,next today',
