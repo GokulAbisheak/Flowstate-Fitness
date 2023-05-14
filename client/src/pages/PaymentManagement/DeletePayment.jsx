@@ -8,7 +8,7 @@ const DeletePayment = () => {
 
     const theme = useTheme();
 
-    const onSubmitDeletePayments = async event => {
+    const onSubmitDeletePayment = async event => {
         event.preventDefault();
 
         try {
@@ -25,7 +25,8 @@ const DeletePayment = () => {
 
             <Grid display="flex" justifyContent="center"><h1>Delete Payment Here</h1></Grid>
 
-            <form onSubmit={onSubmitDeletePayments}>
+            <form onSubmit={onSubmitDeletePayment}>
+                
 
                 <Grid
                     display="flex"

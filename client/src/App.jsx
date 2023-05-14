@@ -50,6 +50,8 @@ import DisplayCards from './pages/TrainerManagement/DisplayCards';
 import ApplyTrainer from './pages/TrainerManagement/ApplyTrainer';
 import VeiwApp from './pages/TrainerManagement/DisplayApplication';
 import Home from './pages/Home';
+import UserCalendar from './pages/PersonalTrainingManagement/UserCalendar';
+import DeletePayment from './pages/PaymentManagement/DeletePayment';
 
 function App() {
 
@@ -92,10 +94,13 @@ function App() {
 
                 {/* Payment Management */}
                 <Route path="/admin/mainpayment" element={<MainPayment />} />
-                <Route path="/admin/adminpayment" element={<AdminPayment />} />
+                <Route path="/admin/payment" element={<AdminPayment />} />
+                <Route path="/admin/deletepayment" element={<DeletePayment />} />
+              
 
                 {/* Personal Training Management */}
                 <Route path="/admin/schedule" element={<TrainerCalendar />} />
+                <Route path="/admin/addSession" element={<AddSession />} />
                 <Route path="/admin/attendance" element={<Attendance />} />
                 <Route path="/admin/addAttendance" element={<AddAttendance />} />
                 <Route path="/admin/updateAttendance" element={<UpdateAttendance />} />
@@ -137,12 +142,13 @@ function App() {
                 <Route path="/user/cart" element={<Cart />} />
 
                 {/* Payment Management */}
-                <Route path="/user/adminpayment" element={<AdminPayment />} />
+                {/* <Route path="/user/adminpayment" element={<AdminPayment />} /> */}
                 <Route path="/user/mnpayment" element={<MainPayment />} />
                 <Route path="/user/pay/:amount/:desc" element={<MainPayment />} />
 
                 {/* Personal Training Management */}
                 <Route path="/user/addSession" element={<AddSession />} />
+                <Route path="/user/usercal" element={<UserCalendar />} />
               </Route>
             </Route>
             

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Grid, TextField, InputAdornment, useTheme } from '@mui/material';
+import { Box, Button, Grid, TextField, InputAdornment, useTheme, Snackbar, Alert } from '@mui/material';
 import axios from 'axios';
 // import { useSelector } from 'react-redux';
 
@@ -62,8 +62,8 @@ const AddProducts = () => {
                         window.location.href = '/admin/products'
                     })
                     .catch(err => {
-                        //alert('Product adding failed! ' + err);
-                        handleOpenError();
+                        alert('Product adding failed! ' + err);
+                        //handleOpenError();
                     });
             }
         };
@@ -216,6 +216,9 @@ const AddProducts = () => {
                             //required={true}
                             onChange={(e) => {
                                 setPEXPDate(e.target.value);
+                                if(productMFGDate == productEXPDate){
+                                    productEXPDate = null;
+                                }
                             }} />
                     </Grid>
 

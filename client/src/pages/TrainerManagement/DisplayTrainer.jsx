@@ -235,6 +235,7 @@ const DisplayTrainers = () => {
                     <form onSubmit={handleSubmit}>
                         <TextField sx={{ width: "calc(100% - 80px)", margin: "10px 40px" }}
                             label="Email"
+                            disabled={true}
                             value={email}
                             InputLabelProps={{ shrink: true }}
                             onChange={(e) => {

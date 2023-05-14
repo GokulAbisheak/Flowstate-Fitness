@@ -113,6 +113,7 @@ const AddTrainer = () => {
         />
         <TextField
           label="Email"
+         
           fullWidth
           margin="normal"
           value={email}

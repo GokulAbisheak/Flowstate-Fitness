@@ -220,7 +220,7 @@ return (
           id="zip-input"
           name="pZip"
           label="ZIP code"
-          type="text"
+          type="numeric"
           margin="normal"
           sx={{ width: 300 }}
           required={true}

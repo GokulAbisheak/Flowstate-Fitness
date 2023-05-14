@@ -58,11 +58,10 @@ const SignUp = () => {
         }
 
         // Validate password
-        const passwordRegex = /.{8,}/;
-        if (!password) {
-            errors.password = 'Password is required';
-        } else if (!passwordRegex.test(password)) {
-            errors.password = 'Password must be at least 8 characters';
+        if (isNaN(password)) {
+            errors.password = 'Password should be a number';
+        } else if(password.length < 8) {
+            errors.password = 'Password should be atleast 8 charatcter long'
         }
 
         //validate confirm password

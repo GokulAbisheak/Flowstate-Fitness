@@ -2,11 +2,14 @@ import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid
 // import React, {useState} from "react";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const AdminPayment = () => {
 
     const [allPayments, setAllPayments] = useState([]);
     const [paymentID, setPaymentID] = useState("");
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         const getAllPayments = () => {
@@ -35,7 +38,7 @@ const AdminPayment = () => {
 
   return (
     <>
-            <Grid display="flex" alignItems="center" justifyContent="center"><Grid item><Button size="normal" color="primary" href="/user/mnpayment" style={{ marginBottom: '10px' }}>All Payments</Button></Grid></Grid>
+            <Grid display="flex" alignItems="center" justifyContent="center"><Grid item><h1 size="normal" color="primary"  style={{ marginBottom: '10px' }}>All Payments</h1></Grid></Grid>
             <Grid container spacing={2}>
                 {allPayments.map((payment) => (
                     <Grid item key={payment.paymentId} xs={12} sm={6} md={4}>
@@ -86,14 +89,15 @@ const AdminPayment = () => {
                                 </CardContent>
                             </CardActionArea>
                             <CardActions style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <Button size="small" color="primary" href="/admin/updatePayment">Update</Button>
-                                <Button size="small" color="primary" onClick={onSubmitDeletePayments}>Delete</Button>
+                                {/* <Button size="small" color="primary" href="/admin/updatePayment">Update</Button>
+                                <Button size="small" color="primary" onClick={onSubmitDeletePayments}>Delete</Button> */}
                             </CardActions>
                         </Card>
                     </Grid>
                 ))}
             </Grid>
-            <Grid display="flex" alignItems="center" justifyContent="center"><Grid item><Button size="normal" color="primary" href="/user/mnpayment" style={{ marginBottom: '10px' }}>Delete Payments</Button></Grid></Grid>
+            <Grid display="flex" alignItems="center" justifyContent="center"><Grid item><Button onClick={() => {navigate('/admin/deletepayment')}} variant='contained' size="normal" color="primary" style={{ marginBottom: '10px' }}>Delete Payments</Button></Grid></Grid>
+            
         </>
   )
 
