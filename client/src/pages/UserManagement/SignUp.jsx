@@ -58,11 +58,10 @@ const SignUp = () => {
         }
 
         // Validate password
-        const passwordRegex = /.{8,}/;
-        if (!password) {
-            errors.password = 'Password is required';
-        } else if (!passwordRegex.test(password)) {
-            errors.password = 'Password must be at least 8 characters';
+        if (isNaN(password)) {
+            errors.password = 'Password should be a number';
+        } else if(password.length < 8) {
+            errors.password = 'Password should be atleast 8 charatcter long'
         }
 
         //validate confirm password
@@ -142,7 +141,7 @@ const SignUp = () => {
         <>
             <Grid container spacing={0}>
                 <Grid item xs={12} lg={6} display="flex" justifyContent="center" alignItems="center" minHeight="90vh" sx={{ display: { xs: "none", lg: "flex" } }}>
-                    <img style={{ width: "80%", height: "auto" }} src="/assets/pilates-animate.svg" />
+                    <img style={{ width: "80%", height: "auto" }} src="/assets/jogging-new.svg" />
                 </Grid>
                 <Grid item xs={12} lg={6} display="flex" justifyContent="center" alignItems="center" minHeight="90vh">
                     <form onSubmit={handleSubmit}>

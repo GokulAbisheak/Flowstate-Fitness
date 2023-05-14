@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Rating, Button, Grid } from '@mui/material';
+import { TextField, Rating, Button,Snackbar,Alert, Grid } from '@mui/material';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
@@ -10,6 +10,8 @@ const ReviewForm = () => {
   const [id, setID] = useState(loggedUser.email);//(loggedUser.email);
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState('');
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openError, setOpenError] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -22,16 +24,20 @@ const ReviewForm = () => {
   };
 
   axios.post('http://localhost:8090/review/add', newReview).then(() => {
-      alert('Adding Successful!')
+     
+      //alert('Adding Successful!')
       // window.location.href = '/review'
 
       // setID('');
       setComment('');
       setRating('');
+      handleOpenSuccess();
+      //window.location.href = '/user/displayReviewUser'
 
 
   }).catch((err) => {
-      alert('Review adding failed! ' + err)
+    handleOpenError();
+      //alert('Review adding failed! ' + err)
   })
     /* fetch('/api/reviews', {
       method: 'POST',
@@ -48,6 +54,25 @@ const ReviewForm = () => {
         console.error('Error submitting review:', error);
       }); */
   };
+
+  const handleOpenSuccess = () => {
+    setOpenSuccess(true);
+    setTimeout(() => {
+      window.location.href = '/user/displayReviewUser';
+    }, 3000);
+}
+
+const handleCloseSuccess = () => {
+    setOpenSuccess(false);
+}
+
+const handleOpenError = () => {
+    setOpenError(true);
+}
+
+const handleCloseError = () => {
+    setOpenError(false);
+}
 
   return (
     <>
@@ -80,6 +105,7 @@ const ReviewForm = () => {
               label="Comment"
               type="text"
               margin="normal"
+              required ={true}
               multiline
               sx={{ width: 300 }} 
               onChange={(e) => {
@@ -91,6 +117,7 @@ const ReviewForm = () => {
             <Rating
               label="Ratings"
               margin="normal"
+              required ={true}
               name="simple-controlled" 
               onChange={(e) => {
                 setRating(e.target.value)
@@ -105,6 +132,24 @@ const ReviewForm = () => {
         </Grid>
 
       </form >
+
+      <Snackbar open={openSuccess} autoHideDuration={5000} onClose={handleCloseSuccess} anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+            }}>
+                <Alert variant="filled" onClose={handleCloseSuccess} severity="success" sx={{ width: '100%' }}>
+                    Review Adding Success!
+                </Alert>
+            </Snackbar>
+
+            <Snackbar open={openError} autoHideDuration={4000} onClose={handleCloseError} anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+            }}>
+                <Alert variant="filled" onClose={handleCloseError} severity="error" sx={{ width: '100%' }}>
+                    Review Adding Failed!
+                </Alert>
+            </Snackbar>
 
     </>
   )

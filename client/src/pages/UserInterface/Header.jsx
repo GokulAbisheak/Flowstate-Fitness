@@ -43,22 +43,22 @@ const Header = () => {
     const NavDetails = [
         {
             title: "Home",
-            link: "",
-        },
-
-        {
-            title: "Blog",
-            link: "",
+            link: "/user/home",
         },
 
         {
             title: "About",
-            link: "",
+            link: "/user/about",
         },
 
         {
             title: "Training",
-            link: "",
+            link: "/user/addSession",
+        },
+
+        {
+            title: "Trainers",
+            link: "/user/trainers",
         },
 
         {
@@ -68,12 +68,12 @@ const Header = () => {
 
         {
             title: "Products",
-            link: "",
+            link: "/user/productScreen",
         },
 
         {
             title: "Contact",
-            link: "",
+            link: "/user/addReviews",
         },
     ]
 
@@ -130,7 +130,7 @@ const Header = () => {
                     }
                 </FlexBetween>
                 <FlexBetween>
-                    <IconButton sx={{ marginRight: "5px" }}>
+                    <IconButton sx={{ marginRight: "5px" }} onClick={() => {navigate('/user/cart')}}>
                         <ShoppingCart sx={{ fontSize: "25px" }} />
                     </IconButton>
                     <IconButton sx={{ marginRight: "5px" }} onClick={() => dispatch(setMode())}>

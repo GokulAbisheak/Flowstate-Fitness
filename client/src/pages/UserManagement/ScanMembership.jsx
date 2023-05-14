@@ -4,8 +4,19 @@ import { QrCodeScanner } from "react-simple-qr-code-scanner";
 import axios from 'axios';
 import { useTheme } from '@mui/material'
 import '../../styles/index.css'
+import { useSelector } from 'react-redux';
 
 const ScanMembership = () => {
+
+    const loggedUser = useSelector((state) => state.user)
+    const token = useSelector((state) => state.token)
+
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    };
 
     const [scannedResult, setScannedResult] = useState('');
     const [membershipId, setMemebershipId] = useState('');
@@ -30,7 +41,7 @@ const ScanMembership = () => {
             console.log(result)
             setScannedResult(result.text);
 
-            axios.get(`http://localhost:8090/membership/${result.text}`).then((res) => {
+            axios.get(`http://localhost:8090/membership/${result.text}`, config).then((res) => {
                 if (res.data._id != undefined) {
                     setMemebershipId(res.data._id)
                     setMemeberEmail(res.data.email)

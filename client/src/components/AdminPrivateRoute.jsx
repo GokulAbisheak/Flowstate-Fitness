@@ -10,7 +10,7 @@ const AdminPrivateRoute = () => {
   let type;
 
   if (!loggedUser) {
-    type = 'notadmin'
+    type = 'nouser'
   } else if (loggedUser.type === 'admin') {
     type = 'admin'
   } else {
@@ -20,7 +20,7 @@ const AdminPrivateRoute = () => {
 
   return (
     <>
-      {type === 'admin' ? <Outlet /> : <Navigate to='/user' />}
+      {type === 'admin' ? <Outlet /> : type === 'nouser' ? <Navigate to='/login' /> : <Navigate to='/user' />}
     </>
   );
 };

@@ -1,4 +1,4 @@
-import Trainer from '../models/Trainer.model';
+import Trainer from '../models/Trainer.model.js';
 import logger from '../utilities/logger.js';
 
 const TrainerController = {

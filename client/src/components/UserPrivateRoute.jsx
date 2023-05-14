@@ -20,7 +20,7 @@ const UserPrivateRoute = () => {
 
   return (
     <>
-      {type === 'user' ? <Outlet /> : <Navigate to='/login' />}
+      {type === 'user' ? <Outlet /> : <Navigate to='/' />}
     </>
   );
 };

@@ -19,7 +19,7 @@ const ReviewController = {
       });
       await review.save();
       res.status(201).json(review);
-      logger.info("Product create successful");
+      logger.info("Review create successful");
     } catch (error) {
       res.status(400).json({ message: error.message });
       logger.error("review create failed");
@@ -33,7 +33,7 @@ const ReviewController = {
       res.status(200).json(review);
     } catch (error) {
       res.status(500).json({ message: error.message });
-      logger.error("Error getting all products");
+      logger.error("Error getting all Reviews");
     }
   },
 
@@ -44,7 +44,7 @@ const ReviewController = {
       res.status(200).json(review);
     } catch (error) {
       res.status(500).json({ message: error.message });
-      logger.error("Error getting all products");
+      logger.error("Error getting all Reviews");
     }
   },
 

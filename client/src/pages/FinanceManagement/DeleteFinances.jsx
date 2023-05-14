@@ -6,6 +6,7 @@ const DeleteFinances = () => {
 
     const [salaryID, setSID] = useState("");
 
+
     const theme = useTheme();
 
     const onSubmitDeleteFinances = async event => {
@@ -43,7 +44,7 @@ const DeleteFinances = () => {
                             label="Salary ID"
                             type="text"
                             margin="normal"
-                            value={productID}
+                            value={salaryID}
                             sx={{ width: 300 }}
                             onChange={(e) => {
                                 setSID(e.target.value)

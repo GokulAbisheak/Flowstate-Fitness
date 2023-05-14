@@ -63,13 +63,7 @@ const SideNav = () => {
         {
             text: 'Finance',
             icon: <FinanceIcon></FinanceIcon>,
-            path: '/admin/finance',
-        },
-
-        {
-            text: 'Articles',
-            icon: <BookIcon></BookIcon>,
-            path: '/admin/articles',
+            path: '/admin/addFinances',
         },
 
         {

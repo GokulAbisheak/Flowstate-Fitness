@@ -6,10 +6,21 @@ import { useSelector } from 'react-redux';
 import UpdateBox from '../../components/UpdateBox.js';
 import CancelIcon from '@mui/icons-material/Close';
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 const PurchaseMembership = () => {
 
     const loggedUser = useSelector((state) => state.user)
+    const token = useSelector((state) => state.token)
+
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const navigate = useNavigate()
 
     const theme = useTheme();
     const [memberEmail, setMembershipEmail] = useState(loggedUser.email)
@@ -17,6 +28,7 @@ const PurchaseMembership = () => {
     const [flowToken, setFlowToken] = useState();
     const [freeFlowToken, setFreeFlowToken] = useState();
     const [membershipExpiration, setMemebershipExpiration] = useState('');
+    const [price, setPrice] = useState('');
 
     const [openSuccess, setOpenSuccess] = useState(false);
     const [openError, setOpenError] = useState(false);
@@ -68,16 +80,19 @@ const PurchaseMembership = () => {
             setFlowToken(8000)
             setMemebershipExpiration(addMonths(today, 12))
             setFreeFlowToken(1000)
+            setPrice(25000)
         } else if (type === 'Silver') {
             setMembershipType('Silver')
             setFlowToken(5000)
             setMemebershipExpiration(addMonths(today, 6))
             setFreeFlowToken(400)
+            setPrice(15000)
         } else if (type === 'Bronze') {
             setMembershipType('Bronze')
             setFlowToken(1000)
             setMemebershipExpiration(addMonths(today, 1))
             setFreeFlowToken(0)
+            setPrice(3000)
         }
         displayPurchaseBox()
     }
@@ -99,10 +114,10 @@ const PurchaseMembership = () => {
             availableFlowTokens = res.data.flowTokens
             if (availableFlowTokens >= flowToken) {
                 let newFlowTokens = availableFlowTokens - flowToken + freeFlowToken
-                axios.patch(`http://localhost:8090/user/update/${loggedUser.email}`, { flowTokens: newFlowTokens }).then((res) => {
-                    axios.get(`http://localhost:8090/membership/email/${loggedUser.email}`).then((res) => {
+                axios.patch(`http://localhost:8090/user/update/${loggedUser.email}`, { flowTokens: newFlowTokens }, config).then((res) => {
+                    axios.get(`http://localhost:8090/membership/email/${loggedUser.email}`, config).then((res) => {
                         const tempId = res.data._id;
-                        axios.patch(`http://localhost:8090/membership/update/${tempId}`, { expirationDate: membershipExpiration }).then((res) => {
+                        axios.patch(`http://localhost:8090/membership/update/${tempId}`, { expirationDate: membershipExpiration }, config).then((res) => {
                             handleOpenSuccess();
 
                             //email
@@ -131,7 +146,7 @@ const PurchaseMembership = () => {
                             expirationDate: membershipExpiration
                         }
 
-                        axios.post('http://localhost:8090/membership/add', newMembership).then((res) => {
+                        axios.post('http://localhost:8090/membership/add', newMembership, config).then((res) => {
                             handleOpenSuccess();
                         }).catch(() => {
 
@@ -145,6 +160,7 @@ const PurchaseMembership = () => {
     }
 
     const handleOpenSuccess = () => {
+        hidePurchaseBox()
         setOpenSuccess(true);
     }
 
@@ -212,7 +228,7 @@ const PurchaseMembership = () => {
                         <CancelIcon onClick={() => { hidePurchaseBox() }} />
                     </IconButton>
                     <Button variant='contained' fullWidth sx={{ marginTop: '10px' }} onClick={() => { purchaseWithFlowToken() }}>Purchase with {flowToken} FlowTokens</Button>
-                    <Button variant='contained' fullWidth sx={{ marginTop: '10px' }}>Purchase with Credit/Debit Card</Button>
+                    <Button variant='contained' fullWidth sx={{ marginTop: '10px' }} onClick={() => {navigate('/user/pay/'+price+'/Membership')}}>Purchase with Credit/Debit Card</Button>
                 </Box>
             </UpdateBox>
 

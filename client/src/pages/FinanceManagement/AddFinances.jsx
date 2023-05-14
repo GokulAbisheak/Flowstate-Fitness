@@ -161,7 +161,7 @@ const AddFinances = () => {
 
                         id="date-input"
                         name="lastUpdated"
-                        helperText="Please select manufactured date"
+                        helperText="Please select date"
                         type="date"
                         margin="normal"
                         sx={{ width: 300 }}
@@ -181,6 +181,7 @@ const AddFinances = () => {
                         label="Salary"
                         type="text"
                         margin="normal"
+                        
                         startadornment={<InputAdornment position="start">Rs.</InputAdornment>}
                         sx={{ width: 300 }}
                         required={true}
